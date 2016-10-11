@@ -1,0 +1,10 @@
+<map id="kernel/dispatcher.h" name="kernel/dispatcher.h">
+<area shape="rect" id="node2" href="$delay_8c.html" title="kernel/delay.c" alt="" coords="5,80,107,107"/>
+<area shape="rect" id="node3" href="$dispatcher_8c.html" title="kernel/dispatcher.c" alt="" coords="131,80,263,107"/>
+<area shape="rect" id="node4" href="$interrutps_8h.html" title="kernel/interrutps.h" alt="" coords="287,80,413,107"/>
+<area shape="rect" id="node6" href="$scheduler_8c.html" title="kernel/scheduler.c" alt="" coords="439,80,567,107"/>
+<area shape="rect" id="node7" href="$task_8c.html" title="kernel/task.c" alt="" coords="591,80,688,107"/>
+<area shape="rect" id="node8" href="$nojent_o_s_8h.html" title="nojentOS.h" alt="" coords="713,80,799,107"/>
+<area shape="rect" id="node5" href="$nojent_o_s_8c.html" title="nojentOS.c" alt="" coords="461,155,547,181"/>
+<area shape="rect" id="node9" href="$main_8c.html" title="main.c" alt="" coords="725,155,787,181"/>
+</map>

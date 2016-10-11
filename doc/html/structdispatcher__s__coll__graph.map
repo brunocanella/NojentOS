@@ -1,0 +1,5 @@
+<map id="dispatcher_s" name="dispatcher_s">
+<area shape="rect" id="node2" href="$structtask__s.html" title="task_s" alt="" coords="49,187,111,213"/>
+<area shape="rect" id="node3" href="$structtask__context__s.html" title="task_context_s" alt="" coords="25,96,135,123"/>
+<area shape="rect" id="node4" href="$structtask__context__stack__s.html" title="task_context_stack_s" alt="" coords="5,5,155,32"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="kernel/scheduler.c" name="kernel/scheduler.c">
+<area shape="rect" id="node2" href="$scheduler_8h.html" title="scheduler.h" alt="" coords="5,155,93,181"/>
+<area shape="rect" id="node7" href="$dispatcher_8h.html" title="dispatcher.h" alt="" coords="85,80,179,107"/>
+<area shape="rect" id="node3" href="$task_8h.html" title="task.h" alt="" coords="61,229,119,256"/>
+<area shape="rect" id="node4" href="$types_8h.html" title="types.h" alt="" coords="34,379,99,405"/>
+<area shape="rect" id="node6" href="$task__context_8h.html" title="task_context.h" alt="" coords="83,304,191,331"/>
+<area shape="rect" id="node5" href="$defines_8h.html" title="defines.h" alt="" coords="64,453,137,480"/>
+</map>

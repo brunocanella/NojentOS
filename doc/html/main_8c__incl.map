@@ -1,0 +1,11 @@
+<map id="main.c" name="main.c">
+<area shape="rect" id="node3" href="$config_8h.html" title="config.h" alt="" coords="45,229,112,256"/>
+<area shape="rect" id="node5" href="$nojent_o_s_8h.html" title="nojentOS.h" alt="" coords="158,80,244,107"/>
+<area shape="rect" id="node4" href="$defines_8h.html" title="kernel/defines.h" alt="" coords="145,528,260,555"/>
+<area shape="rect" id="node6" href="$types_8h.html" title="kernel/types.h" alt="" coords="203,453,307,480"/>
+<area shape="rect" id="node7" href="$timers_8h.html" title="kernel/timers.h" alt="" coords="239,304,347,331"/>
+<area shape="rect" id="node8" href="$dispatcher_8h.html" title="kernel/dispatcher.h" alt="" coords="290,155,421,181"/>
+<area shape="rect" id="node9" href="$task_8h.html" title="task.h" alt="" coords="372,304,429,331"/>
+<area shape="rect" id="node11" href="$scheduler_8h.html" title="scheduler.h" alt="" coords="375,229,464,256"/>
+<area shape="rect" id="node10" href="$task__context_8h.html" title="task_context.h" alt="" coords="343,379,451,405"/>
+</map>

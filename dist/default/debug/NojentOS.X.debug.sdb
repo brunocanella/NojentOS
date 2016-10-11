@@ -1,0 +1,509 @@
+[p LITE_MODE AUTOSTATIC LFSROK EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F4520 ]
+[d frameptr 4065 ]
+"29 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/interrutps.h
+[e E3189 task_state_e `uc
+task_state_ready 0
+task_state_running 1
+task_state_blocked 2
+]
+"8 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[e E3185 task_state_e `uc
+task_state_ready 0
+task_state_running 1
+task_state_blocked 2
+]
+"18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/scheduler.c
+[e E19 task_state_e `uc
+task_state_ready 0
+task_state_running 1
+task_state_blocked 2
+]
+"8 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.c
+[e E19 task_state_e `uc
+task_state_ready 0
+task_state_running 1
+task_state_blocked 2
+]
+"8 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+"62 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"86 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+"54 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+"62 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+"20 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/ftsub.c
+[v ___ftsub __ftsub `(f  1 e 3 0 ]
+"10 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/sprcadd.c
+[v ___fladd __fladd `(d  1 e 3 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 3 0 ]
+"11 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 3 0 ]
+"8 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/sprcmul.c
+[v ___flmul __flmul `(d  1 e 3 0 ]
+"15 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+"15 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"12 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[v _task_idle_callback task_idle_callback `(v  1 e 1 0 ]
+"18
+[v _dispatcher_init dispatcher_init `(v  1 e 1 0 ]
+"35
+[v _dispatcher_start dispatcher_start `(v  1 e 1 0 ]
+"18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.h
+"21 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task_context.h
+"16
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+"39 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v _dispatcher_add_task dispatcher_add_task `(*.39S442  1 e 2 0 ]
+"48
+[v _dispatcher_change_context_isr dispatcher_change_context_isr `(v  1 e 1 0 ]
+"21 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/interrutps.h
+[v _global_isr global_isr `II(v  1 e 1 0 ]
+"18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.h
+"21 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task_context.h
+"16
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+"18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/scheduler.c
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v _scheduler_round_robin scheduler_round_robin `(*.39S442  1 e 2 0 ]
+"5 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.c
+[v _task_create task_create `(v  1 e 1 0 ]
+"24
+[v _task_ready task_ready `(v  1 e 1 0 ]
+[v i2_task_ready task_ready `(v  1 e 1 0 ]
+"28
+[v _task_running task_running `(v  1 e 1 0 ]
+"8 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/timers.c
+[v _timer0_reset timer0_reset `(v  1 e 1 0 ]
+[v i2_timer0_reset timer0_reset `(v  1 e 1 0 ]
+"15
+[v _timer0_init timer0_init `(v  1 e 1 0 ]
+"51
+[v _timer0_isr timer0_isr `(v  1 e 1 0 ]
+"14 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/main.c
+[v _task_1 task_1 `(v  1 s 1 task_1 ]
+"23
+[v _task_2 task_2 `(v  1 s 1 task_2 ]
+"32
+[v _task_3 task_3 `(v  1 s 1 task_3 ]
+"41
+[v _main main `(v  1 e 1 0 ]
+"15 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/nojentOS.c
+[v _nojo_init nojo_init `(v  1 e 1 0 ]
+"23
+[v _nojo_start nojo_start `(v  1 e 1 0 ]
+[s S30 . 1 `uc 1 RD0 1 0 :1:0 
+`uc 1 RD1 1 0 :1:1 
+`uc 1 RD2 1 0 :1:2 
+`uc 1 RD3 1 0 :1:3 
+`uc 1 RD4 1 0 :1:4 
+`uc 1 RD5 1 0 :1:5 
+`uc 1 RD6 1 0 :1:6 
+`uc 1 RD7 1 0 :1:7 
+]
+"668 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
+[s S70 . 1 `uc 1 PSP0 1 0 :1:0 
+`uc 1 PSP1 1 0 :1:1 
+`uc 1 PSP2 1 0 :1:2 
+`uc 1 PSP3 1 0 :1:3 
+`uc 1 PSP4 1 0 :1:4 
+`uc 1 PSP5 1 0 :1:5 
+`uc 1 PSP6 1 0 :1:6 
+`uc 1 PSP7 1 0 :1:7 
+]
+[s S79 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 P1B 1 0 :1:5 
+`uc 1 P1C 1 0 :1:6 
+`uc 1 P1D 1 0 :1:7 
+]
+[s S84 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 SS2 1 0 :1:7 
+]
+[u S87 . 1 `S30 1 . 1 0 `S70 1 . 1 0 `S79 1 . 1 0 `S84 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES87  1 e 1 @3971 ]
+[s S119 . 1 `uc 1 LATD0 1 0 :1:0 
+`uc 1 LATD1 1 0 :1:1 
+`uc 1 LATD2 1 0 :1:2 
+`uc 1 LATD3 1 0 :1:3 
+`uc 1 LATD4 1 0 :1:4 
+`uc 1 LATD5 1 0 :1:5 
+`uc 1 LATD6 1 0 :1:6 
+`uc 1 LATD7 1 0 :1:7 
+]
+"1436
+[s S128 . 1 `uc 1 LD0 1 0 :1:0 
+]
+[s S130 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 LD1 1 0 :1:1 
+]
+[s S133 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 LD2 1 0 :1:2 
+]
+[s S136 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 LD3 1 0 :1:3 
+]
+[s S139 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 LD4 1 0 :1:4 
+]
+[s S142 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 LD5 1 0 :1:5 
+]
+[s S145 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 LD6 1 0 :1:6 
+]
+[s S148 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 LD7 1 0 :1:7 
+]
+[u S151 . 1 `S119 1 . 1 0 `S128 1 . 1 0 `S130 1 . 1 0 `S133 1 . 1 0 `S136 1 . 1 0 `S139 1 . 1 0 `S142 1 . 1 0 `S145 1 . 1 0 `S148 1 . 1 0 ]
+[v _LATDbits LATDbits `VES151  1 e 1 @3980 ]
+[s S21 . 1 `uc 1 TRISD0 1 0 :1:0 
+`uc 1 TRISD1 1 0 :1:1 
+`uc 1 TRISD2 1 0 :1:2 
+`uc 1 TRISD3 1 0 :1:3 
+`uc 1 TRISD4 1 0 :1:4 
+`uc 1 TRISD5 1 0 :1:5 
+`uc 1 TRISD6 1 0 :1:6 
+`uc 1 TRISD7 1 0 :1:7 
+]
+"2272
+[u S39 . 1 `S21 1 . 1 0 `S30 1 . 1 0 ]
+[v _TRISDbits TRISDbits `VES39  1 e 1 @3989 ]
+[s S496 . 1 `uc 1 TUN 1 0 :5:0 
+`uc 1 . 1 0 :1:5 
+`uc 1 PLLEN 1 0 :1:6 
+`uc 1 INTSRC 1 0 :1:7 
+]
+"2644
+[s S501 . 1 `uc 1 TUN0 1 0 :1:0 
+`uc 1 TUN1 1 0 :1:1 
+`uc 1 TUN2 1 0 :1:2 
+`uc 1 TUN3 1 0 :1:3 
+`uc 1 TUN4 1 0 :1:4 
+]
+[u S507 . 1 `S496 1 . 1 0 `S501 1 . 1 0 ]
+[v _OSCTUNEbits OSCTUNEbits `VES507  1 e 1 @3995 ]
+[s S464 . 1 `uc 1 SCS 1 0 :2:0 
+`uc 1 IOFS 1 0 :1:2 
+`uc 1 OSTS 1 0 :1:3 
+`uc 1 IRCF 1 0 :3:4 
+`uc 1 IDLEN 1 0 :1:7 
+]
+"6226
+[s S470 . 1 `uc 1 SCS0 1 0 :1:0 
+`uc 1 SCS1 1 0 :1:1 
+`uc 1 FLTS 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 IRCF0 1 0 :1:4 
+`uc 1 IRCF1 1 0 :1:5 
+`uc 1 IRCF2 1 0 :1:6 
+]
+[u S478 . 1 `S464 1 . 1 0 `S470 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES478  1 e 1 @4051 ]
+[s S296 . 1 `uc 1 T0PS 1 0 :3:0 
+`uc 1 PSA 1 0 :1:3 
+`uc 1 T0SE 1 0 :1:4 
+`uc 1 T0CS 1 0 :1:5 
+`uc 1 T08BIT 1 0 :1:6 
+`uc 1 TMR0ON 1 0 :1:7 
+]
+"6308
+[s S303 . 1 `uc 1 T0PS0 1 0 :1:0 
+`uc 1 T0PS1 1 0 :1:1 
+`uc 1 T0PS2 1 0 :1:2 
+`uc 1 T0PS3 1 0 :1:3 
+`uc 1 . 1 0 :2:4 
+`uc 1 T016BIT 1 0 :1:6 
+]
+[u S310 . 1 `S296 1 . 1 0 `S303 1 . 1 0 ]
+[v _T0CONbits T0CONbits `VES310  1 e 1 @4053 ]
+"6367
+[v _TMR0 TMR0 `VEus  1 e 2 @4054 ]
+"6385
+[v _STATUS STATUS `VEuc  1 e 1 @4056 ]
+"6511
+[v _BSR BSR `VEuc  1 e 1 @4064 ]
+"6565
+[v _WREG WREG `VEuc  1 e 1 @4072 ]
+[s S328 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 NOT_RBPU 1 0 :1:7 
+]
+"6740
+[s S331 . 1 `uc 1 RBIP 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 TMR0IP 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 INTEDG2 1 0 :1:4 
+`uc 1 INTEDG1 1 0 :1:5 
+`uc 1 INTEDG0 1 0 :1:6 
+`uc 1 nRBPU 1 0 :1:7 
+]
+[s S340 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 RBPU 1 0 :1:7 
+]
+[u S343 . 1 `S328 1 . 1 0 `S331 1 . 1 0 `S340 1 . 1 0 ]
+[v _INTCON2bits INTCON2bits `VES343  1 e 1 @4081 ]
+[s S246 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE_GIEL 1 0 :1:6 
+`uc 1 GIE_GIEH 1 0 :1:7 
+]
+"6816
+[s S255 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 INT0F 1 0 :1:1 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 INT0E 1 0 :1:4 
+`uc 1 T0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+[s S264 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+[u S268 . 1 `S246 1 . 1 0 `S255 1 . 1 0 `S264 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES268  1 e 1 @4082 ]
+"6983
+[v _STKPTR STKPTR `VEuc  1 e 1 @4092 ]
+"7062
+[v _TOSL TOSL `VEuc  1 e 1 @4093 ]
+"7068
+[v _TOSH TOSH `VEuc  1 e 1 @4094 ]
+"7074
+[v _TOSU TOSU `VEuc  1 e 1 @4095 ]
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+"8 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[s S449 dispatcher_s 317 `[3]S442 1 tasks 312 0 `uc 1 size 1 312 `*.39S442 1 running 2 313 `*.37(*.39S442 1 callback 2 315 ]
+[v _dispatcher dispatcher `S449  1 e 317 0 ]
+"10
+[v _idle idle `S442  1 e 104 0 ]
+"14 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/interrutps.h
+[v __WREG _WREG `uc  1 e 1 0 ]
+"15
+[v __BSR _BSR `uc  1 e 1 0 ]
+"16
+[v __STATUS _STATUS `uc  1 e 1 0 ]
+"5 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/timers.c
+[v __timer0_delay_us _timer0_delay_us `ui  1 e 2 0 ]
+"6
+[v __timer0_callback _timer0_callback `*.37(v  1 e 2 0 ]
+"41 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"56
+} 0
+"5 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.c
+[v _task_create task_create `(v  1 e 1 0 ]
+{
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+"8
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v task_create@handle handle `*.39S442  1 a 2 14 ]
+"5
+[v task_create@id id `ui  1 p 2 0 ]
+[v task_create@priority priority `ui  1 p 2 2 ]
+[v task_create@callback callback `*.37(v  1 p 2 4 ]
+"22
+} 0
+"24
+[v _task_ready task_ready `(v  1 e 1 0 ]
+{
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v task_ready@handle handle `*.39S442  1 p 2 6 ]
+"26
+} 0
+"18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.h
+"21 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task_context.h
+"16
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+"39 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v _dispatcher_add_task dispatcher_add_task `(*.39S442  1 e 2 0 ]
+{
+"40
+[v dispatcher_add_task@task task `*.39S442  1 a 2 9 ]
+"43
+} 0
+"23 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/nojentOS.c
+[v _nojo_start nojo_start `(v  1 e 1 0 ]
+{
+"27
+} 0
+"35 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[v _dispatcher_start dispatcher_start `(v  1 e 1 0 ]
+{
+"37
+} 0
+"15 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/timers.c
+[v _timer0_init timer0_init `(v  1 e 1 0 ]
+{
+[v timer0_init@delay_us delay_us `ui  1 p 2 6 ]
+[v timer0_init@callback callback `*.37(v  1 p 2 8 ]
+"49
+} 0
+"8
+[v _timer0_reset timer0_reset `(v  1 e 1 0 ]
+{
+"13
+} 0
+"15 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/nojentOS.c
+[v _nojo_init nojo_init `(v  1 e 1 0 ]
+{
+"21
+} 0
+"18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[v _dispatcher_init dispatcher_init `(v  1 e 1 0 ]
+{
+"33
+} 0
+"14 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/main.c
+[v _task_1 task_1 `(v  1 s 1 task_1 ]
+{
+"19
+[v task_1@i i `ui  1 a 2 60 ]
+"21
+} 0
+"23
+[v _task_2 task_2 `(v  1 s 1 task_2 ]
+{
+"28
+[v task_2@i i `ui  1 a 2 1 ]
+"30
+} 0
+"32
+[v _task_3 task_3 `(v  1 s 1 task_3 ]
+{
+"37
+[v task_3@i i `ui  1 a 2 4 ]
+"39
+} 0
+"12 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[v _task_idle_callback task_idle_callback `(v  1 e 1 0 ]
+{
+"16
+} 0
+"21 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/interrutps.h
+[v _global_isr global_isr `II(v  1 e 1 0 ]
+{
+"54
+[v global_isr@i_581 i `uc  1 a 1 52 ]
+"37
+[v global_isr@i i `uc  1 a 1 45 ]
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+"48
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[v global_isr@n_context n_context `*.39S437  1 a 2 57 ]
+"52
+[v global_isr@n_stack n_stack `*.39S434  1 a 2 55 ]
+"46
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v global_isr@n_task n_task `*.39S442  1 a 2 48 ]
+"31
+[v global_isr@p_context p_context `*.39S437  1 a 2 53 ]
+"35
+[v global_isr@p_stack p_stack `*.39S434  1 a 2 50 ]
+"29
+[v global_isr@p_task p_task `*.39S442  1 a 2 46 ]
+"67
+} 0
+"51 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/timers.c
+[v _timer0_isr timer0_isr `(v  1 e 1 0 ]
+{
+"57
+} 0
+"8
+[v i2_timer0_reset timer0_reset `(v  1 e 1 0 ]
+{
+"13
+} 0
+"48 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c
+[v _dispatcher_change_context_isr dispatcher_change_context_isr `(v  1 e 1 0 ]
+{
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+"50
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v dispatcher_change_context_isr@next next `*.39S442  1 a 2 22 ]
+"57
+} 0
+"24 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.c
+[v i2_task_ready task_ready `(v  1 e 1 0 ]
+{
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v i2task_ready@handle handle `*.39S442  1 p 2 0 ]
+"26
+} 0
+"28
+[v _task_running task_running `(v  1 e 1 0 ]
+{
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v task_running@handle handle `*.39S442  1 p 2 0 ]
+"30
+} 0
+"18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.h
+"21 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task_context.h
+"16
+[s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
+"18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/scheduler.c
+[s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
+[s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
+[v _scheduler_round_robin scheduler_round_robin `(*.39S442  1 e 2 0 ]
+{
+"33
+[v scheduler_round_robin@j j `i  1 a 2 16 ]
+"30
+[v scheduler_round_robin@i_743 i `i  1 a 2 18 ]
+"20
+[v scheduler_round_robin@i i `i  1 a 2 20 ]
+"29
+[v scheduler_round_robin@next next `*.39S442  1 a 2 14 ]
+"19
+[v scheduler_round_robin@offset offset `i  1 a 2 12 ]
+"41
+} 0
+"15 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 4 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"53
+} 0
+"8 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+{
+"11
+[v ___awmod@sign sign `uc  1 a 1 5 ]
+[v ___awmod@counter counter `uc  1 a 1 4 ]
+"8
+[v ___awmod@dividend dividend `i  1 p 2 0 ]
+[v ___awmod@divisor divisor `i  1 p 2 2 ]
+"35
+} 0
