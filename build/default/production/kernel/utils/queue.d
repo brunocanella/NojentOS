@@ -1,0 +1,1 @@
+ build/default/production/kernel/utils/queue.d  build/default/production/kernel/utils/queue.p1:  kernel/utils/queue.c kernel/utils/../defines.h kernel/utils/../task_context.h kernel/utils/../task.h kernel/utils/../types.h kernel/utils/queue.h

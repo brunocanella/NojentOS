@@ -1,0 +1,1 @@
+ build/default/production/kernel/semaphore.d  build/default/production/kernel/semaphore.p1:  kernel/semaphore.c kernel/utils/../defines.h kernel/utils/../task_context.h kernel/utils/../task.h kernel/semaphore.h kernel/utils/../types.h kernel/utils/queue.h

@@ -1,0 +1,79 @@
+
+# 1 "kernel/utils/queue.c"
+
+# 11 "kernel/utils/../types.h"
+typedef unsigned char byte;
+
+typedef byte uint8_t;
+typedef unsigned int uint16_t;
+typedef unsigned short long uint24_t;
+typedef unsigned long uint32_t;
+
+typedef void (*function_ptr_t)(void);
+
+# 16 "kernel/utils/../task_context.h"
+typedef struct task_context_stack_s {
+uint24_t values[31];
+uint8_t size;
+} task_context_stack_t;
+
+typedef struct task_context_s {
+byte work;
+byte bsr;
+byte status;
+task_context_stack_t stack;
+} task_context_t;
+
+# 12 "kernel/utils/../task.h"
+typedef enum task_state_e {
+task_state_ready,
+task_state_running,
+task_state_blocked
+} task_state_t;
+
+typedef struct task_s {
+uint16_t id;
+uint16_t priority;
+task_state_t state;
+function_ptr_t callback;
+task_context_t context;
+} task_t;
+
+void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
+
+void task_ready( task_t* handle );
+
+void task_running( task_t* handle );
+
+# 15 "kernel/utils/queue.h"
+typedef struct queue_s {
+task_t* values[TASKS_MAX];
+uint8_t size;
+uint8_t first;
+} queue_t;
+
+void queue_create( queue_t* handle );
+void queue_add( queue_t* handle, task_t* ptr_task );
+task_t* queue_remove( queue_t* handle );
+
+# 8 "kernel/utils/queue.c"
+void queue_create( queue_t* handle ) {
+
+handle->size = 0;
+handle->first = 0;
+}
+
+void queue_add( queue_t* handle, task_t* ptr_task ) {
+uint8_t pos = ( handle->first + handle->size ) % TASKS_MAX;
+handle->values[pos] = ptr_task;
+handle->size++;
+}
+
+uint8_t queue_remove( queue_t* handle ) {
+task_t* removed = handle->values[handle->first];
+
+handle->first = (handle->first + 1) % TASKS_MAX;
+handle->size--;
+
+return removed;
+}
