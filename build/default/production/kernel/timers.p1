@@ -1,5 +1,5 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[v F7 `(v ~T0 @X0 0 tf ]
+[v F32 `(v ~T0 @X0 0 tf ]
 "6790 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
 [s S338 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S338 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
@@ -41,12 +41,41 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S333 . . . . ]
 "6740
 [v _INTCON2bits `VS333 ~T0 @X0 0 e@4081 ]
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;types.h: 11: typedef unsigned char byte;
 [; ;types.h: 13: typedef byte uint8_t;
 [; ;types.h: 14: typedef unsigned int uint16_t;
 [; ;types.h: 15: typedef unsigned short long uint24_t;
 [; ;types.h: 16: typedef unsigned long uint32_t;
-[; ;types.h: 18: typedef void (*function_ptr_t)(void);
+[; ;types.h: 18: typedef void* pointer_t;
+[; ;types.h: 20: typedef void (*function_ptr_t)(void);
 [; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
 [; ;timers.h: 13: void timer0_isr();
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
@@ -3021,9 +3050,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;timers.c: 5: uint16_t _timer0_delay_us = 0;
 "6
-[v __timer0_callback `*F7 ~T0 @X0 1 e ]
+[v __timer0_callback `*F32 ~T0 @X0 1 e ]
 [i __timer0_callback
--> -> -> 0 `i `*v `*F7
+-> -> -> 0 `i `*v `*F32
 ]
 [; ;timers.c: 6: function_ptr_t _timer0_callback = ((void*)0);
 "8
@@ -3043,12 +3072,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 344 ]
 }
 "15
-[v _timer0_init `(v ~T0 @X0 1 ef2`ui`*F7 ]
+[v _timer0_init `(v ~T0 @X0 1 ef2`ui`*F32 ]
 {
 [; ;timers.c: 15: void timer0_init( uint16_t delay_us, function_ptr_t callback ) {
 [e :U _timer0_init ]
 [v _delay_us `ui ~T0 @X0 1 r1 ]
-[v _callback `*F7 ~T0 @X0 1 r2 ]
+[v _callback `*F32 ~T0 @X0 1 r2 ]
 [f ]
 [; ;timers.c: 17: T0CONbits.TMR0ON = 0;
 "17
@@ -3107,7 +3136,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _timer0_reset ..  ]
 [; ;timers.c: 54: if( _timer0_callback ) {
 "54
-[e $ ! != __timer0_callback -> -> 0 `i `*F7 347  ]
+[e $ ! != __timer0_callback -> -> 0 `i `*F32 347  ]
 {
 [; ;timers.c: 55: _timer0_callback();
 "55

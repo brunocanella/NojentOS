@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[v F7 `(v ~T0 @X0 0 tf ]
+[v F32 `(v ~T0 @X0 0 tf ]
 "8 kernel/task.c
-[c E19 0 1 2 .. ]
-[n E19 task_state_e task_state_ready task_state_running task_state_blocked  ]
+[c E44 0 1 2 .. ]
+[n E44 task_state_e task_state_ready task_state_running task_state_blocked  ]
 "16 kernel/task_context.h
 [s S1 `um -> 31 `i `uc 1 ]
 [n S1 task_context_stack_s values size ]
@@ -10,7 +10,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [s S2 `uc 1 `uc 1 `uc 1 `S1 1 ]
 [n S2 task_context_s work bsr status stack ]
 "18 kernel/task.h
-[s S3 `ui 1 `ui 1 `E19 1 `*F7 1 `S2 1 ]
+[s S3 `ui 1 `ui 1 `E44 1 `*F32 1 `S2 1 ]
 [n S3 task_s id priority state callback context ]
 "28 kernel/dispatcher.h
 [v _dispatcher_add_task `(*S3 ~T0 @X0 0 ef ]
@@ -22,12 +22,41 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _STATUS `Vuc ~T0 @X0 0 e@4056 ]
 "28 kernel/task.h
 [v _task_ready `(v ~T0 @X0 0 ef1`*S3 ]
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;types.h: 11: typedef unsigned char byte;
 [; ;types.h: 13: typedef byte uint8_t;
 [; ;types.h: 14: typedef unsigned int uint16_t;
 [; ;types.h: 15: typedef unsigned short long uint24_t;
 [; ;types.h: 16: typedef unsigned long uint32_t;
-[; ;types.h: 18: typedef void (*function_ptr_t)(void);
+[; ;types.h: 18: typedef void* pointer_t;
+[; ;types.h: 20: typedef void (*function_ptr_t)(void);
 [; ;task_context.h: 16: typedef struct task_context_stack_s {
 [; ;task_context.h: 17: uint24_t values[31];
 [; ;task_context.h: 18: uint8_t size;
@@ -3033,13 +3062,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 32: extern dispatcher_t dispatcher;
 [; ;dispatcher.h: 34: extern task_t idle;
 "5 kernel/task.c
-[v _task_create `(v ~T0 @X0 1 ef3`ui`ui`*F7 ]
+[v _task_create `(v ~T0 @X0 1 ef3`ui`ui`*F32 ]
 {
 [; ;task.c: 5: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback ) {
 [e :U _task_create ]
 [v _id `ui ~T0 @X0 1 r1 ]
 [v _priority `ui ~T0 @X0 1 r2 ]
-[v _callback `*F7 ~T0 @X0 1 r3 ]
+[v _callback `*F32 ~T0 @X0 1 r3 ]
 [f ]
 "8
 [v _handle `*S3 ~T0 @X0 1 a ]
@@ -3085,7 +3114,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;task.c: 25: handle->state = task_state_ready;
 "25
-[e = . *U _handle 2 . `E19 0 ]
+[e = . *U _handle 2 . `E44 0 ]
 [; ;task.c: 26: }
 "26
 [e :UE 349 ]
@@ -3099,7 +3128,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;task.c: 29: handle->state = task_state_running;
 "29
-[e = . *U _handle 2 . `E19 1 ]
+[e = . *U _handle 2 . `E44 1 ]
 [; ;task.c: 30: }
 "30
 [e :UE 350 ]

@@ -1,15 +1,13 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "4 kernel/memory.c
 [s S2 `ui 1 `*S2 1 `uc 1 ]
-[n S2 block_s size next free ]
+[n S2 block_s size next free_block ]
 "20
 [v __find_free_block `(*S2 ~T0 @X0 0 ef1`ui ]
 "21
 [v __split_free_block `(v ~T0 @X0 0 ef2`*S2`ui ]
 "22
 [v __merge_free_blocks `(v ~T0 @X0 0 ef ]
-"195 /home/bruno/Programs/microchip/xc8/v1.37/include/stdio.h
-[v _printf `(i ~T0 @X0 0 ev`*Cuc ]
 [; ;__size_t.h: 4: typedef unsigned size_t;
 [; ;stdarg.h: 7: typedef void * va_list[1];
 [; ;stdarg.h: 10: extern void * __va_start(void);
@@ -40,18 +38,51 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;memory.h: 6: typedef unsigned char byte;
-[; ;memory.h: 14: extern byte _heap[512];
-[; ;memory.h: 16: void* malloc( size_t size );
-[; ;memory.h: 18: typedef struct block_s block_t;
-[; ;memory.h: 21: void print_blocks();
-[; ;memory.h: 22: void print_heap();
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
+[; ;types.h: 11: typedef unsigned char byte;
+[; ;types.h: 13: typedef byte uint8_t;
+[; ;types.h: 14: typedef unsigned int uint16_t;
+[; ;types.h: 15: typedef unsigned short long uint24_t;
+[; ;types.h: 16: typedef unsigned long uint32_t;
+[; ;types.h: 18: typedef void* pointer_t;
+[; ;types.h: 20: typedef void (*function_ptr_t)(void);
+[; ;memory.h: 10: extern byte _heap[512];
+[; ;memory.h: 13: void* malloc( size_t size );
+[; ;memory.h: 15: void free( void* a_pointer );
+[; ;memory.h: 17: typedef struct block_s block_t;
 "3 kernel/memory.c
 [p p 1 ]
 [; ;memory.c: 4: struct block_s {
 [; ;memory.c: 5: size_t size;
 [; ;memory.c: 6: block_t* next;
-[; ;memory.c: 7: byte free;
+[; ;memory.c: 7: byte free_block;
 [; ;memory.c: 8: };
 "13
 [v _s_heap `uc ~T0 @X0 -> 512 `i e ]
@@ -126,7 +157,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;memory.c: 44: l_block = l_free;
 "44
 [e = _l_block _l_free ]
-[; ;memory.c: 45: l_block->free = 0;
+[; ;memory.c: 45: l_block->free_block = 0;
 "45
 [e = . *U _l_block 2 -> -> 0 `i `uc ]
 [; ;memory.c: 46: return l_block + 1;
@@ -194,7 +225,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;memory.c: 66: l_block->size = a_size;
 "66
 [e = . *U _l_block 0 _a_size ]
-[; ;memory.c: 67: l_block->free = 0;
+[; ;memory.c: 67: l_block->free_block = 0;
 "67
 [e = . *U _l_block 2 -> -> 0 `i `uc ]
 [; ;memory.c: 68: l_block->next = (0);
@@ -230,7 +261,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;memory.c: 77: }
 [; ;memory.c: 79: block_t* l_block = ((block_t*) a_pointer ) - 1;
 [e = _l_block - -> _a_pointer `*S2 * -> -> 1 `i `x -> -> # *U -> _a_pointer `*S2 `i `x ]
-[; ;memory.c: 82: l_block->free = 1;
+[; ;memory.c: 82: l_block->free_block = 1;
 "82
 [e = . *U _l_block 2 -> -> 1 `i `uc ]
 [; ;memory.c: 84: _merge_free_blocks();
@@ -251,7 +282,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _l_current `*S2 ~T0 @X0 1 a ]
 [; ;memory.c: 94: block_t* l_current = s_blocks;
 [e = _l_current _s_blocks ]
-[; ;memory.c: 96: while( l_current && ( l_current->free == 0 || l_current->size < a_size ) ) {
+[; ;memory.c: 96: while( l_current && ( l_current->free_block == 0 || l_current->size < a_size ) ) {
 "96
 [e $U 17  ]
 [e :U 18 ]
@@ -289,7 +320,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;memory.c: 108: l_new->size = a_block->size - ( a_resize + sizeof(block_t) );
 "108
 [e = . *U _l_new 0 - . *U _a_block 0 + _a_resize -> # `S2 `ui ]
-[; ;memory.c: 110: l_new->free = 1;
+[; ;memory.c: 110: l_new->free_block = 1;
 "110
 [e = . *U _l_new 2 -> -> 1 `i `uc ]
 [; ;memory.c: 113: l_new->next = a_block->next;
@@ -324,7 +355,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _l_next `*S2 ~T0 @X0 1 a ]
 [; ;memory.c: 128: block_t* l_next = l_curr->next;
 [e = _l_next . *U _l_curr 1 ]
-[; ;memory.c: 130: if( l_curr && l_curr->free && l_next && l_next->free ) {
+[; ;memory.c: 130: if( l_curr && l_curr->free_block && l_next && l_next->free_block ) {
 "130
 [e $ ! && && && != _l_curr -> -> 0 `i `*S2 != -> . *U _l_curr 2 `i -> -> -> 0 `i `uc `i != _l_next -> -> 0 `i `*S2 != -> . *U _l_next 2 `i -> -> -> 0 `i `uc `i 25  ]
 {
@@ -358,74 +389,3 @@ Version 3.2 HI-TECH Software Intermediate Code
 "142
 [e :UE 21 ]
 }
-"144
-[v _print_blocks `(v ~T0 @X0 1 ef ]
-{
-[; ;memory.c: 144: void print_blocks() {
-[e :U _print_blocks ]
-[f ]
-"145
-[v _l_block `*S2 ~T0 @X0 1 a ]
-[; ;memory.c: 145: block_t* l_block = s_blocks;
-[e = _l_block _s_blocks ]
-[; ;memory.c: 146: while( l_block ) {
-"146
-[e $U 28  ]
-[e :U 29 ]
-{
-[; ;memory.c: 147: printf( "Bloco: %X\nsize = %d\nnext = %X\nfree = %d\n\n", l_block, l_block->size, l_block->next, l_block->free );
-"147
-[e ( _printf , , , , (. :s 1C _l_block . *U _l_block 0 . *U _l_block 1 -> . *U _l_block 2 `i ]
-[; ;memory.c: 148: l_block = l_block->next;
-"148
-[e = _l_block . *U _l_block 1 ]
-"149
-}
-[e :U 28 ]
-"146
-[e $ != _l_block -> -> 0 `i `*S2 29  ]
-[e :U 30 ]
-[; ;memory.c: 149: }
-[; ;memory.c: 150: }
-"150
-[e :UE 27 ]
-}
-"152
-[v _print_heap `(v ~T0 @X0 1 ef ]
-{
-[; ;memory.c: 152: void print_heap() {
-[e :U _print_heap ]
-[f ]
-[; ;memory.c: 153: for( unsigned int i = 0; i < 512; i += 16 ) {
-"153
-{
-[v _i `ui ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `ui ]
-[e $ < _i -> -> 512 `i `ui 32  ]
-[e $U 33  ]
-[e :U 32 ]
-{
-[; ;memory.c: 154: printf( "%2X %2X %2X %2X %2X %2X %2X %2X, %2X %2X %2X %2X %2X %2X %2X %2X\n",
-[; ;memory.c: 155: s_heap[i+0], s_heap[i+1], s_heap[i+2], s_heap[i+3],
-[; ;memory.c: 156: s_heap[i+4], s_heap[i+5], s_heap[i+6], s_heap[i+7],
-[; ;memory.c: 157: s_heap[i+8], s_heap[i+9], s_heap[i+10], s_heap[i+11],
-[; ;memory.c: 158: s_heap[i+12], s_heap[i+13], s_heap[i+14], s_heap[i+15]
-[; ;memory.c: 159: );
-"159
-[e ( _printf , , , , , , , , , , , , , , , , (. :s 2C -> *U + &U _s_heap * -> + _i -> -> 0 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 1 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 2 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 3 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 4 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 5 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 6 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 7 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 8 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 9 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 10 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 11 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 12 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 13 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 14 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i -> *U + &U _s_heap * -> + _i -> -> 15 `i `ui `ux -> -> # *U &U _s_heap `ui `ux `i ]
-"160
-}
-"153
-[e =+ _i -> -> 16 `i `ui ]
-[e $ < _i -> -> 512 `i `ui 32  ]
-[e :U 33 ]
-"160
-}
-[; ;memory.c: 160: }
-[; ;memory.c: 161: }
-"161
-[e :UE 31 ]
-}
-[p f _printf 10518656 ]
-[a 2C 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 44 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 32 37 50 88 10 0 ]
-[a 1C 66 108 111 99 111 58 32 37 88 10 115 105 122 101 32 61 32 37 100 10 110 101 120 116 32 61 32 37 88 10 102 114 101 101 32 61 32 37 100 10 10 0 ]

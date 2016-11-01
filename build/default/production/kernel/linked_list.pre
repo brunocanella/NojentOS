@@ -1,0 +1,338 @@
+
+# 1 "kernel/linked_list.c"
+
+# 13 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdint.h"
+typedef signed char int8_t;
+
+# 20
+typedef signed int int16_t;
+
+# 28
+typedef signed short long int int24_t;
+
+# 36
+typedef signed long int int32_t;
+
+# 43
+typedef unsigned char uint8_t;
+
+# 49
+typedef unsigned int uint16_t;
+
+# 56
+typedef unsigned short long int uint24_t;
+
+# 63
+typedef unsigned long int uint32_t;
+
+# 71
+typedef signed char int_least8_t;
+
+# 78
+typedef signed int int_least16_t;
+
+# 90
+typedef signed short long int int_least24_t;
+
+# 98
+typedef signed long int int_least32_t;
+
+# 105
+typedef unsigned char uint_least8_t;
+
+# 111
+typedef unsigned int uint_least16_t;
+
+# 121
+typedef unsigned short long int uint_least24_t;
+
+# 128
+typedef unsigned long int uint_least32_t;
+
+# 137
+typedef signed char int_fast8_t;
+
+# 144
+typedef signed int int_fast16_t;
+
+# 156
+typedef signed short long int int_fast24_t;
+
+# 164
+typedef signed long int int_fast32_t;
+
+# 171
+typedef unsigned char uint_fast8_t;
+
+# 177
+typedef unsigned int uint_fast16_t;
+
+# 187
+typedef unsigned short long int uint_fast24_t;
+
+# 194
+typedef unsigned long int uint_fast32_t;
+
+# 200
+typedef int32_t intmax_t;
+
+
+
+
+typedef uint32_t uintmax_t;
+
+
+
+
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+
+# 11 "kernel/types.h"
+typedef unsigned char byte;
+
+typedef byte uint8_t;
+typedef unsigned int uint16_t;
+typedef unsigned short long uint24_t;
+typedef unsigned long uint32_t;
+
+typedef void* pointer_t;
+
+typedef void (*function_ptr_t)(void);
+
+# 6 "kernel/linked_list.h"
+struct linked_list_s;
+
+typedef struct linked_list_s linked_list_t;
+
+#pragma pack(1)
+struct linked_list_s {
+linked_list_t* next;
+pointer_t data;
+};
+
+#pragma pack(1)
+typedef struct linked_list_head_data_s {
+uint8_t size;
+linked_list_t* last;
+} linked_list_head_data_t;
+
+int8_t linked_list_create( linked_list_t** a_head );
+
+int8_t linked_list_insert( linked_list_t* a_head, pointer_t a_data );
+
+
+
+int8_t linked_list_remove_last( linked_list_t* a_head );
+
+int8_t linked_list_remove_first( linked_list_t* a_head );
+
+int8_t linked_list_remove_all( linked_list_t* a_head );
+
+pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index );
+
+pointer_t linked_list_get_last( linked_list_t* a_head );
+
+pointer_t linked_list_get_first( linked_list_t* a_head );
+
+# 4 "/home/bruno/Programs/microchip/xc8/v1.37/include/__size_t.h"
+typedef unsigned size_t;
+
+# 7 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 29 "/home/bruno/Programs/microchip/xc8/v1.37/include/errno.h"
+extern int errno;
+
+# 12 "/home/bruno/Programs/microchip/xc8/v1.37/include/conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 10 "kernel/memory.h"
+extern byte _heap[512];
+
+
+void* malloc( size_t size );
+
+void free( void* a_pointer );
+
+typedef struct block_s block_t;
+
+# 10 "kernel/linked_list.c"
+int8_t linked_list_create( linked_list_t** a_head ) {
+(*a_head) = (linked_list_t*) malloc( sizeof( linked_list_t ) );
+
+linked_list_head_data_t* l_head_data = (linked_list_head_data_t*) malloc( sizeof(linked_list_head_data_t) );
+
+l_head_data->size = 0;
+l_head_data->last = ((void*)0);
+
+(*a_head)->data = l_head_data;
+(*a_head)->next = ((void*)0);
+
+if( (*a_head) == ((void*)0) || l_head_data == ((void*)0)) {
+return -1;
+} else {
+return 0;
+}
+}
+
+int8_t linked_list_insert( linked_list_t* a_head, pointer_t a_data ) {
+linked_list_t* l_node = (linked_list_t*) malloc( sizeof(linked_list_t) );
+
+if( l_node == ((void*)0) ) {
+return -1;
+}
+
+l_node->next = ((void*)0);
+l_node->data = a_data;
+
+linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+
+if( a_head->next == ((void*)0) ) {
+a_head->next = l_node;
+l_head_data->last = l_node;
+} else {
+l_head_data->last->next = l_node;
+l_head_data->last = l_node;
+}
+
+l_head_data->size++;
+
+return 0;
+}
+
+# 82
+int8_t linked_list_remove_last( linked_list_t* a_head ) {
+linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+
+if( l_head_data->size == 0 ) {
+return -2;
+} else if( l_head_data->size == 1 ) {
+free(a_head->next);
+a_head->next = ((void*)0);
+l_head_data->size--;
+l_head_data->last = ((void*)0);
+} else {
+linked_list_t* l_iter_prev = a_head->next;
+linked_list_t* l_iter_curr = a_head->next->next;
+
+while( l_iter_curr->next != ((void*)0) ) {
+l_iter_prev = l_iter_curr;
+l_iter_curr = l_iter_curr->next;
+}
+free(l_iter_curr);
+l_iter_prev->next = ((void*)0);
+l_head_data->size--;
+l_head_data->last = l_iter_prev;
+}
+return 0;
+}
+
+int8_t linked_list_remove_first( linked_list_t* a_head ){
+linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+
+if( l_head_data->size == 0 ) {
+return -2;
+} else if( l_head_data->size == 1 ) {
+free(a_head->next);
+a_head->next = ((void*)0);
+l_head_data->size--;
+l_head_data->last = ((void*)0);
+} else {
+linked_list_t* l_iter_delet = a_head->next;
+linked_list_t* l_iter_new_first = a_head->next->next;
+a_head->next = l_iter_new_first;
+l_head_data->size--;
+free(l_iter_delet);
+}
+return 0;
+}
+
+int8_t linked_list_remove_all( linked_list_t* a_head ) {
+int8_t return_result = 0;
+while (return_result == 0)
+{
+return_result = linked_list_remove_last(a_head);
+}
+return return_result;
+}
+
+pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index ){
+linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+if (a_index >= l_head_data->size)
+return ((void*)0);
+
+uint16_t iterator_num = 0;
+linked_list_t* iterator_ptr = a_head->next;
+
+while(iterator_num < a_index){
+iterator_num++;
+iterator_ptr = iterator_ptr->next;
+}
+
+return iterator_ptr->data;
+}
+
+pointer_t linked_list_get_last( linked_list_t* a_head ){
+linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+return l_head_data->last->data;
+}
+
+pointer_t linked_list_get_first( linked_list_t* a_head ){
+return a_head->next->data;
+}
+

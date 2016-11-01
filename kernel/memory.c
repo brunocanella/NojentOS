@@ -4,7 +4,7 @@
 struct block_s {
 	size_t size;
 	block_t* next;
-	byte free;
+	byte free_block;
 };
 
 #define BLOCK_SIZE sizeof(block_t)
@@ -42,7 +42,7 @@ void* malloc( size_t a_size ) {
 			}
 			// Por fim, marca o bloco como ocupado e retorna ele.
 			l_block = l_free;
-			l_block->free = 0;
+			l_block->free_block = 0;
 			return l_block + 1;
 		} else {
 			// Não existe um bloco vago disponivel, logo, vai ter que criar um.
@@ -64,7 +64,7 @@ void* malloc( size_t a_size ) {
 	}
 	
 	l_block->size = a_size;
-	l_block->free = 0;
+	l_block->free_block = 0;
 	l_block->next = NULL;
 	
 	return l_block + 1;
@@ -79,7 +79,7 @@ void free( void* a_pointer ) {
 	block_t* l_block = ((block_t*) a_pointer ) - 1;
 	// TODO: fazer uma exceção, caso o valor de free seja LIVRE nesse ponto.
 	// assert(block_ptr->free == 0);
-	l_block->free = 1;
+	l_block->free_block = 1;
 	// Agora, tenta fundir quaisquer blocos que estejam livres e adjacentes.
 	_merge_free_blocks();
 }
@@ -93,7 +93,7 @@ void free( void* a_pointer ) {
 block_t* _find_free_block( size_t a_size ) {
 	block_t* l_current = s_blocks;
 	// Procura pelo primeiro bloco que estiver disponivel. Tem que estar livre e possuir tamanho suficiente, senão vai pro próximo
-	while( l_current && ( l_current->free == 0 || l_current->size < a_size ) ) {
+	while( l_current && ( l_current->free_block == 0 || l_current->size < a_size ) ) {
 		// Atual não entrou nessas condições. Procura o próximo.
 		l_current = l_current->next;
 	}
@@ -107,7 +107,7 @@ void _split_free_block( block_t* a_block, size_t a_resize ) {
 	// O tamanho deste novo bloco será o que sobrou de tamanho após o resize, deduzido também do tamanho do novo bloco
 	l_new->size = a_block->size - ( a_resize + BLOCK_SIZE );					// 76 - (20 + 24) = 22
 	// Não pode esquecer de MARCAR ele como um bloco que está livre.
-	l_new->free = 1;
+	l_new->free_block = 1;
 	// Finalmente, coloca no "meio" este bloco novo criado.
 	// Para isso, primeiro aponta pro next do bloco anterior.
 	l_new->next = a_block->next;
@@ -127,7 +127,7 @@ void _merge_free_blocks() {
 		// Recupera o proximo cursor, para ver se ele pode mesclar com o atual
 		block_t* l_next = l_curr->next;
 		// Se tanto o atual como o proximo estiverem marcados como free, mescla eles.
-		if( l_curr && l_curr->free && l_next && l_next->free ) {
+		if( l_curr && l_curr->free_block && l_next && l_next->free_block ) {
 			// O novo tamanho, é o tamanho de bloco + o espaço alocado pelo bloco sendo "engolido".
 			l_curr->size += BLOCK_SIZE + l_next->size;
 			// Por fim, se livra da referencia para o bloco sendo removido
@@ -141,6 +141,7 @@ void _merge_free_blocks() {
 	}
 }
 
+#ifdef DEBUG_LINUX
 void print_blocks() {
 	block_t* l_block = s_blocks;
 	while( l_block ) {
@@ -159,3 +160,4 @@ void print_heap() {
 		);
 	}
 }
+#endif//DEBUG_LINUX

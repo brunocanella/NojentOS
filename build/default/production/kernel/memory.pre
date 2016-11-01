@@ -64,19 +64,117 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-# 6 "kernel/memory.h"
+# 13 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdint.h"
+typedef signed char int8_t;
+
+# 20
+typedef signed int int16_t;
+
+# 28
+typedef signed short long int int24_t;
+
+# 36
+typedef signed long int int32_t;
+
+# 43
+typedef unsigned char uint8_t;
+
+# 49
+typedef unsigned int uint16_t;
+
+# 56
+typedef unsigned short long int uint24_t;
+
+# 63
+typedef unsigned long int uint32_t;
+
+# 71
+typedef signed char int_least8_t;
+
+# 78
+typedef signed int int_least16_t;
+
+# 90
+typedef signed short long int int_least24_t;
+
+# 98
+typedef signed long int int_least32_t;
+
+# 105
+typedef unsigned char uint_least8_t;
+
+# 111
+typedef unsigned int uint_least16_t;
+
+# 121
+typedef unsigned short long int uint_least24_t;
+
+# 128
+typedef unsigned long int uint_least32_t;
+
+# 137
+typedef signed char int_fast8_t;
+
+# 144
+typedef signed int int_fast16_t;
+
+# 156
+typedef signed short long int int_fast24_t;
+
+# 164
+typedef signed long int int_fast32_t;
+
+# 171
+typedef unsigned char uint_fast8_t;
+
+# 177
+typedef unsigned int uint_fast16_t;
+
+# 187
+typedef unsigned short long int uint_fast24_t;
+
+# 194
+typedef unsigned long int uint_fast32_t;
+
+# 200
+typedef int32_t intmax_t;
+
+
+
+
+typedef uint32_t uintmax_t;
+
+
+
+
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+
+# 11 "kernel/types.h"
 typedef unsigned char byte;
 
-# 14
+typedef byte uint8_t;
+typedef unsigned int uint16_t;
+typedef unsigned short long uint24_t;
+typedef unsigned long uint32_t;
+
+typedef void* pointer_t;
+
+typedef void (*function_ptr_t)(void);
+
+# 10 "kernel/memory.h"
 extern byte _heap[512];
+
 
 void* malloc( size_t size );
 
+void free( void* a_pointer );
+
 typedef struct block_s block_t;
-
-
-void print_blocks();
-void print_heap();
 
 
 # 3 "kernel/memory.c"
@@ -84,7 +182,7 @@ void print_heap();
 struct block_s {
 size_t size;
 block_t* next;
-byte free;
+byte free_block;
 };
 
 
@@ -122,7 +220,7 @@ _split_free_block( l_free, a_size );
 }
 
 l_block = l_free;
-l_block->free = 0;
+l_block->free_block = 0;
 return l_block + 1;
 } else {
 
@@ -144,7 +242,7 @@ l_previous->next = l_block;
 }
 
 l_block->size = a_size;
-l_block->free = 0;
+l_block->free_block = 0;
 l_block->next = (0);
 
 return l_block + 1;
@@ -159,7 +257,7 @@ return;
 block_t* l_block = ((block_t*) a_pointer ) - 1;
 
 
-l_block->free = 1;
+l_block->free_block = 1;
 
 _merge_free_blocks();
 }
@@ -168,7 +266,7 @@ _merge_free_blocks();
 block_t* _find_free_block( size_t a_size ) {
 block_t* l_current = s_blocks;
 
-while( l_current && ( l_current->free == 0 || l_current->size < a_size ) ) {
+while( l_current && ( l_current->free_block == 0 || l_current->size < a_size ) ) {
 
 l_current = l_current->next;
 }
@@ -182,7 +280,7 @@ block_t* l_new = (block_t*)(((char*)a_block) + sizeof(block_t) + a_resize);
 
 l_new->size = a_block->size - ( a_resize + sizeof(block_t) );
 
-l_new->free = 1;
+l_new->free_block = 1;
 
 
 l_new->next = a_block->next;
@@ -202,7 +300,7 @@ while( l_curr ) {
 
 block_t* l_next = l_curr->next;
 
-if( l_curr && l_curr->free && l_next && l_next->free ) {
+if( l_curr && l_curr->free_block && l_next && l_next->free_block ) {
 
 l_curr->size += sizeof(block_t) + l_next->size;
 
@@ -216,21 +314,3 @@ l_curr = l_curr->next;
 }
 }
 
-void print_blocks() {
-block_t* l_block = s_blocks;
-while( l_block ) {
-printf( "Bloco: %X\nsize = %d\nnext = %X\nfree = %d\n\n", l_block, l_block->size, l_block->next, l_block->free );
-l_block = l_block->next;
-}
-}
-
-void print_heap() {
-for( unsigned int i = 0; i < 512; i += 16 ) {
-printf( "%2X %2X %2X %2X %2X %2X %2X %2X, %2X %2X %2X %2X %2X %2X %2X %2X\n",
-s_heap[i+0], s_heap[i+1], s_heap[i+2], s_heap[i+3],
-s_heap[i+4], s_heap[i+5], s_heap[i+6], s_heap[i+7],
-s_heap[i+8], s_heap[i+9], s_heap[i+10], s_heap[i+11],
-s_heap[i+12], s_heap[i+13], s_heap[i+14], s_heap[i+15]
-);
-}
-}

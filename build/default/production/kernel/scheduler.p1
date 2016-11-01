@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "18 kernel/scheduler.c
-[c E19 0 1 2 .. ]
-[n E19 task_state_e task_state_ready task_state_running task_state_blocked  ]
-[v F7 `(v ~T0 @X0 0 tf ]
+[c E44 0 1 2 .. ]
+[n E44 task_state_e task_state_ready task_state_running task_state_blocked  ]
+[v F32 `(v ~T0 @X0 0 tf ]
 "16 kernel/task_context.h
 [s S1 `um -> 31 `i `uc 1 ]
 [n S1 task_context_stack_s values size ]
@@ -10,22 +10,51 @@ Version 3.2 HI-TECH Software Intermediate Code
 [s S2 `uc 1 `uc 1 `uc 1 `S1 1 ]
 [n S2 task_context_s work bsr status stack ]
 "18 kernel/task.h
-[s S3 `ui 1 `ui 1 `E19 1 `*F7 1 `S2 1 ]
+[s S3 `ui 1 `ui 1 `E44 1 `*F32 1 `S2 1 ]
 [n S3 task_s id priority state callback context ]
-[v F40 `(*S3 ~T0 @X0 0 tf ]
+[v F65 `(*S3 ~T0 @X0 0 tf ]
 "17 kernel/dispatcher.h
-[s S347 `S3 -> 3 `i `uc 1 `*S3 1 `*F40 1 ]
+[s S347 `S3 -> 3 `i `uc 1 `*S3 1 `*F65 1 ]
 [n S347 dispatcher_s tasks size running callback ]
 "32
 [v _dispatcher `S347 ~T0 @X0 0 e ]
 "34
 [v _idle `S3 ~T0 @X0 0 e ]
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;types.h: 11: typedef unsigned char byte;
 [; ;types.h: 13: typedef byte uint8_t;
 [; ;types.h: 14: typedef unsigned int uint16_t;
 [; ;types.h: 15: typedef unsigned short long uint24_t;
 [; ;types.h: 16: typedef unsigned long uint32_t;
-[; ;types.h: 18: typedef void (*function_ptr_t)(void);
+[; ;types.h: 18: typedef void* pointer_t;
+[; ;types.h: 20: typedef void (*function_ptr_t)(void);
 [; ;task_context.h: 16: typedef struct task_context_stack_s {
 [; ;task_context.h: 17: uint24_t values[31];
 [; ;task_context.h: 18: uint8_t size;
@@ -3091,7 +3120,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _j % + + _offset -> 1 `i _i -> 3 `i ]
 [; ;scheduler.c: 34: if( dispatcher.tasks[j].state == task_state_ready ) {
 "34
-[e $ ! == -> . *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E19 0 `i 356  ]
+[e $ ! == -> . *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E44 0 `i 356  ]
 {
 [; ;scheduler.c: 35: next = &dispatcher.tasks[j];
 "35

@@ -6,6 +6,8 @@
 #ifndef DEFINES_H
 #define	DEFINES_H
 
+#include <stdint.h>
+
 #ifndef NULL
 #define NULL ((void*)0)
 #endif//NULL
@@ -30,6 +32,16 @@
 
 // Valores para o oscilador
 #define OSC_INTOSC_8MHZ 0b111                                                   // Oscilador Interno de 8MHz
+
+/**Deu boa*/
+#define ERROR_NONE 0
+/**Faltou espaço na memória. Ferrou.*/
+#define ERROR_MALLOC_NULL -1
+/**Tentou remover com a lista vazia*/
+#define ERROR_LIST_REMOVE_EMPTY -2
+ /**Tentou remover item foram do tamanho da lista*/
+ #define ERROR_LIST_OUT_OF_RANGE -3
+ 
 
 #endif	/* DEFINES_H */
 
