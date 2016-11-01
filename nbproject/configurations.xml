@@ -14,8 +14,6 @@
       <itemPath>kernel/scheduler.h</itemPath>
       <itemPath>kernel/task.h</itemPath>
       <itemPath>kernel/task_context.h</itemPath>
-      <itemPath>kernel/semaphore.h</itemPath>
-      <itemPath>kernel/utils/queue.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -30,8 +28,6 @@
       <itemPath>kernel/dispatcher.c</itemPath>
       <itemPath>kernel/scheduler.c</itemPath>
       <itemPath>kernel/task.c</itemPath>
-      <itemPath>kernel/semaphore.c</itemPath>
-      <itemPath>kernel/utils/queue.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
