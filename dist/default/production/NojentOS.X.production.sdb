@@ -29,6 +29,8 @@ task_state_blocked 2
 ]
 "8 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
+"464 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/doprnt.c
+[v _printf printf `(i  1 e 2 0 ]
 "62 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/float.c
 [v ___ftpack __ftpack `(f  1 e 3 0 ]
 "86 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/ftadd.c
@@ -39,6 +41,14 @@ task_state_blocked 2
 [v ___ftmul __ftmul `(f  1 e 3 0 ]
 "20 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/ftsub.c
 [v ___ftsub __ftsub `(f  1 e 3 0 ]
+"8 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/isdigit.c
+[v _isdigit isdigit `(b  1 e 0 0 ]
+"8 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+"8 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/lwmod.c
+[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+"7 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/putch.c
+[v _putch putch `(v  1 e 1 0 ]
 "10 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/sprcadd.c
 [v ___fladd __fladd `(d  1 e 3 0 ]
 "245
@@ -69,6 +79,14 @@ task_state_blocked 2
 [v _dispatcher_change_context_isr dispatcher_change_context_isr `(v  1 e 1 0 ]
 "21 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/interrutps.h
 [v _global_isr global_isr `II(v  1 e 1 0 ]
+"4 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/memory.c
+"93
+[s S833 block_s 5 `ui 1 size 2 0 `*.39S833 1 next 2 2 `uc 1 free 1 4 ]
+[v __find_free_block _find_free_block `(*.39S833  1 e 2 0 ]
+"104
+[v __split_free_block _split_free_block `(v  1 e 1 0 ]
+"120
+[v __merge_free_blocks _merge_free_blocks `(v  1 e 1 0 ]
 "18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.h
 "21 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task_context.h
 "16
@@ -300,6 +318,11 @@ task_state_blocked 2
 [v __BSR _BSR `uc  1 e 1 0 ]
 "16
 [v __STATUS _STATUS `uc  1 e 1 0 ]
+"13 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/memory.c
+[v _s_heap s_heap `[512]uc  1 e 512 0 ]
+"15
+[s S833 block_s 5 `ui 1 size 2 0 `*.39S833 1 next 2 2 `uc 1 free 1 4 ]
+[v _s_blocks s_blocks `*.39S833  1 e 2 0 ]
 "5 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/timers.c
 [v __timer0_delay_us _timer0_delay_us `ui  1 e 2 0 ]
 "6
@@ -316,7 +339,7 @@ task_state_blocked 2
 "8
 [s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
 [s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
-[v task_create@handle handle `*.39S442  1 a 2 14 ]
+[v task_create@handle handle `*.39S442  1 a 2 9 ]
 "5
 [v task_create@id id `ui  1 p 2 0 ]
 [v task_create@priority priority `ui  1 p 2 2 ]
@@ -329,7 +352,7 @@ task_state_blocked 2
 [s S434 task_context_stack_s 94 `[31]um 1 values 93 0 `uc 1 size 1 93 ]
 [s S437 task_context_s 97 `uc 1 work 1 0 `uc 1 bsr 1 1 `uc 1 status 1 2 `S434 1 stack 94 3 ]
 [s S442 task_s 104 `ui 1 id 2 0 `ui 1 priority 2 2 `E3189 1 state 1 4 `*.37(v 1 callback 2 5 `S437 1 context 97 7 ]
-[v task_ready@handle handle `*.39S442  1 p 2 6 ]
+[v task_ready@handle handle `*.39S442  1 p 2 8 ]
 "26
 } 0
 "18 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/task.h
@@ -342,7 +365,7 @@ task_state_blocked 2
 [v _dispatcher_add_task dispatcher_add_task `(*.39S442  1 e 2 0 ]
 {
 "40
-[v dispatcher_add_task@task task `*.39S442  1 a 2 9 ]
+[v dispatcher_add_task@task task `*.39S442  1 a 2 11 ]
 "43
 } 0
 "23 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/nojentOS.c
@@ -358,8 +381,8 @@ task_state_blocked 2
 "15 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/timers.c
 [v _timer0_init timer0_init `(v  1 e 1 0 ]
 {
-[v timer0_init@delay_us delay_us `ui  1 p 2 6 ]
-[v timer0_init@callback callback `*.37(v  1 p 2 8 ]
+[v timer0_init@delay_us delay_us `ui  1 p 2 8 ]
+[v timer0_init@callback callback `*.37(v  1 p 2 10 ]
 "49
 } 0
 "8
@@ -381,21 +404,21 @@ task_state_blocked 2
 [v _task_1 task_1 `(v  1 s 1 task_1 ]
 {
 "19
-[v task_1@i i `ui  1 a 2 60 ]
+[v task_1@i i `ui  1 a 2 0 ]
 "21
 } 0
 "23
 [v _task_2 task_2 `(v  1 s 1 task_2 ]
 {
 "28
-[v task_2@i i `ui  1 a 2 1 ]
+[v task_2@i i `ui  1 a 2 3 ]
 "30
 } 0
 "32
 [v _task_3 task_3 `(v  1 s 1 task_3 ]
 {
 "37
-[v task_3@i i `ui  1 a 2 4 ]
+[v task_3@i i `ui  1 a 2 6 ]
 "39
 } 0
 "12 /home/bruno/Documents/UFSC/2016.2/ARA7562 - Sistemas Operacionais Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c

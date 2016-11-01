@@ -5,8 +5,8 @@ Linker command line:
 -W-3 --edf=/home/bruno/Programs/microchip/xc8/v1.37/dat/en_msgs.txt -cs \
   -h+dist/default/production/NojentOS.X.production.sym \
   --cmf=dist/default/production/NojentOS.X.production.cmf -z -Q18F4520 \
-  -o/tmp/xcXTGnUlY -Mdist/default/production/NojentOS.X.production.map -E1 \
-  -ver=XC8 -ASTACK=0243h-05ffh -pstack=STACK -ACODE=00h-07FFFh \
+  -o/tmp/xcXLqvULp -Mdist/default/production/NojentOS.X.production.map -E1 \
+  -ver=XC8 -ASTACK=0448h-05ffh -pstack=STACK -ACODE=00h-07FFFh \
   -ACONST=00h-07FFFh -ASMALLCONST=0600h-06FFhx122 \
   -AMEDIUMCONST=0600h-07FFFh -ACOMRAM=01h-07Fh -AABS1=00h-05FFh \
   -ABIGRAM=01h-05FFh -ARAM=080h-0FFh,0100h-01FFhx5 -ABANK0=080h-0FFh \
@@ -21,7 +21,7 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  /tmp/xcXnJ5HCd.obj dist/default/production/NojentOS.X.production.obj 
+  /tmp/xcXPJnqOY.obj dist/default/production/NojentOS.X.production.obj 
 
 Object code version is 3.11
 
@@ -33,7 +33,7 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-/tmp/xcXnJ5HCd.obj
+/tmp/xcXPJnqOY.obj
                 end_init                             16       16        4        4       0
                 reset_vec                             0        0        4        0       0
                 idloc                            200000   200000        8   200000       0
@@ -41,37 +41,38 @@ Call graph: (short form)
 dist/default/production/NojentOS.X.production.obj
                 intcode                               8        8        E        4       0
                 temp                                 44       44        1        1       1
-                text22                              4A8      4A8       70        4       0
-                text21                              6FE      6FE       26        4       0
-                text20                              25E      25E      10E        4       0
-                text19                              78A      78A       12        4       0
-                text18                              778      778       12        4       0
-                text17                              5AA      5AA       46        4       0
-                text16                              7B6      7B6        C        4       0
-                text15                              724      724       24        4       0
-                intcode_body                         1A       1A      244        4       0
-                text13                              7CA      7CA        4        4       0
-                text12                              518      518       4A        4       0
-                text11                              562      562       48        4       0
-                text10                              634      634       36        4       0
-                text9                               5F0      5F0       44        4       0
-                text8                               79C      79C        E        4       0
-                text7                               7AA      7AA        C        4       0
-                text6                               69E      69E       32        4       0
-                text5                               748      748       1C        4       0
-                text4                               7C2      7C2        8        4       0
-                text3                               6D0      6D0       2E        4       0
-                text2                               764      764       14        4       0
-                text1                               36C      36C       C4        4       0
-                text0                               430      430       78        4       0
-                cstackCOMRAM                          1        1       3E        1       1
-                cstackBANK0                          E8       E8       10       80       1
-                cstackBANK1                         100      100        6      100       1
-                bssBIGRAM                           106      106      13D      106       1
+                smallconst                          600      600       92      300       0
+                text22                              B20      B20       70      349       0
+                text21                              D82      D82       26      349       0
+                text20                              8D6      8D6      10E      349       0
+                text19                              E0E      E0E       12      349       0
+                text18                              DFC      DFC       12      349       0
+                text17                              C22      C22       46      349       0
+                text16                              E3A      E3A        C      349       0
+                text15                              DA8      DA8       24      349       0
+                intcode_body                        692      692      244      349       0
+                text13                              E4E      E4E        4      349       0
+                text12                              B90      B90       4A      349       0
+                text11                              BDA      BDA       48      349       0
+                text10                              CAC      CAC       3E      349       0
+                text9                               C68      C68       44      349       0
+                text8                               E20      E20        E      349       0
+                text7                               E2E      E2E        C      349       0
+                text6                               D22      D22       32      349       0
+                text5                               DCC      DCC       1C      349       0
+                text4                               E46      E46        8      349       0
+                text3                               D54      D54       2E      349       0
+                text2                               DE8      DE8       14      349       0
+                text1                               9E4      9E4       C4      349       0
+                text0                               AA8      AA8       78      349       0
+                cstackCOMRAM                          1        1       3C        1       1
+                cstackBANK0                          E8       E8        D       80       1
+                cstackBANK1                         100      100        B      100       1
+                bssBIGRAM                           10B      10B      33D      10B       1
                 bssBANK0                             80       80       68       80       1
-                bssCOMRAM                            3F       3F        3        1       1
-                cinit                               66A      66A       34        4       0
-                nvBANK0                              F8       F8        2       80       1
+                bssCOMRAM                            3D       3D        5        1       1
+                cinit                               CEA      CEA       38      349       0
+                nvBANK0                              F5       F5        2       80       1
                 nvCOMRAM                             42       42        2        1       1
 
 TOTAL           Name                               Link     Load   Length     Space
@@ -81,57 +82,58 @@ TOTAL           Name                               Link     Load   Length     Sp
                 end_init                             16       16        4         0
                 intcode                               8        8        E         0
                 reset_vec                             0        0        4         0
-                text22                              4A8      4A8       70         0
-                text21                              6FE      6FE       26         0
-                text20                              25E      25E      10E         0
-                text19                              78A      78A       12         0
-                text18                              778      778       12         0
-                text17                              5AA      5AA       46         0
-                text16                              7B6      7B6        C         0
-                text15                              724      724       24         0
-                intcode_body                         1A       1A      244         0
-                text13                              7CA      7CA        4         0
-                text12                              518      518       4A         0
-                text11                              562      562       48         0
-                text10                              634      634       36         0
-                text9                               5F0      5F0       44         0
-                text8                               79C      79C        E         0
-                text7                               7AA      7AA        C         0
-                text6                               69E      69E       32         0
-                text5                               748      748       1C         0
-                text4                               7C2      7C2        8         0
-                text3                               6D0      6D0       2E         0
-                text2                               764      764       14         0
-                text1                               36C      36C       C4         0
-                text0                               430      430       78         0
-                cinit                               66A      66A       34         0
+                text22                              B20      B20       70         0
+                text21                              D82      D82       26         0
+                text20                              8D6      8D6      10E         0
+                text19                              E0E      E0E       12         0
+                text18                              DFC      DFC       12         0
+                text17                              C22      C22       46         0
+                text16                              E3A      E3A        C         0
+                text15                              DA8      DA8       24         0
+                intcode_body                        692      692      244         0
+                text13                              E4E      E4E        4         0
+                text12                              B90      B90       4A         0
+                text11                              BDA      BDA       48         0
+                text10                              CAC      CAC       3E         0
+                text9                               C68      C68       44         0
+                text8                               E20      E20        E         0
+                text7                               E2E      E2E        C         0
+                text6                               D22      D22       32         0
+                text5                               DCC      DCC       1C         0
+                text4                               E46      E46        8         0
+                text3                               D54      D54       2E         0
+                text2                               DE8      DE8       14         0
+                text1                               9E4      9E4       C4         0
+                text0                               AA8      AA8       78         0
+                cinit                               CEA      CEA       38         0
 
         CLASS   CONST          
 
         CLASS   SMALLCONST     
+                smallconst                          600      600       92         0
 
         CLASS   MEDIUMCONST    
 
         CLASS   COMRAM         
                 temp                                 44       44        1         1
-                cstackCOMRAM                          1        1       3E         1
-                bssCOMRAM                            3F       3F        3         1
+                cstackCOMRAM                          1        1       3C         1
+                bssCOMRAM                            3D       3D        5         1
                 nvCOMRAM                             42       42        2         1
 
         CLASS   ABS1           
 
         CLASS   BIGRAM         
-                bssBIGRAM                           106      106      13D         1
+                bssBIGRAM                           10B      10B      33D         1
 
         CLASS   RAM            
 
         CLASS   BANK0          
-                cstackBANK0                          E8       E8       10         1
+                cstackBANK0                          E8       E8        D         1
                 bssBANK0                             80       80       68         1
-                nvBANK0                              F8       F8        2         1
+                nvBANK0                              F5       F5        2         1
 
         CLASS   BANK1          
-                cstackBANK1                         100      100        6         1
+                cstackBANK1                         100      100        B         1
 
         CLASS   BANK2          
 
@@ -159,10 +161,12 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
 
                 reset_vec                      000000  000004  000004         0       0  CODE    
                 cstackCOMRAM                   000001  000044  000045         1       1  COMRAM  
-                intcode                        000008  0007C6  0007CE         4       0  CODE    
-                bssBANK0                       000080  00007A  0000FA        80       1  BANK0   
-                cstackBANK1                    000100  000006  000106       100       1  BANK1   
-                bssBIGRAM                      000106  00013D  000243       106       1  BIGRAM  
+                intcode                        000008  000012  00001A         4       0  CODE    
+                bssBANK0                       000080  000077  0000F7        80       1  BANK0   
+                cstackBANK1                    000100  00000B  00010B       100       1  BANK1   
+                bssBIGRAM                      00010B  00033D  000448       10B       1  BIGRAM  
+                smallconst                     000600  000092  000692       300       0  SMALLCON
+                intcode_body                   000692  0007C0  000E52       349       0  CODE    
                 idloc                          200000  000008  200008    200000       0  IDLOC   
                 config                         300000  00000E  30000E    300000       0  CONFIG  
 
@@ -170,32 +174,32 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
 UNUSED ADDRESS RANGES
 
         Name                Unused          Largest block    Delta
-        BANK0            0000FA-0000FF                6
-        BANK2            000243-0002FF               BD
-        BANK3            000300-0003FF              100
-        BANK4            000400-0004FF              100
+        BANK0            0000F7-0000FF                9
+        BANK4            000448-0004FF               B8
         BANK5            000500-0005FF              100
         BIGRAM           000045-00007F               3B
-                         0000FA-0000FF                6
-                         000243-0005FF              3BD
+                         0000F7-0000FF                9
+                         000448-0005FF              1B8
         CODE             000004-000007                4
-                         0007CE-007FFF             7832
+                         00001A-0005FF              5E6
+                         000E52-007FFF             71AE
         COMRAM           000045-00007F               3B
         CONST            000004-000007                4
-                         0007CE-007FFF             7832
+                         00001A-0005FF              5E6
+                         000E52-007FFF             71AE
         EEDATA           F00000-F000FF              100
-        MEDIUMCONST      0007CE-007FFF             7832
-        RAM              0000FA-0000FF                6
-                         000243-0005FF              100
+        MEDIUMCONST      000E52-007FFF             71AE
+        RAM              0000F7-0000FF                9
+                         000448-0005FF               B8
         SFR              000F80-000FFF               80
-        SMALLCONST       0007CE-007FFF              100
-        STACK            000243-0005FF              3BD
+        SMALLCONST       000E52-007FFF              100
+        STACK            000448-0005FF              1B8
 
                                   Symbol Table
 
 ?___awmod                               cstackCOMRAM 000001
 ?___wmul                                cstackCOMRAM 000001
-?_dispatcher_add_task                   cstackBANK0  0000EE
+?_dispatcher_add_task                   cstackBANK0  0000F0
 ?_scheduler_round_robin                 cstackCOMRAM 000007
 _BSR                                    (abs)        000FE0
 _INTCON2bits                            (abs)        000FF1
@@ -273,9 +277,9 @@ __Hrdata                                rdata        000000
 __Hreset_vec                            reset_vec    000004
 __Hrparam                               rparam       000000
 __Hsfr                                  sfr          000000
-__Hsmallconst                           smallconst   000000
+__Hsmallconst                           smallconst   000692
 __Hspace_0                              (abs)        30000E
-__Hspace_1                              (abs)        000243
+__Hspace_1                              (abs)        000448
 __Hspace_2                              (abs)        000000
 __Hstack                                stack        000000
 __Hstruct                               struct       000000
@@ -360,7 +364,7 @@ __Lrdata                                rdata        000000
 __Lreset_vec                            reset_vec    000000
 __Lrparam                               rparam       000000
 __Lsfr                                  sfr          000000
-__Lsmallconst                           smallconst   000000
+__Lsmallconst                           smallconst   000600
 __Lspace_0                              (abs)        000000
 __Lspace_1                              (abs)        000000
 __Lspace_2                              (abs)        000000
@@ -392,11 +396,11 @@ __Ltext7                                text7        000000
 __Ltext8                                text8        000000
 __Ltext9                                text9        000000
 __S0                                    (abs)        30000E
-__S1                                    (abs)        000243
+__S1                                    (abs)        000448
 __S2                                    (abs)        000000
 __STATUS                                bssCOMRAM    000040
 __WREG                                  bssCOMRAM    000041
-___awmod                                text22       0004A8
+___awmod                                text22       000B20
 ___awmod@counter                        cstackCOMRAM 000005
 ___awmod@dividend                       cstackCOMRAM 000001
 ___awmod@divisor                        cstackCOMRAM 000003
@@ -406,72 +410,75 @@ ___intlo_sp                             stack        000000
 ___param_bank                           (abs)        000010
 ___rparam_used                          (abs)        000001
 ___sp                                   stack        000000
-___wmul                                 text21       0006FE
+___wmul                                 text21       000D82
 ___wmul@multiplicand                    cstackCOMRAM 000003
 ___wmul@multiplier                      cstackCOMRAM 000001
 ___wmul@product                         cstackCOMRAM 000005
 __accesstop                             (abs)        000080
 __activetblptr                          (abs)        000002
-__end_of___awmod                        text22       000518
-__end_of___wmul                         text21       000724
-__end_of__initialization                cinit        000690
-__end_of_dispatcher_add_task            text3        0006FE
-__end_of_dispatcher_change_context_isr  text17       0005F0
-__end_of_dispatcher_init                text9        000634
-__end_of_dispatcher_start               text5        000764
-__end_of_global_isr                     intcode_body 00025E
-__end_of_main                           text0        0004A8
-__end_of_nojo_init                      text8        0007AA
-__end_of_nojo_start                     text4        0007CA
-__end_of_scheduler_round_robin          text20       00036C
-__end_of_task_1                         text10       00066A
-__end_of_task_2                         text11       0005AA
-__end_of_task_3                         text12       000562
-__end_of_task_create                    text1        000430
-__end_of_task_idle_callback             text13       0007CE
-__end_of_task_ready                     text2        000778
-__end_of_task_running                   text19       00079C
-__end_of_timer0_init                    text6        0006D0
-__end_of_timer0_isr                     text15       000748
-__end_of_timer0_reset                   text7        0007B6
-__end_ofi2_task_ready                   text18       00078A
-__end_ofi2_timer0_reset                 text16       0007C2
-__initialization                        cinit        00066A
+__end_of___awmod                        text22       000B90
+__end_of___wmul                         text21       000DA8
+__end_of__initialization                cinit        000D14
+__end_of_dispatcher_add_task            text3        000D82
+__end_of_dispatcher_change_context_isr  text17       000C68
+__end_of_dispatcher_init                text9        000CAC
+__end_of_dispatcher_start               text5        000DE8
+__end_of_dpowers                        smallconst   00060B
+__end_of_global_isr                     intcode_body 0008D6
+__end_of_hexpowers                      smallconst   000613
+__end_of_main                           text0        000B20
+__end_of_nojo_init                      text8        000E2E
+__end_of_nojo_start                     text4        000E4E
+__end_of_scheduler_round_robin          text20       0009E4
+__end_of_task_1                         text10       000CEA
+__end_of_task_2                         text11       000C22
+__end_of_task_3                         text12       000BDA
+__end_of_task_create                    text1        000AA8
+__end_of_task_idle_callback             text13       000E52
+__end_of_task_ready                     text2        000DFC
+__end_of_task_running                   text19       000E20
+__end_of_timer0_init                    text6        000D54
+__end_of_timer0_isr                     text15       000DCC
+__end_of_timer0_reset                   text7        000E3A
+__end_ofi2_task_ready                   text18       000E0E
+__end_ofi2_timer0_reset                 text16       000E46
+__initialization                        cinit        000CEA
 __mediumconst                           mediumconst  000000
 __pbssBANK0                             bssBANK0     000080
-__pbssBIGRAM                            bssBIGRAM    000106
-__pbssCOMRAM                            bssCOMRAM    00003F
-__pcinit                                cinit        00066A
+__pbssBIGRAM                            bssBIGRAM    00010B
+__pbssCOMRAM                            bssCOMRAM    00003D
+__pcinit                                cinit        000CEA
 __pcstackBANK0                          cstackBANK0  0000E8
 __pcstackBANK1                          cstackBANK1  000100
 __pcstackCOMRAM                         cstackCOMRAM 000001
 __pintcode                              intcode      000008
-__pintcode_body                         intcode_body 00001A
-__pnvBANK0                              nvBANK0      0000F8
+__pintcode_body                         intcode_body 000692
+__pnvBANK0                              nvBANK0      0000F5
 __pnvCOMRAM                             nvCOMRAM     000042
-__ptext0                                text0        000430
-__ptext1                                text1        00036C
-__ptext10                               text10       000634
-__ptext11                               text11       000562
-__ptext12                               text12       000518
-__ptext13                               text13       0007CA
-__ptext15                               text15       000724
-__ptext16                               text16       0007B6
-__ptext17                               text17       0005AA
-__ptext18                               text18       000778
-__ptext19                               text19       00078A
-__ptext2                                text2        000764
-__ptext20                               text20       00025E
-__ptext21                               text21       0006FE
-__ptext22                               text22       0004A8
+__psmallconst                           smallconst   000600
+__ptext0                                text0        000AA8
+__ptext1                                text1        0009E4
+__ptext10                               text10       000CAC
+__ptext11                               text11       000BDA
+__ptext12                               text12       000B90
+__ptext13                               text13       000E4E
+__ptext15                               text15       000DA8
+__ptext16                               text16       000E3A
+__ptext17                               text17       000C22
+__ptext18                               text18       000DFC
+__ptext19                               text19       000E0E
+__ptext2                                text2        000DE8
+__ptext20                               text20       0008D6
+__ptext21                               text21       000D82
+__ptext22                               text22       000B20
 __ptext23                               text23       000000
-__ptext3                                text3        0006D0
-__ptext4                                text4        0007C2
-__ptext5                                text5        000748
-__ptext6                                text6        00069E
-__ptext7                                text7        0007AA
-__ptext8                                text8        00079C
-__ptext9                                text9        0005F0
+__ptext3                                text3        000D54
+__ptext4                                text4        000E46
+__ptext5                                text5        000DCC
+__ptext6                                text6        000D22
+__ptext7                                text7        000E2E
+__ptext8                                text8        000E20
+__ptext9                                text9        000C68
 __ramtop                                ramtop       000600
 __size_of___awmod                       (abs)        000000
 __size_of___wmul                        (abs)        000000
@@ -496,34 +503,36 @@ __size_of_timer0_isr                    (abs)        000000
 __size_of_timer0_reset                  (abs)        000000
 __size_ofi2_task_ready                  (abs)        000000
 __size_ofi2_timer0_reset                (abs)        000000
-__smallconst                            smallconst   000000
+__smallconst                            smallconst   000600
 __timer0_callback                       nvCOMRAM     000042
-__timer0_delay_us                       nvBANK0      0000F8
-_dispatcher                             bssBIGRAM    000106
-_dispatcher_add_task                    text3        0006D0
-_dispatcher_change_context_isr          text17       0005AA
-_dispatcher_init                        text9        0005F0
-_dispatcher_start                       text5        000748
+__timer0_delay_us                       nvBANK0      0000F5
+_dispatcher                             bssBIGRAM    00030B
+_dispatcher_add_task                    text3        000D54
+_dispatcher_change_context_isr          text17       000C22
+_dispatcher_init                        text9        000C68
+_dispatcher_start                       text5        000DCC
 _global_isr                             intcode      000008
 _idle                                   bssBANK0     000080
-_main                                   text0        000430
-_nojo_init                              text8        00079C
-_nojo_start                             text4        0007C2
-_scheduler_round_robin                  text20       00025E
-_task_1                                 text10       000634
-_task_2                                 text11       000562
-_task_3                                 text12       000518
-_task_create                            text1        00036C
-_task_idle_callback                     text13       0007CA
-_task_ready                             text2        000764
-_task_running                           text19       00078A
-_timer0_init                            text6        00069E
-_timer0_isr                             text15       000724
-_timer0_reset                           text7        0007AA
+_main                                   text0        000AA8
+_nojo_init                              text8        000E20
+_nojo_start                             text4        000E46
+_s_blocks                               bssCOMRAM    00003D
+_s_heap                                 bssBIGRAM    00010B
+_scheduler_round_robin                  text20       0008D6
+_task_1                                 text10       000CAC
+_task_2                                 text11       000BDA
+_task_3                                 text12       000B90
+_task_create                            text1        0009E4
+_task_idle_callback                     text13       000E4E
+_task_ready                             text2        000DE8
+_task_running                           text19       000E0E
+_timer0_init                            text6        000D22
+_timer0_isr                             text15       000DA8
+_timer0_reset                           text7        000E2E
 btemp                                   temp         000044
-dispatcher_add_task@task                cstackBANK0  0000F1
+dispatcher_add_task@task                cstackBANK0  0000F3
 dispatcher_change_context_isr@next      cstackCOMRAM 000017
-end_of_initialization                   cinit        000690
+end_of_initialization                   cinit        000D14
 global_isr@i                            cstackCOMRAM 00002E
 global_isr@i_581                        cstackCOMRAM 000035
 global_isr@n_context                    cstackCOMRAM 00003A
@@ -532,11 +541,11 @@ global_isr@n_task                       cstackCOMRAM 000031
 global_isr@p_context                    cstackCOMRAM 000036
 global_isr@p_stack                      cstackCOMRAM 000033
 global_isr@p_task                       cstackCOMRAM 00002F
-i2_task_ready                           text18       000778
-i2_timer0_reset                         text16       0007B6
+i2_task_ready                           text18       000DFC
+i2_timer0_reset                         text16       000E3A
 i2task_ready@handle                     cstackCOMRAM 000001
 int$flags                               temp         000044
-int_func                                intcode_body 00001A
+int_func                                intcode_body 000692
 intlevel0                               text         000000
 intlevel1                               text         000000
 intlevel2                               text         000000
@@ -547,20 +556,20 @@ scheduler_round_robin@j                 cstackCOMRAM 000011
 scheduler_round_robin@next              cstackCOMRAM 00000F
 scheduler_round_robin@offset            cstackCOMRAM 00000D
 stackhi                                 (abs)        0005FF
-stacklo                                 (abs)        000243
+stacklo                                 (abs)        000448
 start                                   init         000016
-start_initialization                    cinit        00066A
-task_1@i                                cstackCOMRAM 00003D
-task_2@i                                cstackBANK0  0000E9
-task_3@i                                cstackBANK0  0000EC
+start_initialization                    cinit        000CEA
+task_1@i                                cstackBANK0  0000E8
+task_2@i                                cstackBANK0  0000EB
+task_3@i                                cstackBANK0  0000EE
 task_create@callback                    cstackBANK1  000104
-task_create@handle                      cstackBANK0  0000F6
+task_create@handle                      cstackBANK1  000109
 task_create@id                          cstackBANK1  000100
 task_create@priority                    cstackBANK1  000102
-task_ready@handle                       cstackBANK0  0000EE
+task_ready@handle                       cstackBANK0  0000F0
 task_running@handle                     cstackCOMRAM 000001
-timer0_init@callback                    cstackBANK0  0000F0
-timer0_init@delay_us                    cstackBANK0  0000EE
+timer0_init@callback                    cstackBANK0  0000F2
+timer0_init@delay_us                    cstackBANK0  0000F0
 
 
 FUNCTION INFORMATION:
@@ -605,7 +614,7 @@ Total ram usage:        0 bytes
   callback        2    4[BANK1 ] PTR FTN()void 
 		 -> task_3(1), task_2(1), task_1(1), 
  Auto vars:     Size  Location     Type
-  handle          2   14[BANK0 ] PTR struct task_s
+  handle          2    9[BANK1 ] PTR struct task_s
 		 -> dispatcher.tasks(312), dispatcher(317), 
  Return value:  Size  Location     Type
                   1    wreg      void 
@@ -617,9 +626,9 @@ Total ram usage:        0 bytes
 		Unchanged: 
  Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
       Params:         0       0       6       0       0       0       0
-      Locals:         0       2       0       0       0       0       0
-      Temps:          0       3       0       0       0       0       0
-      Totals:         0       5       6       0       0       0       0
+      Locals:         0       0       2       0       0       0       0
+      Temps:          0       0       3       0       0       0       0
+      Totals:         0       0      11       0       0       0       0
 Total ram usage:       11 bytes
  Hardware stack levels used:    1
  Hardware stack levels required when called:    7
@@ -635,7 +644,7 @@ Total ram usage:       11 bytes
  Defined at:
 		line 24 in file "kernel/task.c"
  Parameters:    Size  Location     Type
-  handle          2    6[BANK0 ] PTR struct task_s
+  handle          2    8[BANK0 ] PTR struct task_s
 		 -> dispatcher.tasks(312), idle(104), dispatcher(317), 
  Auto vars:     Size  Location     Type
 		None
@@ -668,10 +677,10 @@ Total ram usage:        2 bytes
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
-  task            2    9[BANK0 ] PTR struct task_s
+  task            2   11[BANK0 ] PTR struct task_s
 		 -> dispatcher.tasks(312), dispatcher(317), 
  Return value:  Size  Location     Type
-                  2    6[BANK0 ] PTR struct task_s
+                  2    8[BANK0 ] PTR struct task_s
  Registers used:
 		wreg, status,2, status,0, prodl, prodh
  Tracked objects:
@@ -757,8 +766,8 @@ Total ram usage:        0 bytes
  Defined at:
 		line 15 in file "kernel/timers.c"
  Parameters:    Size  Location     Type
-  delay_us        2    6[BANK0 ] unsigned int 
-  callback        2    8[BANK0 ] PTR FTN()void 
+  delay_us        2    8[BANK0 ] unsigned int 
+  callback        2   10[BANK0 ] PTR FTN()void 
 		 -> dispatcher_change_context_isr(1), 
  Auto vars:     Size  Location     Type
 		None
@@ -881,7 +890,7 @@ Total ram usage:        0 bytes
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
-  i               2   60[COMRAM] unsigned int 
+  i               2    0[BANK0 ] unsigned int 
  Return value:  Size  Location     Type
                   1    wreg      void 
  Registers used:
@@ -892,9 +901,9 @@ Total ram usage:        0 bytes
 		Unchanged: 
  Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
       Params:         0       0       0       0       0       0       0
-      Locals:         2       0       0       0       0       0       0
+      Locals:         0       2       0       0       0       0       0
       Temps:          1       0       0       0       0       0       0
-      Totals:         3       0       0       0       0       0       0
+      Totals:         1       2       0       0       0       0       0
 Total ram usage:        3 bytes
  Hardware stack levels used:    1
  Hardware stack levels required when called:    5
@@ -911,7 +920,7 @@ Total ram usage:        3 bytes
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
-  i               2    1[BANK0 ] unsigned int 
+  i               2    3[BANK0 ] unsigned int 
  Return value:  Size  Location     Type
                   1    wreg      void 
  Registers used:
@@ -941,7 +950,7 @@ Total ram usage:        3 bytes
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
-  i               2    4[BANK0 ] unsigned int 
+  i               2    6[BANK0 ] unsigned int 
  Return value:  Size  Location     Type
                   1    wreg      void 
  Registers used:
@@ -1298,16 +1307,16 @@ MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/Umul16.c
-		___wmul        		CODE           	06FE	0000	39
+		___wmul        		CODE           	0D82	0000	39
 
 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/Umul16.c estimated size: 39
 
 kernel/dispatcher.c
-		_dispatcher_change_context_isr		CODE           	05AA	0000	71
-		_task_idle_callback		CODE           	07CA	0000	5
-		_dispatcher_init		CODE           	05F0	0000	69
-		_dispatcher_start		CODE           	0748	0000	29
-		_dispatcher_add_task		CODE           	06D0	0000	47
+		_dispatcher_change_context_isr		CODE           	0C22	0000	71
+		_task_idle_callback		CODE           	0E4E	0000	5
+		_dispatcher_init		CODE           	0C68	0000	69
+		_dispatcher_start		CODE           	0DCC	0000	29
+		_dispatcher_add_task		CODE           	0D54	0000	47
 
 kernel/dispatcher.c estimated size: 221
 
@@ -1317,47 +1326,49 @@ kernel/interrutps.h
 kernel/interrutps.h estimated size: 595
 
 shared
-		i2_task_ready  		CODE           	0778	0000	19
-		__initialization		CODE           	066A	0000	39
-		i2_timer0_reset		CODE           	07B6	0000	13
+		i2_task_ready  		CODE           	0DFC	0000	19
+		_dpowers       		SMALLCONST     	0000	0000	0
+		__initialization		CODE           	0CEA	0000	43
+		_hexpowers     		SMALLCONST     	0000	0000	0
+		i2_timer0_reset		CODE           	0E3A	0000	13
 
-shared estimated size: 71
+shared estimated size: 75
 
 kernel/timers.c
-		_timer0_isr    		CODE           	0724	0000	37
-		_timer0_init   		CODE           	069E	0000	51
-		_timer0_reset  		CODE           	07AA	0000	13
+		_timer0_isr    		CODE           	0DA8	0000	37
+		_timer0_init   		CODE           	0D22	0000	51
+		_timer0_reset  		CODE           	0E2E	0000	13
 
 kernel/timers.c estimated size: 101
 
 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/awmod.c
-		___awmod       		CODE           	04A8	0000	113
+		___awmod       		CODE           	0B20	0000	113
 
 /home/bruno/Programs/microchip/xc8/v1.37/sources/common/awmod.c estimated size: 113
 
 kernel/task.c
-		_task_create   		CODE           	036C	0000	197
-		_task_ready    		CODE           	0764	0000	21
-		_task_running  		CODE           	078A	0000	19
+		_task_create   		CODE           	09E4	0000	197
+		_task_ready    		CODE           	0DE8	0000	21
+		_task_running  		CODE           	0E0E	0000	19
 
 kernel/task.c estimated size: 237
 
 kernel/scheduler.c
-		_scheduler_round_robin		CODE           	025E	0000	271
+		_scheduler_round_robin		CODE           	08D6	0000	271
 
 kernel/scheduler.c estimated size: 271
 
 main.c
-		_task_2        		CODE           	0562	0000	73
-		_main          		CODE           	0430	0000	121
-		_task_3        		CODE           	0518	0000	75
-		_task_1        		CODE           	0634	0000	55
+		_task_2        		CODE           	0BDA	0000	73
+		_main          		CODE           	0AA8	0000	121
+		_task_3        		CODE           	0B90	0000	75
+		_task_1        		CODE           	0CAC	0000	63
 
-main.c estimated size: 324
+main.c estimated size: 332
 
 nojentOS.c
-		_nojo_start    		CODE           	07C2	0000	9
-		_nojo_init     		CODE           	079C	0000	15
+		_nojo_start    		CODE           	0E46	0000	9
+		_nojo_init     		CODE           	0E20	0000	15
 
 nojentOS.c estimated size: 24
 
