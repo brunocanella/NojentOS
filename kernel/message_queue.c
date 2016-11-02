@@ -13,7 +13,7 @@ uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t s
         return 0;
     
     //Instanciando um nó de mensagem
-    message_queue_node_t* message_queue_node = (message_queue_node_t*)linked_list_get_last((linked_list_t*)descriptor); 
+    message_queue_node_t* message_queue_node = (message_queue_node_t*)linked_list_get_first((linked_list_t*)descriptor); 
     
     //Caso o que for ser lido for de tamanho diferente da p?oxima mensagem gravada não lê
     if(message_queue_node->width != size) 
@@ -25,7 +25,7 @@ uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t s
         ((uint8_t*)buff)[i] = ((uint8_t*)(message_queue_node->data))[i];
     
     //buffer já está salvo, retirando dado da lista
-    linked_list_remove_last((linked_list_t*)descriptor);
+    linked_list_remove_first((linked_list_t*)descriptor);
     //dando free no dado que estava na lista encadeada
     free(message_queue_node);
     GLOBAL_INTERRUPTS_ENABLE();
@@ -38,7 +38,12 @@ uint8_t message_queue_write(message_queue_t descriptor, pointer_t buff, uint8_t 
     //Instanciando um nó de mensagem
     message_queue_node_t* message_queue_node = (message_queue_node_t*)malloc(sizeof(message_queue_node_t));
     message_queue_node->width = size;
-    message_queue_node->data = buff;
+    message_queue_node->data = (pointer_t*)malloc(size);
+    
+        //Atribuindo o conteudo ao buffer para dar free no dado que estava salvo na lista
+    uint8_t i;
+    for(i = 0; i < size; i++)
+        ((uint8_t*)(message_queue_node->data))[i] = ((uint8_t*)buff)[i];
     
     //Tenta inserir a mensagem na lista, caso der certo retorna o número de bytes gravados
     if(linked_list_insert((linked_list_t*)descriptor, message_queue_node) == ERROR_NONE) {
