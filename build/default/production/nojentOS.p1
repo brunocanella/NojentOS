@@ -24,7 +24,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n E3214 task_state_e task_state_ready task_state_running task_state_blocked  ]
 [v F3198 `(v ~T0 @X0 0 tf ]
 "16 kernel/task_context.h
-[s S344 `um -> 31 `i `uc 1 ]
+[s S344 `um -> 10 `i `uc 1 ]
 [n S344 task_context_stack_s values size ]
 "21
 [s S345 `uc 1 `uc 1 `uc 1 `S344 1 ]
@@ -32,11 +32,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18 kernel/task.h
 [s S346 `ui 1 `ui 1 `E3214 1 `*F3198 1 `S345 1 ]
 [n S346 task_s id priority state callback context ]
-[v F3235 `(*S346 ~T0 @X0 0 tf ]
+[v F3237 `(*S346 ~T0 @X0 0 tf ]
 "17 kernel/dispatcher.h
-[s S347 `S346 -> 3 `i `uc 1 `*S346 1 `*F3235 1 ]
+[s S347 `S346 -> 3 `i `uc 1 `*S346 1 `*F3237 1 ]
 [n S347 dispatcher_s tasks size running callback ]
-"32
+"34
 [v _dispatcher `S347 ~T0 @X0 0 e ]
 "7074 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
 [v _TOSU `Vuc ~T0 @X0 0 e@4095 ]
@@ -3077,7 +3077,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
 [; ;timers.h: 13: void timer0_isr();
 [; ;task_context.h: 16: typedef struct task_context_stack_s {
-[; ;task_context.h: 17: uint24_t values[31];
+[; ;task_context.h: 17: uint24_t values[10];
 [; ;task_context.h: 18: uint8_t size;
 [; ;task_context.h: 19: } task_context_stack_t;
 [; ;task_context.h: 21: typedef struct task_context_s {
@@ -3101,7 +3101,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
+[; ;task.h: 32: void task_block( task_t* handle );
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
+[; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
 [; ;dispatcher.h: 17: typedef struct dispatcher_s {
 [; ;dispatcher.h: 18: task_t tasks[3];
@@ -3113,10 +3115,41 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 26: void dispatcher_start();
 [; ;dispatcher.h: 28: task_t* dispatcher_add_task();
 [; ;dispatcher.h: 30: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 32: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 34: extern task_t idle;
-[; ;nojentOS.h: 16: void nojo_init();
-[; ;nojentOS.h: 18: void nojo_start();
+[; ;dispatcher.h: 32: void dispatcher_change_context( task_state_t task_state );
+[; ;dispatcher.h: 34: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 36: extern task_t idle;
+[; ;linked_list.h: 6: struct linked_list_s;
+[; ;linked_list.h: 8: typedef struct linked_list_s linked_list_t;
+"10 kernel/linked_list.h
+[p p 1 ]
+[; ;linked_list.h: 11: struct linked_list_s {
+[; ;linked_list.h: 12: linked_list_t* next;
+[; ;linked_list.h: 13: pointer_t data;
+[; ;linked_list.h: 14: };
+"16
+[p p 1 ]
+[; ;linked_list.h: 17: typedef struct linked_list_head_data_s {
+[; ;linked_list.h: 18: uint8_t size;
+[; ;linked_list.h: 19: linked_list_t* last;
+[; ;linked_list.h: 20: } linked_list_head_data_t;
+[; ;linked_list.h: 22: int8_t linked_list_create( linked_list_t** a_head );
+[; ;linked_list.h: 24: int8_t linked_list_insert( linked_list_t* a_head, pointer_t a_data );
+[; ;linked_list.h: 28: int8_t linked_list_remove_last( linked_list_t* a_head );
+[; ;linked_list.h: 30: int8_t linked_list_remove_first( linked_list_t* a_head );
+[; ;linked_list.h: 32: int8_t linked_list_remove_all( linked_list_t* a_head );
+[; ;linked_list.h: 34: pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index );
+[; ;linked_list.h: 36: pointer_t linked_list_get_last( linked_list_t* a_head );
+[; ;linked_list.h: 38: pointer_t linked_list_get_first( linked_list_t* a_head );
+[; ;linked_list.h: 40: uint8_t linked_list_get_size( linked_list_t* a_head );
+[; ;semaphore.h: 14: typedef struct semaphore_s {
+[; ;semaphore.h: 15: int8_t value;
+[; ;semaphore.h: 16: linked_list_t* queue;
+[; ;semaphore.h: 17: } semaphore_t;
+[; ;semaphore.h: 19: void semaphore_init( semaphore_t* handle, int8_t initial_value );
+[; ;semaphore.h: 20: void semaphore_wait( semaphore_t* handle );
+[; ;semaphore.h: 21: void semaphore_signal( semaphore_t* handle );
+[; ;nojentOS.h: 17: void nojo_init();
+[; ;nojentOS.h: 19: void nojo_start();
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -3135,9 +3168,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "16
 [v __STATUS `uc ~T0 @X0 1 e ]
 [; ;interrutps.h: 16: byte _STATUS;
-[v F3279 `(v ~T0 @X0 1 tf ]
+[v F3323 `(v ~T0 @X0 1 tf ]
 "21
-[v _global_isr `IF3279 ~T0 @X0 1 e ]
+[v _global_isr `IF3323 ~T0 @X0 1 e ]
 {
 [; ;interrutps.h: 21: void interrupt global_isr() {
 [e :U _global_isr ]
@@ -3153,11 +3186,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = __STATUS _STATUS ]
 [; ;interrutps.h: 26: if( INTCONbits.TMR0IE && INTCONbits.TMR0IF ) {
 "26
-[e $ ! && != -> . . _INTCONbits 0 5 `i -> -> -> 0 `i `Vuc `i != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 349  ]
+[e $ ! && != -> . . _INTCONbits 0 5 `i -> -> -> 0 `i `Vuc `i != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 352  ]
 {
 [; ;interrutps.h: 28: do {
 "28
-[e :U 352 ]
+[e :U 355 ]
 {
 "29
 [v _p_task `*S346 ~T0 @X0 1 a ]
@@ -3165,11 +3198,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _p_task . _dispatcher 2 ]
 [; ;interrutps.h: 30: if( p_task == ((void*)0) ) { break; }
 "30
-[e $ ! == -> _p_task `*v -> -> 0 `i `*v 353  ]
+[e $ ! == -> _p_task `*v -> -> 0 `i `*v 356  ]
 {
-[e $U 351  ]
+[e $U 354  ]
 }
-[e :U 353 ]
+[e :U 356 ]
 "31
 [v _p_context `*S345 ~T0 @X0 1 a ]
 [; ;interrutps.h: 31: task_context_t* p_context = &(p_task->context);
@@ -3189,8 +3222,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _p_stack &U . *U _p_context 3 ]
 [; ;interrutps.h: 36: while( (STKPTR & 0b11111) > 0 ) {
 "36
-[e $U 354  ]
-[e :U 355 ]
+[e $U 357  ]
+[e :U 358 ]
 {
 "37
 [v _i `uc ~T0 @X0 1 a ]
@@ -3204,13 +3237,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; <" POP ;# ">
 "40
 }
-[e :U 354 ]
+[e :U 357 ]
 "36
-[e $ > & -> _STKPTR `i -> 31 `i -> 0 `i 355  ]
-[e :U 356 ]
+[e $ > & -> _STKPTR `i -> 31 `i -> 0 `i 358  ]
+[e :U 359 ]
 "41
 }
-[e :U 351 ]
+[e :U 354 ]
 [; ;interrutps.h: 40: }
 [; ;interrutps.h: 41: }while(0);
 [; ;interrutps.h: 43: timer0_isr();
@@ -3218,7 +3251,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _timer0_isr ..  ]
 [; ;interrutps.h: 45: do {
 "45
-[e :U 359 ]
+[e :U 362 ]
 {
 "46
 [v _n_task `*S346 ~T0 @X0 1 a ]
@@ -3226,11 +3259,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _n_task . _dispatcher 2 ]
 [; ;interrutps.h: 47: if( n_task == ((void*)0) ) { break; }
 "47
-[e $ ! == -> _n_task `*v -> -> 0 `i `*v 360  ]
+[e $ ! == -> _n_task `*v -> -> 0 `i `*v 363  ]
 {
-[e $U 358  ]
+[e $U 361  ]
 }
-[e :U 360 ]
+[e :U 363 ]
 "48
 [v _n_context `*S345 ~T0 @X0 1 a ]
 [; ;interrutps.h: 48: task_context_t* n_context = &(n_task->context);
@@ -3250,8 +3283,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _n_stack &U . *U _n_context 3 ]
 [; ;interrutps.h: 53: while( n_stack->size > 0 ) {
 "53
-[e $U 361  ]
-[e :U 362 ]
+[e $U 364  ]
+[e :U 365 ]
 {
 "54
 [v _i `uc ~T0 @X0 1 a ]
@@ -3271,16 +3304,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _TOSL -> >> *U + &U . *U _n_stack 0 * -> _i `ux -> -> # *U &U . *U _n_stack 0 `ui `ux -> 0 `i `uc ]
 "61
 }
-[e :U 361 ]
+[e :U 364 ]
 "53
-[e $ > -> . *U _n_stack 1 `i -> 0 `i 362  ]
-[e :U 363 ]
+[e $ > -> . *U _n_stack 1 `i -> 0 `i 365  ]
+[e :U 366 ]
 "62
 }
-[e :U 358 ]
+[e :U 361 ]
 "63
 }
-[e :U 349 ]
+[e :U 352 ]
 [; ;interrutps.h: 61: }
 [; ;interrutps.h: 62: } while(0);
 [; ;interrutps.h: 63: }
@@ -3295,7 +3328,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _WREG __WREG ]
 [; ;interrutps.h: 67: }
 "67
-[e :UE 348 ]
+[e :UE 351 ]
 }
 "15 nojentOS.c
 [v _nojo_init `(v ~T0 @X0 1 ef ]
@@ -3314,7 +3347,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _dispatcher_init ..  ]
 [; ;nojentOS.c: 21: }
 "21
-[e :UE 364 ]
+[e :UE 367 ]
 }
 "23
 [v _nojo_start `(v ~T0 @X0 1 ef ]
@@ -3327,12 +3360,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _dispatcher_start ..  ]
 [; ;nojentOS.c: 26: do{ INTCONbits.GIE = 1; }while(0);
 "26
-[e :U 368 ]
+[e :U 371 ]
 {
 [e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
 }
-[e :U 367 ]
+[e :U 370 ]
 [; ;nojentOS.c: 27: }
 "27
-[e :UE 365 ]
+[e :UE 368 ]
 }

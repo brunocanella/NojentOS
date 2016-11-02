@@ -12,7 +12,7 @@
 
 typedef task_t* (*scheduler_function_ptr_t)(void);
 
-//task_t* scheduler_priority();
+task_t* scheduler_priority();
 
 task_t* scheduler_round_robin();
 

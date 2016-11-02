@@ -29,6 +29,8 @@ void task_ready( task_t* handle );
 
 void task_running( task_t* handle );
 
+void task_block( task_t* handle );
+
 // void task_delay( task_t* handle );
 
 #endif	/* TASK_H */

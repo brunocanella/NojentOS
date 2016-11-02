@@ -10,7 +10,7 @@
 #include "types.h"
 
 #ifndef STACK_LEVEL_MAX
-#define STACK_LEVEL_MAX 31
+#define STACK_LEVEL_MAX 10
 #endif//STACK_LEVEL_MAX
 
 typedef struct task_context_stack_s {

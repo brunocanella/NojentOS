@@ -17,7 +17,11 @@ void task_idle_callback() {
 
 void dispatcher_init() {
     dispatcher.size = 0;
+#if SCHEDULER == SCHEDULER_ROUND_ROBIN
     dispatcher.callback = scheduler_round_robin;
+#else
+    dispatcher.callback = scheduler_priority;
+#endif
     
     idle.id = 255;
     idle.priority = 0;
@@ -54,4 +58,23 @@ void dispatcher_change_context_isr() {
     dispatcher.running = next;
     // E resume o funcionamento dela ( passa para running )
     task_running( dispatcher.running );
+}
+
+void dispatcher_change_context( task_state_t task_state ) {
+    // Desabilita as interrupções globais antes de mexer nas tarefas.
+    GLOBAL_INTERRUPTS_DISABLE();    
+    // Salva o contexto da tarefa que estava rodando.
+    CONTEXT_SAVE( dispatcher.running );
+    // Passa a tarefa atual para o estado informado escolhido.
+    dispatcher.running->state = task_state;
+    // Descobre quem será a tarefa que será a proxima a entrar em execução
+    task_t* next = dispatcher.callback();
+    // Coloca a tarefa como a que está em execução
+    dispatcher.running = next;
+    // E atualiza o status dela como rodando.
+    task_running( dispatcher.running );
+    // Finalmente, carrega a pilha desta tarefa
+    CONTEXT_LOAD( dispatcher.running );    
+    // e por fim, reabilita as interrupções globais antes de retornar.
+    GLOBAL_INTERRUPTS_ENABLE();
 }

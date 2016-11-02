@@ -105,7 +105,7 @@ typedef void (*function_ptr_t)(void);
 
 # 16 "kernel/task_context.h"
 typedef struct task_context_stack_s {
-uint24_t values[31];
+uint24_t values[10];
 uint8_t size;
 } task_context_stack_t;
 
@@ -137,10 +137,12 @@ void task_ready( task_t* handle );
 
 void task_running( task_t* handle );
 
+void task_block( task_t* handle );
+
 # 13 "kernel/scheduler.h"
 typedef task_t* (*scheduler_function_ptr_t)(void);
 
-
+task_t* scheduler_priority();
 
 task_t* scheduler_round_robin();
 
@@ -4082,11 +4084,29 @@ task_t* dispatcher_add_task();
 
 void dispatcher_change_context_isr();
 
+void dispatcher_change_context( task_state_t task_state );
+
 extern dispatcher_t dispatcher;
 
 extern task_t idle;
 
-# 18 "kernel/scheduler.c"
+# 5 "kernel/scheduler.c"
+task_t* scheduler_priority() {
+
+task_t* highest = &idle;
+
+for( int i = 0; i < dispatcher.size; i++ ) {
+
+task_t* current = &dispatcher.tasks[i];
+
+if( ( current->state == task_state_ready ) && ( highest->priority < current->priority ) ) {
+highest = current;
+}
+}
+
+return highest;
+}
+
 task_t* scheduler_round_robin() {
 int offset = -1;
 for( int i = 0; i < 3; i++ ) {
@@ -4111,4 +4131,3 @@ break;
 
 return next;
 }
-

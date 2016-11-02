@@ -7,6 +7,8 @@ kernel/task_context.h  \
 kernel/scheduler.h  \
 kernel/task.h  \
 config.h  \
+kernel/linked_list.h  \
+kernel/semaphore.h  \
 kernel/dispatcher.h  \
 kernel/timers.h  \
 kernel/defines.h 

@@ -4,7 +4,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [c E44 0 1 2 .. ]
 [n E44 task_state_e task_state_ready task_state_running task_state_blocked  ]
 "16 kernel/task_context.h
-[s S1 `um -> 31 `i `uc 1 ]
+[s S1 `um -> 10 `i `uc 1 ]
 [n S1 task_context_stack_s values size ]
 "21
 [s S2 `uc 1 `uc 1 `uc 1 `S1 1 ]
@@ -58,7 +58,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 18: typedef void* pointer_t;
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
 [; ;task_context.h: 16: typedef struct task_context_stack_s {
-[; ;task_context.h: 17: uint24_t values[31];
+[; ;task_context.h: 17: uint24_t values[10];
 [; ;task_context.h: 18: uint8_t size;
 [; ;task_context.h: 19: } task_context_stack_t;
 [; ;task_context.h: 21: typedef struct task_context_s {
@@ -82,6 +82,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
+[; ;task.h: 32: void task_block( task_t* handle );
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
 "51 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
@@ -3048,6 +3049,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18f4520.h: 8312: extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 [; ;pic18f4520.h: 8314: extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
+[; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
 [; ;dispatcher.h: 17: typedef struct dispatcher_s {
 [; ;dispatcher.h: 18: task_t tasks[3];
@@ -3059,8 +3061,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 26: void dispatcher_start();
 [; ;dispatcher.h: 28: task_t* dispatcher_add_task();
 [; ;dispatcher.h: 30: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 32: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 34: extern task_t idle;
+[; ;dispatcher.h: 32: void dispatcher_change_context( task_state_t task_state );
+[; ;dispatcher.h: 34: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 36: extern task_t idle;
 "5 kernel/task.c
 [v _task_create `(v ~T0 @X0 1 ef3`ui`ui`*F32 ]
 {
@@ -3133,3 +3136,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 "30
 [e :UE 350 ]
 }
+"32
+[v _task_block `(v ~T0 @X0 1 ef1`*S3 ]
+{
+[; ;task.c: 32: void task_block( task_t* handle ) {
+[e :U _task_block ]
+[v _handle `*S3 ~T0 @X0 1 r1 ]
+[f ]
+[; ;task.c: 33: handle->state = task_state_blocked;
+"33
+[e = . *U _handle 2 . `E44 2 ]
+[; ;task.c: 34: }
+"34
+[e :UE 351 ]
+}
+"36
+[; ;task.c: 36: asm("GLOBAL _task_block");
+[; <" GLOBAL _task_block ;# ">

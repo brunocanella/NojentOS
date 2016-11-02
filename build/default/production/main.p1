@@ -1,4 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
+"11 kernel/linked_list.h
+[s S348 `*S348 1 `*v 1 ]
+[n S348 linked_list_s next data ]
+"14 kernel/semaphore.h
+[s S350 `c 1 `*S348 1 ]
+[n S350 semaphore_s value queue ]
 "2251 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
 [s S111 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S111 . TRISD0 TRISD1 TRISD2 TRISD3 TRISD4 TRISD5 TRISD6 TRISD7 ]
@@ -27,7 +33,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S25 . . . . . ]
 "668
 [v _PORTDbits `VS25 ~T0 @X0 0 e@3971 ]
-"1394
+"19 kernel/semaphore.h
+[v _semaphore_init `(v ~T0 @X0 0 ef2`*S350`c ]
+"1394 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
 [s S78 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S78 . LATD0 LATD1 LATD2 LATD3 LATD4 LATD5 LATD6 LATD7 ]
 "1404
@@ -62,13 +70,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "43 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18.h
 [v ___nop `(v ~T0 @X0 0 ef ]
 [p i ___nop ]
+"20 kernel/semaphore.h
+[v _semaphore_wait `(v ~T0 @X0 0 ef1`*S350 ]
+"21
+[v _semaphore_signal `(v ~T0 @X0 0 ef1`*S350 ]
 [p mainexit ]
-"16 nojentOS.h
+"17 nojentOS.h
 [v _nojo_init `(v ~T0 @X0 0 ef ]
 [v F3221 `(v ~T0 @X0 0 tf ]
 "26 kernel/task.h
 [v _task_create `(v ~T0 @X0 0 ef3`ui`ui`*F3221 ]
-"18 nojentOS.h
+"19 nojentOS.h
 [v _nojo_start `(v ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -3112,7 +3124,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
+[; ;task.h: 32: void task_block( task_t* handle );
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
+[; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
 [; ;dispatcher.h: 17: typedef struct dispatcher_s {
 [; ;dispatcher.h: 18: task_t tasks[3];
@@ -3124,184 +3138,239 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 26: void dispatcher_start();
 [; ;dispatcher.h: 28: task_t* dispatcher_add_task();
 [; ;dispatcher.h: 30: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 32: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 34: extern task_t idle;
-[; ;nojentOS.h: 16: void nojo_init();
-[; ;nojentOS.h: 18: void nojo_start();
-"14 main.c
-[v _task_1 `(v ~T0 @X0 1 sf ]
-{
-[; ;main.c: 14: static void task_1() {
-[e :U _task_1 ]
-[f ]
-[; ;main.c: 15: TRISDbits.RD0 = 0;
-"15
-[e = . . _TRISDbits 1 0 -> -> 0 `i `uc ]
-[; ;main.c: 16: PORTDbits.RD0 = 0;
+[; ;dispatcher.h: 32: void dispatcher_change_context( task_state_t task_state );
+[; ;dispatcher.h: 34: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 36: extern task_t idle;
+[; ;linked_list.h: 6: struct linked_list_s;
+[; ;linked_list.h: 8: typedef struct linked_list_s linked_list_t;
+"10 kernel/linked_list.h
+[p p 1 ]
+[; ;linked_list.h: 11: struct linked_list_s {
+[; ;linked_list.h: 12: linked_list_t* next;
+[; ;linked_list.h: 13: pointer_t data;
+[; ;linked_list.h: 14: };
 "16
+[p p 1 ]
+[; ;linked_list.h: 17: typedef struct linked_list_head_data_s {
+[; ;linked_list.h: 18: uint8_t size;
+[; ;linked_list.h: 19: linked_list_t* last;
+[; ;linked_list.h: 20: } linked_list_head_data_t;
+[; ;linked_list.h: 22: int8_t linked_list_create( linked_list_t** a_head );
+[; ;linked_list.h: 24: int8_t linked_list_insert( linked_list_t* a_head, pointer_t a_data );
+[; ;linked_list.h: 28: int8_t linked_list_remove_last( linked_list_t* a_head );
+[; ;linked_list.h: 30: int8_t linked_list_remove_first( linked_list_t* a_head );
+[; ;linked_list.h: 32: int8_t linked_list_remove_all( linked_list_t* a_head );
+[; ;linked_list.h: 34: pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index );
+[; ;linked_list.h: 36: pointer_t linked_list_get_last( linked_list_t* a_head );
+[; ;linked_list.h: 38: pointer_t linked_list_get_first( linked_list_t* a_head );
+[; ;linked_list.h: 40: uint8_t linked_list_get_size( linked_list_t* a_head );
+[; ;semaphore.h: 14: typedef struct semaphore_s {
+[; ;semaphore.h: 15: int8_t value;
+[; ;semaphore.h: 16: linked_list_t* queue;
+[; ;semaphore.h: 17: } semaphore_t;
+[; ;semaphore.h: 19: void semaphore_init( semaphore_t* handle, int8_t initial_value );
+[; ;semaphore.h: 20: void semaphore_wait( semaphore_t* handle );
+[; ;semaphore.h: 21: void semaphore_signal( semaphore_t* handle );
+[; ;nojentOS.h: 17: void nojo_init();
+[; ;nojentOS.h: 19: void nojo_start();
+"41 main.c
+[v _g_sem_1 `S350 ~T0 @X0 1 e ]
+[; ;main.c: 41: semaphore_t g_sem_1;
+"42
+[v _g_sem_2 `S350 ~T0 @X0 1 e ]
+[; ;main.c: 42: semaphore_t g_sem_2;
+"45
+[v _task_1_priority `(v ~T0 @X0 1 sf ]
+{
+[; ;main.c: 45: static void task_1_priority() {
+[e :U _task_1_priority ]
+[f ]
+[; ;main.c: 46: TRISDbits.RD0 = 0;
+"46
+[e = . . _TRISDbits 1 0 -> -> 0 `i `uc ]
+[; ;main.c: 47: PORTDbits.RD0 = 0;
+"47
 [e = . . _PORTDbits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 17: while(1) {
-"17
-[e :U 350 ]
-{
-[; ;main.c: 18: PORTDbits.RD0 = !LATDbits.LATD0;
-"18
-[e = . . _PORTDbits 0 0 -> -> ! != -> . . _LATDbits 0 0 `i -> -> -> 0 `i `Vuc `i `i `uc ]
-[; ;main.c: 19: for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
-"19
-{
-[v _i `ui ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 352  ]
-[e $U 353  ]
-[e :U 352 ]
-{
-[e ( ___nop ..  ]
-}
-[e ++ _i -> -> 1 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 352  ]
+[; ;main.c: 49: semaphore_init( &g_sem_1, 0 );
+"49
+[e ( _semaphore_init (2 , &U _g_sem_1 -> -> 0 `i `c ]
+[; ;main.c: 50: semaphore_init( &g_sem_2, 0 );
+"50
+[e ( _semaphore_init (2 , &U _g_sem_2 -> -> 0 `i `c ]
+[; ;main.c: 52: while(1) {
+"52
 [e :U 353 ]
-}
-"20
-}
-[e :U 349 ]
-"17
-[e $U 350  ]
-[e :U 351 ]
-[; ;main.c: 20: }
-[; ;main.c: 21: }
-"21
-[e :UE 348 ]
-}
-"23
-[v _task_2 `(v ~T0 @X0 1 sf ]
 {
-[; ;main.c: 23: static void task_2() {
-[e :U _task_2 ]
-[f ]
-[; ;main.c: 24: TRISDbits.RD1 = 0;
-"24
-[e = . . _TRISDbits 1 1 -> -> 0 `i `uc ]
-[; ;main.c: 25: PORTDbits.RD1 = 0;
-"25
-[e = . . _PORTDbits 0 1 -> -> 0 `i `uc ]
-[; ;main.c: 26: while(1) {
-"26
-[e :U 357 ]
-{
-[; ;main.c: 27: PORTDbits.RD1 = !LATDbits.LATD1;
-"27
-[e = . . _PORTDbits 0 1 -> -> ! != -> . . _LATDbits 0 1 `i -> -> -> 0 `i `Vuc `i `i `uc ]
-[; ;main.c: 28: for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
-"28
+[; ;main.c: 53: PORTDbits.RD0 = !LATDbits.LATD0;
+"53
+[e = . . _PORTDbits 0 0 -> -> ! != -> . . _LATDbits 0 0 `i -> -> -> 0 `i `Vuc `i `i `uc ]
+[; ;main.c: 54: for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
+"54
 {
 [v _i `ui ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 359  ]
-[e $U 360  ]
-[e :U 359 ]
+[e $ < -> _i `l -> 60000 `l 355  ]
+[e $U 356  ]
+[e :U 355 ]
 {
 [e ( ___nop ..  ]
 }
 [e ++ _i -> -> 1 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 359  ]
-[e :U 360 ]
-}
-"29
-}
+[e $ < -> _i `l -> 60000 `l 355  ]
 [e :U 356 ]
-"26
-[e $U 357  ]
-[e :U 358 ]
-[; ;main.c: 29: }
-[; ;main.c: 30: }
-"30
-[e :UE 355 ]
 }
-"32
-[v _task_3 `(v ~T0 @X0 1 sf ]
+[; ;main.c: 55: semaphore_wait( &g_sem_1 );
+"55
+[e ( _semaphore_wait (1 &U _g_sem_1 ]
+"56
+}
+[e :U 352 ]
+"52
+[e $U 353  ]
+[e :U 354 ]
+[; ;main.c: 56: }
+[; ;main.c: 57: }
+"57
+[e :UE 351 ]
+}
+"59
+[v _task_2_priority `(v ~T0 @X0 1 sf ]
 {
-[; ;main.c: 32: static void task_3() {
-[e :U _task_3 ]
+[; ;main.c: 59: static void task_2_priority() {
+[e :U _task_2_priority ]
 [f ]
-[; ;main.c: 33: TRISDbits.RD2 = 0;
-"33
-[e = . . _TRISDbits 1 2 -> -> 0 `i `uc ]
-[; ;main.c: 34: PORTDbits.RD2 = 0;
-"34
-[e = . . _PORTDbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 35: while(1) {
-"35
-[e :U 364 ]
+[; ;main.c: 60: TRISDbits.RD1 = 0;
+"60
+[e = . . _TRISDbits 1 1 -> -> 0 `i `uc ]
+[; ;main.c: 61: PORTDbits.RD1 = 0;
+"61
+[e = . . _PORTDbits 0 1 -> -> 0 `i `uc ]
+[; ;main.c: 62: while(1) {
+"62
+[e :U 360 ]
 {
-[; ;main.c: 36: PORTDbits.RD2 = !LATDbits.LATD2;
-"36
-[e = . . _PORTDbits 0 2 -> -> ! != -> . . _LATDbits 0 2 `i -> -> -> 0 `i `Vuc `i `i `uc ]
-[; ;main.c: 37: for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
-"37
+[; ;main.c: 63: PORTDbits.RD1 = !LATDbits.LATD1;
+"63
+[e = . . _PORTDbits 0 1 -> -> ! != -> . . _LATDbits 0 1 `i -> -> -> 0 `i `Vuc `i `i `uc ]
+[; ;main.c: 64: for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
+"64
 {
 [v _i `ui ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 366  ]
-[e $U 367  ]
-[e :U 366 ]
+[e $ < -> _i `l -> 60000 `l 362  ]
+[e $U 363  ]
+[e :U 362 ]
 {
 [e ( ___nop ..  ]
 }
 [e ++ _i -> -> 1 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 366  ]
-[e :U 367 ]
-}
-"38
-}
+[e $ < -> _i `l -> 60000 `l 362  ]
 [e :U 363 ]
-"35
-[e $U 364  ]
-[e :U 365 ]
-[; ;main.c: 38: }
-[; ;main.c: 39: }
-"39
-[e :UE 362 ]
 }
-"41
+[; ;main.c: 65: semaphore_wait( &g_sem_2 );
+"65
+[e ( _semaphore_wait (1 &U _g_sem_2 ]
+[; ;main.c: 66: semaphore_signal( &g_sem_1 );
+"66
+[e ( _semaphore_signal (1 &U _g_sem_1 ]
+"67
+}
+[e :U 359 ]
+"62
+[e $U 360  ]
+[e :U 361 ]
+[; ;main.c: 67: }
+[; ;main.c: 68: }
+"68
+[e :UE 358 ]
+}
+"70
+[v _task_3_priority `(v ~T0 @X0 1 sf ]
+{
+[; ;main.c: 70: static void task_3_priority() {
+[e :U _task_3_priority ]
+[f ]
+[; ;main.c: 71: TRISDbits.RD2 = 0;
+"71
+[e = . . _TRISDbits 1 2 -> -> 0 `i `uc ]
+[; ;main.c: 72: PORTDbits.RD2 = 0;
+"72
+[e = . . _PORTDbits 0 2 -> -> 0 `i `uc ]
+[; ;main.c: 73: while(1) {
+"73
+[e :U 367 ]
+{
+[; ;main.c: 74: PORTDbits.RD2 = !LATDbits.LATD2;
+"74
+[e = . . _PORTDbits 0 2 -> -> ! != -> . . _LATDbits 0 2 `i -> -> -> 0 `i `Vuc `i `i `uc ]
+[; ;main.c: 75: for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
+"75
+{
+[v _i `ui ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `ui ]
+[e $ < -> _i `l -> 60000 `l 369  ]
+[e $U 370  ]
+[e :U 369 ]
+{
+[e ( ___nop ..  ]
+}
+[e ++ _i -> -> 1 `i `ui ]
+[e $ < -> _i `l -> 60000 `l 369  ]
+[e :U 370 ]
+}
+[; ;main.c: 76: semaphore_signal( &g_sem_2 );
+"76
+[e ( _semaphore_signal (1 &U _g_sem_2 ]
+"77
+}
+[e :U 366 ]
+"73
+[e $U 367  ]
+[e :U 368 ]
+[; ;main.c: 77: }
+[; ;main.c: 78: }
+"78
+[e :UE 365 ]
+}
+"80
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 41: void main(void) {
+[; ;main.c: 80: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 43: nojo_init();
-"43
+[; ;main.c: 82: nojo_init();
+"82
 [e ( _nojo_init ..  ]
-[; ;main.c: 45: asm("GLOBAL _task_1, _task_2, _task_3, _task_idle_callback");
-"45
-[; <" GLOBAL _task_1, _task_2, _task_3, _task_idle_callback ;# ">
-[; ;main.c: 47: task_create( 1, 200, task_1 );
-"47
-[e ( _task_create (3 , , -> -> 1 `i `ui -> -> 200 `i `ui &U _task_1 ]
-[; ;main.c: 48: task_create( 2, 100, task_2 );
-"48
-[e ( _task_create (3 , , -> -> 2 `i `ui -> -> 100 `i `ui &U _task_2 ]
-[; ;main.c: 49: task_create( 3, 50, task_3 );
-"49
-[e ( _task_create (3 , , -> -> 3 `i `ui -> -> 50 `i `ui &U _task_3 ]
-[; ;main.c: 51: nojo_start();
-"51
+[; ;main.c: 85: asm("GLOBAL _task_1_priority, _task_2_priority, _task_3_priority, _task_idle_callback");
+"85
+[; <" GLOBAL _task_1_priority, _task_2_priority, _task_3_priority, _task_idle_callback ;# ">
+[; ;main.c: 87: task_create( 1, 200, task_1_priority );
+"87
+[e ( _task_create (3 , , -> -> 1 `i `ui -> -> 200 `i `ui &U _task_1_priority ]
+[; ;main.c: 88: task_create( 2, 100, task_2_priority );
+"88
+[e ( _task_create (3 , , -> -> 2 `i `ui -> -> 100 `i `ui &U _task_2_priority ]
+[; ;main.c: 89: task_create( 3, 50, task_3_priority );
+"89
+[e ( _task_create (3 , , -> -> 3 `i `ui -> -> 50 `i `ui &U _task_3_priority ]
+[; ;main.c: 91: nojo_start();
+"91
 [e ( _nojo_start ..  ]
-[; ;main.c: 53: while(1) {
-"53
-[e :U 371 ]
+[; ;main.c: 93: while(1) {
+"93
+[e :U 374 ]
 {
-[; ;main.c: 54: asm("nop");
-"54
+[; ;main.c: 94: asm("nop");
+"94
 [; <" nop ;# ">
-"55
+"95
 }
-[e :U 370 ]
-"53
-[e $U 371  ]
-[e :U 372 ]
-[; ;main.c: 55: }
-[; ;main.c: 56: }
-"56
-[e :UE 369 ]
+[e :U 373 ]
+"93
+[e $U 374  ]
+[e :U 375 ]
+[; ;main.c: 95: }
+[; ;main.c: 96: }
+"96
+[e :UE 372 ]
 }

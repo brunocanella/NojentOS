@@ -4027,7 +4027,7 @@ typedef void (*function_ptr_t)(void);
 
 # 16 "kernel/task_context.h"
 typedef struct task_context_stack_s {
-uint24_t values[31];
+uint24_t values[10];
 uint8_t size;
 } task_context_stack_t;
 
@@ -4059,10 +4059,12 @@ void task_ready( task_t* handle );
 
 void task_running( task_t* handle );
 
+void task_block( task_t* handle );
+
 # 13 "kernel/scheduler.h"
 typedef task_t* (*scheduler_function_ptr_t)(void);
 
-
+task_t* scheduler_priority();
 
 task_t* scheduler_round_robin();
 
@@ -4081,6 +4083,8 @@ void dispatcher_start();
 task_t* dispatcher_add_task();
 
 void dispatcher_change_context_isr();
+
+void dispatcher_change_context( task_state_t task_state );
 
 extern dispatcher_t dispatcher;
 
@@ -4104,14 +4108,18 @@ asm("nop");
 
 void dispatcher_init() {
 dispatcher.size = 0;
-dispatcher.callback = scheduler_round_robin;
+
+
+
+dispatcher.callback = scheduler_priority;
+
 
 idle.id = 255;
 idle.priority = 0;
 idle.state = task_state_ready;
 idle.callback = task_idle_callback;
 
-# 32
+# 36
 dispatcher.running = &idle;
 }
 
@@ -4125,7 +4133,7 @@ dispatcher.size++;
 return task;
 }
 
-# 48
+# 52
 void dispatcher_change_context_isr() {
 
 task_t* next = dispatcher.callback();
@@ -4135,4 +4143,23 @@ task_ready( dispatcher.running );
 dispatcher.running = next;
 
 task_running( dispatcher.running );
+}
+
+void dispatcher_change_context( task_state_t task_state ) {
+
+do{ INTCONbits.GIE = 0; }while(0);
+
+do { task_t* task = (dispatcher.running); if( task == ((void*)0) ) { break; } task_context_t* context = &(task->context); context->work = WREG; context->bsr = BSR; context->status = STATUS; task_context_stack_t* stack = &context->stack; while( STKPTR > 0 ) { uint8_t i = stack->size++; stack->values[i] = TOS; asm("POP"); } } while(0);
+
+dispatcher.running->state = task_state;
+
+task_t* next = dispatcher.callback();
+
+dispatcher.running = next;
+
+task_running( dispatcher.running );
+
+do { task_t* task = (dispatcher.running); if( task == ((void*)0) ) { break; } task_context_t* context = &(task->context); WREG = context->work; BSR = context->bsr; STATUS = context->status; task_context_stack_t* stack = &context->stack; while( stack->size > 0 ) { uint8_t i = --stack->size; asm("PUSH"); TOS = stack->values[i]; } } while(0);
+
+do{ INTCONbits.GIE = 1; }while(0);
 }

@@ -4032,7 +4032,7 @@ void timer0_isr();
 
 # 16 "kernel/task_context.h"
 typedef struct task_context_stack_s {
-uint24_t values[31];
+uint24_t values[10];
 uint8_t size;
 } task_context_stack_t;
 
@@ -4064,10 +4064,12 @@ void task_ready( task_t* handle );
 
 void task_running( task_t* handle );
 
+void task_block( task_t* handle );
+
 # 13 "kernel/scheduler.h"
 typedef task_t* (*scheduler_function_ptr_t)(void);
 
-
+task_t* scheduler_priority();
 
 task_t* scheduler_round_robin();
 
@@ -4087,11 +4089,60 @@ task_t* dispatcher_add_task();
 
 void dispatcher_change_context_isr();
 
+void dispatcher_change_context( task_state_t task_state );
+
 extern dispatcher_t dispatcher;
 
 extern task_t idle;
 
-# 16 "nojentOS.h"
+# 6 "kernel/linked_list.h"
+struct linked_list_s;
+
+typedef struct linked_list_s linked_list_t;
+
+#pragma pack(1)
+struct linked_list_s {
+linked_list_t* next;
+pointer_t data;
+};
+
+#pragma pack(1)
+typedef struct linked_list_head_data_s {
+uint8_t size;
+linked_list_t* last;
+} linked_list_head_data_t;
+
+int8_t linked_list_create( linked_list_t** a_head );
+
+int8_t linked_list_insert( linked_list_t* a_head, pointer_t a_data );
+
+
+
+int8_t linked_list_remove_last( linked_list_t* a_head );
+
+int8_t linked_list_remove_first( linked_list_t* a_head );
+
+int8_t linked_list_remove_all( linked_list_t* a_head );
+
+pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index );
+
+pointer_t linked_list_get_last( linked_list_t* a_head );
+
+pointer_t linked_list_get_first( linked_list_t* a_head );
+
+uint8_t linked_list_get_size( linked_list_t* a_head );
+
+# 14 "kernel/semaphore.h"
+typedef struct semaphore_s {
+int8_t value;
+linked_list_t* queue;
+} semaphore_t;
+
+void semaphore_init( semaphore_t* handle, int8_t initial_value );
+void semaphore_wait( semaphore_t* handle );
+void semaphore_signal( semaphore_t* handle );
+
+# 17 "nojentOS.h"
 void nojo_init();
 
 void nojo_start();

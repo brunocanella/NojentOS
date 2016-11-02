@@ -12,6 +12,7 @@
 #include "kernel/timers.h"
 
 #include "kernel/dispatcher.h"
+#include "kernel/semaphore.h"
 
 void nojo_init();
 

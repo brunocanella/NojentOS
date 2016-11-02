@@ -29,9 +29,12 @@ void task_running( task_t* handle ) {
     handle->state = task_state_running;
 }
 
-//void task_block( task_t* handle ) {
-//    handle->state = task_state_blocked;    
-//}
+void task_block( task_t* handle ) {
+    handle->state = task_state_blocked;    
+}
+
+asm("GLOBAL _task_block");
+
 //
 //void task_delay( task_t* handle ) {
 //    task_block(handle);

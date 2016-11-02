@@ -159,6 +159,11 @@ pointer_t linked_list_get_first( linked_list_t* a_head ){
     return a_head->next->data;
 }
 
+uint8_t linked_list_get_size( linked_list_t* a_head ) {
+    linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+    return l_head_data->size;
+}
+
 #ifdef DEBUG_LINUX
 void linked_list_print_all_uint8( linked_list_t* a_head ){
     linked_list_t* tmp = a_head->next;

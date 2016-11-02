@@ -2,18 +2,21 @@
 
 #include "dispatcher.h"
 
-//task_t* scheduler_priority() {
-//    task_t* next = &idle;
-//    
-//    for( int i = 0; i < dispatcher.tasks; i++ ) {
-//        if( ( dispatcher.tasks[i].state != task_state_blocked )
-//        && ( next->priority < dispatcher.tasks[i].priority ) ) {
-//            next = &dispatcher.tasks[i];
-//        }
-//    }
-//    
-//    return next;
-//}
+task_t* scheduler_priority() {
+    // De inicio, a A principio, a proxima tarefa a executar será a idle (mas em tese, não deve ser ela nunca.)
+    task_t* highest = &idle;
+    // Procura agora em todas as tarefas, qual é a tarefa de maior prioridade.
+    for( int i = 0; i < dispatcher.size; i++ ) {
+        // Separa a tarefa atual
+        task_t* current = &dispatcher.tasks[i];
+        // current == ready && current > highest
+        if( ( current->state == task_state_ready ) && ( highest->priority < current->priority ) ) {
+            highest = current;
+        }
+    }
+    // Retorna a tarefa de maior prioridade que está pronta para rodar.
+    return highest;
+}
 
 task_t* scheduler_round_robin() {
     int offset = -1;
@@ -39,8 +42,3 @@ task_t* scheduler_round_robin() {
     
     return next;
 }
-
-//task_t* scheduler_priority_rr() {
-//    
-//    return NULL;
-//}

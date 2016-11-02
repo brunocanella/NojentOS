@@ -39,9 +39,13 @@
 #define ERROR_MALLOC_NULL -1
 /**Tentou remover com a lista vazia*/
 #define ERROR_LIST_REMOVE_EMPTY -2
- /**Tentou remover item foram do tamanho da lista*/
- #define ERROR_LIST_OUT_OF_RANGE -3
+/**Tentou remover item foram do tamanho da lista*/
+#define ERROR_LIST_OUT_OF_RANGE -3
  
+#define SCHEDULER_ROUND_ROBIN 0
+#define SCHEDULER_PRIORITY    1
+
+#define SCHEDULER SCHEDULER_PRIORITY
 
 #endif	/* DEFINES_H */
 

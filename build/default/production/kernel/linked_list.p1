@@ -66,6 +66,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;linked_list.h: 34: pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index );
 [; ;linked_list.h: 36: pointer_t linked_list_get_last( linked_list_t* a_head );
 [; ;linked_list.h: 38: pointer_t linked_list_get_first( linked_list_t* a_head );
+[; ;linked_list.h: 40: uint8_t linked_list_get_size( linked_list_t* a_head );
 [; ;__size_t.h: 4: typedef unsigned size_t;
 [; ;stdarg.h: 7: typedef void * va_list[1];
 [; ;stdarg.h: 10: extern void * __va_start(void);
@@ -515,4 +516,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;linked_list.c: 160: }
 "160
 [e :UE 35 ]
+}
+"162
+[v _linked_list_get_size `(uc ~T0 @X0 1 ef1`*S1 ]
+{
+[; ;linked_list.c: 162: uint8_t linked_list_get_size( linked_list_t* a_head ) {
+[e :U _linked_list_get_size ]
+[v _a_head `*S1 ~T0 @X0 1 r1 ]
+[f ]
+"163
+[v _l_head_data `*S2 ~T0 @X0 1 a ]
+[; ;linked_list.c: 163: linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+[e = _l_head_data -> . *U _a_head 1 `*S2 ]
+[; ;linked_list.c: 164: return l_head_data->size;
+"164
+[e ) . *U _l_head_data 0 ]
+[e $UE 36  ]
+[; ;linked_list.c: 165: }
+"165
+[e :UE 36 ]
 }

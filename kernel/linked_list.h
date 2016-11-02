@@ -37,6 +37,8 @@ pointer_t linked_list_get_last( linked_list_t* a_head ); //ok
 
 pointer_t linked_list_get_first( linked_list_t* a_head ); //ok
 
+uint8_t linked_list_get_size( linked_list_t* a_head ); //ok?
+
 #ifdef DEBUG_LINUX
 void linked_list_print_all_uint8( linked_list_t* a_head ); //ok
 #endif

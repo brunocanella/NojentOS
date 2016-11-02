@@ -1,10 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"18 kernel/scheduler.c
+"5 kernel/scheduler.c
 [c E44 0 1 2 .. ]
 [n E44 task_state_e task_state_ready task_state_running task_state_blocked  ]
 [v F32 `(v ~T0 @X0 0 tf ]
 "16 kernel/task_context.h
-[s S1 `um -> 31 `i `uc 1 ]
+[s S1 `um -> 10 `i `uc 1 ]
 [n S1 task_context_stack_s values size ]
 "21
 [s S2 `uc 1 `uc 1 `uc 1 `S1 1 ]
@@ -12,14 +12,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18 kernel/task.h
 [s S3 `ui 1 `ui 1 `E44 1 `*F32 1 `S2 1 ]
 [n S3 task_s id priority state callback context ]
-[v F65 `(*S3 ~T0 @X0 0 tf ]
-"17 kernel/dispatcher.h
-[s S347 `S3 -> 3 `i `uc 1 `*S3 1 `*F65 1 ]
-[n S347 dispatcher_s tasks size running callback ]
-"32
-[v _dispatcher `S347 ~T0 @X0 0 e ]
-"34
+"36 kernel/dispatcher.h
 [v _idle `S3 ~T0 @X0 0 e ]
+[v F67 `(*S3 ~T0 @X0 0 tf ]
+"17
+[s S347 `S3 -> 3 `i `uc 1 `*S3 1 `*F67 1 ]
+[n S347 dispatcher_s tasks size running callback ]
+"34
+[v _dispatcher `S347 ~T0 @X0 0 e ]
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -56,7 +56,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 18: typedef void* pointer_t;
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
 [; ;task_context.h: 16: typedef struct task_context_stack_s {
-[; ;task_context.h: 17: uint24_t values[31];
+[; ;task_context.h: 17: uint24_t values[10];
 [; ;task_context.h: 18: uint8_t size;
 [; ;task_context.h: 19: } task_context_stack_t;
 [; ;task_context.h: 21: typedef struct task_context_s {
@@ -80,7 +80,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
+[; ;task.h: 32: void task_block( task_t* handle );
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
+[; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
 "51 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
@@ -3057,95 +3059,147 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 26: void dispatcher_start();
 [; ;dispatcher.h: 28: task_t* dispatcher_add_task();
 [; ;dispatcher.h: 30: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 32: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 34: extern task_t idle;
-"18 kernel/scheduler.c
-[v _scheduler_round_robin `(*S3 ~T0 @X0 1 ef ]
+[; ;dispatcher.h: 32: void dispatcher_change_context( task_state_t task_state );
+[; ;dispatcher.h: 34: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 36: extern task_t idle;
+"5 kernel/scheduler.c
+[v _scheduler_priority `(*S3 ~T0 @X0 1 ef ]
 {
-[; ;scheduler.c: 18: task_t* scheduler_round_robin() {
-[e :U _scheduler_round_robin ]
+[; ;scheduler.c: 5: task_t* scheduler_priority() {
+[e :U _scheduler_priority ]
 [f ]
-"19
-[v _offset `i ~T0 @X0 1 a ]
-[; ;scheduler.c: 19: int offset = -1;
-[e = _offset -U -> 1 `i ]
-[; ;scheduler.c: 20: for( int i = 0; i < 3; i++ ) {
-"20
+"7
+[v _highest `*S3 ~T0 @X0 1 a ]
+[; ;scheduler.c: 7: task_t* highest = &idle;
+[e = _highest &U _idle ]
+[; ;scheduler.c: 9: for( int i = 0; i < dispatcher.size; i++ ) {
+"9
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 3 `i 349  ]
-[e $U 350  ]
+[e $U 352  ]
 [e :U 349 ]
 {
-[; ;scheduler.c: 21: if( (&dispatcher.tasks[i]) == dispatcher.running ) {
-"21
-[e $ ! == &U *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux . _dispatcher 2 352  ]
+"11
+[v _current `*S3 ~T0 @X0 1 a ]
+[; ;scheduler.c: 11: task_t* current = &dispatcher.tasks[i];
+[e = _current &U *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
+[; ;scheduler.c: 13: if( ( current->state == task_state_ready ) && ( highest->priority < current->priority ) ) {
+"13
+[e $ ! && == -> . *U _current 2 `i -> . `E44 0 `i < . *U _highest 1 . *U _current 1 353  ]
 {
-[; ;scheduler.c: 22: offset = i;
-"22
-[e = _offset _i ]
-[; ;scheduler.c: 23: break;
-"23
-[e $U 350  ]
-"24
+[; ;scheduler.c: 14: highest = current;
+"14
+[e = _highest _current ]
+"15
 }
-[e :U 352 ]
-"25
+[e :U 353 ]
+"16
 }
-"20
+"9
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 3 `i 349  ]
+[e :U 352 ]
+[e $ < _i -> . _dispatcher 1 `i 349  ]
 [e :U 350 ]
-"25
+"16
 }
-"29
-[v _next `*S3 ~T0 @X0 1 a ]
-[; ;scheduler.c: 24: }
-[; ;scheduler.c: 25: }
-[; ;scheduler.c: 29: task_t* next = &idle;
-[e = _next &U _idle ]
-[; ;scheduler.c: 30: for( int i = 0; i < 3; i++ ) {
-"30
+[; ;scheduler.c: 15: }
+[; ;scheduler.c: 16: }
+[; ;scheduler.c: 18: return highest;
+"18
+[e ) _highest ]
+[e $UE 348  ]
+[; ;scheduler.c: 19: }
+"19
+[e :UE 348 ]
+}
+"21
+[v _scheduler_round_robin `(*S3 ~T0 @X0 1 ef ]
+{
+[; ;scheduler.c: 21: task_t* scheduler_round_robin() {
+[e :U _scheduler_round_robin ]
+[f ]
+"22
+[v _offset `i ~T0 @X0 1 a ]
+[; ;scheduler.c: 22: int offset = -1;
+[e = _offset -U -> 1 `i ]
+[; ;scheduler.c: 23: for( int i = 0; i < 3; i++ ) {
+"23
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 3 `i 353  ]
-[e $U 354  ]
-[e :U 353 ]
+[e $ < _i -> 3 `i 355  ]
+[e $U 356  ]
+[e :U 355 ]
 {
-"33
-[v _j `i ~T0 @X0 1 a ]
-[; ;scheduler.c: 33: int j = (offset+1+i) % 3;
-[e = _j % + + _offset -> 1 `i _i -> 3 `i ]
-[; ;scheduler.c: 34: if( dispatcher.tasks[j].state == task_state_ready ) {
-"34
-[e $ ! == -> . *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E44 0 `i 356  ]
+[; ;scheduler.c: 24: if( (&dispatcher.tasks[i]) == dispatcher.running ) {
+"24
+[e $ ! == &U *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux . _dispatcher 2 358  ]
 {
-[; ;scheduler.c: 35: next = &dispatcher.tasks[j];
-"35
-[e = _next &U *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
-[; ;scheduler.c: 36: break;
-"36
-[e $U 354  ]
-"37
+[; ;scheduler.c: 25: offset = i;
+"25
+[e = _offset _i ]
+[; ;scheduler.c: 26: break;
+"26
+[e $U 356  ]
+"27
 }
-[e :U 356 ]
-"38
+[e :U 358 ]
+"28
 }
-"30
+"23
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 3 `i 353  ]
-[e :U 354 ]
-"38
+[e $ < _i -> 3 `i 355  ]
+[e :U 356 ]
+"28
 }
-[; ;scheduler.c: 37: }
-[; ;scheduler.c: 38: }
-[; ;scheduler.c: 40: return next;
+"32
+[v _next `*S3 ~T0 @X0 1 a ]
+[; ;scheduler.c: 27: }
+[; ;scheduler.c: 28: }
+[; ;scheduler.c: 32: task_t* next = &idle;
+[e = _next &U _idle ]
+[; ;scheduler.c: 33: for( int i = 0; i < 3; i++ ) {
+"33
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 3 `i 359  ]
+[e $U 360  ]
+[e :U 359 ]
+{
+"36
+[v _j `i ~T0 @X0 1 a ]
+[; ;scheduler.c: 36: int j = (offset+1+i) % 3;
+[e = _j % + + _offset -> 1 `i _i -> 3 `i ]
+[; ;scheduler.c: 37: if( dispatcher.tasks[j].state == task_state_ready ) {
+"37
+[e $ ! == -> . *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E44 0 `i 362  ]
+{
+[; ;scheduler.c: 38: next = &dispatcher.tasks[j];
+"38
+[e = _next &U *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
+[; ;scheduler.c: 39: break;
+"39
+[e $U 360  ]
 "40
-[e ) _next ]
-[e $UE 348  ]
-[; ;scheduler.c: 41: }
+}
+[e :U 362 ]
 "41
-[e :UE 348 ]
+}
+"33
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 3 `i 359  ]
+[e :U 360 ]
+"41
+}
+[; ;scheduler.c: 40: }
+[; ;scheduler.c: 41: }
+[; ;scheduler.c: 43: return next;
+"43
+[e ) _next ]
+[e $UE 354  ]
+[; ;scheduler.c: 44: }
+"44
+[e :UE 354 ]
 }

@@ -29,6 +29,8 @@ task_t* dispatcher_add_task();
 
 void dispatcher_change_context_isr();
 
+void dispatcher_change_context( task_state_t task_state );
+
 extern dispatcher_t dispatcher;
 
 extern task_t idle;
