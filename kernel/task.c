@@ -2,6 +2,8 @@
 
 #include "dispatcher.h"
 
+#include "memory.h"
+
 void task_create( uint16_t id, uint16_t priority, function_ptr_t callback ) {
     
     
@@ -12,10 +14,11 @@ void task_create( uint16_t id, uint16_t priority, function_ptr_t callback ) {
     handle->callback = callback;
     
     // Quando criar a tarefa, inicia o contexto dela com o próprio endereço da tarefa.
-    handle->context.work = WREG;
-    handle->context.bsr = BSR;
-    handle->context.status = STATUS;
+    handle->context.work = 0;
+    handle->context.bsr = 0;
+    handle->context.status = 0;
     handle->context.stack.size = 1;
+    handle->context.stack.values = (uint24_t*)malloc(sizeof(uint24_t));
     handle->context.stack.values[0] = (uint24_t)callback;    
     
     task_ready( handle );

@@ -7,12 +7,13 @@
 #define	DISPATCHER_H
 
 #ifndef TASKS_MAX
-#define TASKS_MAX 3
+#define TASKS_MAX 4
 #endif//TASKS_MAX
 
 #include <pic18f4520.h>
 #include "task.h"
 #include "scheduler.h"
+#include "memory.h"
 
 typedef struct dispatcher_s {
     task_t tasks[TASKS_MAX];
@@ -33,6 +34,8 @@ extern dispatcher_t dispatcher;
 
 extern task_t idle;
 
+#define STACK_VALUE() (STKPTR & 0b11111)
+
 #define CONTEXT_SAVE(TASK)                                                      \
 do {                                                                            \
     task_t* task = (TASK);                                                      \
@@ -41,8 +44,10 @@ do {                                                                            
     context->work = WREG;                                                       \
     context->bsr = BSR;                                                         \
     context->status = STATUS;                                                   \
-    task_context_stack_t* stack = &context->stack;                              \
-    while( STKPTR > 0 ) {                                                       \
+    free(context->stack.values);                                                \
+    context->stack.values = (uint24_t*)malloc(sizeof(uint24_t) * STACK_VALUE());\
+    task_context_stack_t* stack = &(context->stack);                            \
+    while( STACK_VALUE() > 0 ) {                                                \
         uint8_t i = stack->size++;                                              \
         stack->values[i] = TOS;                                                 \
         POP();                                                                  \
@@ -57,12 +62,13 @@ do {                                                                            
     WREG = context->work;                                                       \
     BSR = context->bsr;                                                         \
     STATUS = context->status;                                                   \
-    task_context_stack_t* stack = &context->stack;                              \
+    task_context_stack_t* stack = &(context->stack);                            \
     while( stack->size > 0 ) {                                                  \
         uint8_t i = --stack->size;                                              \
         PUSH();                                                                 \
         TOS = stack->values[i];                                                 \
     }                                                                           \
+    free(context->stack.values);                                                \
 } while(0)
 
 

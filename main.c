@@ -9,6 +9,9 @@
 // Config tem que vir antes de NojentOS, pois os defines dele sobrescrevem valores do SO.
 #include "config.h"
 
+#include "../NojentOS/kernel/linked_list.h"
+#include "../NojentOS/kernel/memory.h"
+
 #include "nojentOS.h"
 
 static void task_1() {
@@ -38,15 +41,25 @@ static void task_3() {
     }
 }
 
+static void task_4() {
+    TRISDbits.RD3 = OUTPUT;
+    PORTDbits.RD3 = LOW;
+    while(TRUE) {
+        PORTDbits.RD3 = !LATDbits.LATD3;
+        for( uint16_t i = 0; i < 60000; i++ ) { NOP(); }
+    }
+}
+
 void main(void) {
     
     nojo_init();
     
-    asm("GLOBAL _task_1, _task_2, _task_3, _task_idle_callback");
+    asm("GLOBAL _task_1, _task_2, _task_3, _task_4, _task_idle_callback");
     
     task_create( 1, 200, task_1 );
     task_create( 2, 100, task_2 );
     task_create( 3,  50, task_3 );
+    task_create( 4, 400, task_4 );
     
     nojo_start();
     

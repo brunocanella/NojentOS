@@ -6,4 +6,5 @@ kernel/task_context.h  \
 kernel/scheduler.h  \
 kernel/task.h  \
 kernel/dispatcher.h  \
+kernel/memory.h  \
 kernel/defines.h 

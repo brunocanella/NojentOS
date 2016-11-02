@@ -14,7 +14,7 @@
 #endif//STACK_LEVEL_MAX
 
 typedef struct task_context_stack_s {
-    uint24_t values[STACK_LEVEL_MAX];
+    uint24_t* values;
     uint8_t size;
 } task_context_stack_t;
 

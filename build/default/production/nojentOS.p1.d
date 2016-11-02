@@ -8,5 +8,6 @@ kernel/scheduler.h  \
 kernel/task.h  \
 kernel/dispatcher.h  \
 kernel/timers.h  \
+kernel/memory.h  \
 kernel/defines.h  \
 kernel/interrutps.h 
