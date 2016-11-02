@@ -1,0 +1,391 @@
+Version 3.2 HI-TECH Software Intermediate Code
+"4 kernel/memory.c
+[s S2 `ui 1 `*S2 1 `uc 1 ]
+[n S2 block_s size next free_block ]
+"20
+[v __find_free_block `(*S2 ~T0 @X0 0 ef1`ui ]
+"21
+[v __split_free_block `(v ~T0 @X0 0 ef2`*S2`ui ]
+"22
+[v __merge_free_blocks `(v ~T0 @X0 0 ef ]
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stdarg.h: 7: typedef void * va_list[1];
+[; ;stdarg.h: 10: extern void * __va_start(void);
+[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
+[; ;stdio.h: 43: struct __prbuf
+[; ;stdio.h: 44: {
+[; ;stdio.h: 45: char * ptr;
+[; ;stdio.h: 46: void (* func)(char);
+[; ;stdio.h: 47: };
+[; ;errno.h: 29: extern int errno;
+[; ;conio.h: 12: extern void init_uart(void);
+[; ;conio.h: 14: extern char getch(void);
+[; ;conio.h: 15: extern char getche(void);
+[; ;conio.h: 16: extern void putch(char);
+[; ;conio.h: 17: extern void ungetch(char);
+[; ;conio.h: 19: extern __bit kbhit(void);
+[; ;conio.h: 23: extern char * cgets(char *);
+[; ;conio.h: 24: extern void cputs(const char *);
+[; ;stdio.h: 88: extern int cprintf(char *, ...);
+[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+[; ;stdio.h: 183: extern char * gets(char *);
+[; ;stdio.h: 184: extern int puts(const char *);
+[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
+[; ;stdio.h: 195: extern int printf(const char *, ...);
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
+[; ;types.h: 11: typedef unsigned char byte;
+[; ;types.h: 13: typedef byte uint8_t;
+[; ;types.h: 14: typedef unsigned int uint16_t;
+[; ;types.h: 15: typedef unsigned short long uint24_t;
+[; ;types.h: 16: typedef unsigned long uint32_t;
+[; ;types.h: 18: typedef void* pointer_t;
+[; ;types.h: 20: typedef void (*function_ptr_t)(void);
+[; ;memory.h: 10: extern byte _heap[512];
+[; ;memory.h: 13: void* malloc( size_t size );
+[; ;memory.h: 15: void free( void* a_pointer );
+[; ;memory.h: 17: typedef struct block_s block_t;
+"3 kernel/memory.c
+[p p 1 ]
+[; ;memory.c: 4: struct block_s {
+[; ;memory.c: 5: size_t size;
+[; ;memory.c: 6: block_t* next;
+[; ;memory.c: 7: byte free_block;
+[; ;memory.c: 8: };
+"13
+[v _s_heap `uc ~T0 @X0 -> 512 `i e ]
+[; ;memory.c: 13: byte s_heap[512];
+"15
+[v _s_blocks `*S2 ~T0 @X0 1 e ]
+[i _s_blocks
+-> -> 0 `i `*S2
+]
+[; ;memory.c: 15: block_t* s_blocks = (0);
+[; ;memory.c: 20: block_t* _find_free_block( size_t a_size );
+[; ;memory.c: 21: void _split_free_block( block_t* a_block, size_t a_resize );
+[; ;memory.c: 22: void _merge_free_blocks();
+"25
+[v _malloc `(*v ~T0 @X0 1 ef1`ui ]
+{
+[; ;memory.c: 25: void* malloc( size_t a_size ) {
+[e :U _malloc ]
+[v _a_size `ui ~T0 @X0 1 r1 ]
+[f ]
+[; ;memory.c: 26: if( a_size == 0 ) {
+"26
+[e $ ! == _a_size -> -> 0 `i `ui 4  ]
+{
+[; ;memory.c: 27: return (0);
+"27
+[e ) -> -> 0 `i `*v ]
+[e $UE 3  ]
+"28
+}
+[e :U 4 ]
+"29
+[v _l_block `*S2 ~T0 @X0 1 a ]
+[; ;memory.c: 28: }
+[; ;memory.c: 29: block_t* l_block = s_blocks;
+[e = _l_block _s_blocks ]
+[; ;memory.c: 31: if( l_block == (0) ) {
+"31
+[e $ ! == _l_block -> -> 0 `i `*S2 5  ]
+{
+[; ;memory.c: 32: s_blocks = (block_t*)s_heap;
+"32
+[e = _s_blocks -> &U _s_heap `*S2 ]
+[; ;memory.c: 33: l_block = s_blocks;
+"33
+[e = _l_block _s_blocks ]
+"34
+}
+[; ;memory.c: 34: } else {
+[e $U 6  ]
+[e :U 5 ]
+{
+"36
+[v _l_free `*S2 ~T0 @X0 1 a ]
+[; ;memory.c: 36: block_t* l_free = _find_free_block( a_size );
+[e = _l_free ( __find_free_block (1 _a_size ]
+[; ;memory.c: 37: if( l_free ) {
+"37
+[e $ ! != _l_free -> -> 0 `i `*S2 7  ]
+{
+[; ;memory.c: 39: if( ( a_size + sizeof(block_t) ) < l_free->size ) {
+"39
+[e $ ! < + _a_size -> # `S2 `ui . *U _l_free 0 8  ]
+{
+[; ;memory.c: 41: _split_free_block( l_free, a_size );
+"41
+[e ( __split_free_block (2 , _l_free _a_size ]
+"42
+}
+[e :U 8 ]
+[; ;memory.c: 42: }
+[; ;memory.c: 44: l_block = l_free;
+"44
+[e = _l_block _l_free ]
+[; ;memory.c: 45: l_block->free_block = 0;
+"45
+[e = . *U _l_block 2 -> -> 0 `i `uc ]
+[; ;memory.c: 46: return l_block + 1;
+"46
+[e ) -> + _l_block * -> -> 1 `i `x -> -> # *U _l_block `i `x `*v ]
+[e $UE 3  ]
+"47
+}
+[; ;memory.c: 47: } else {
+[e $U 9  ]
+[e :U 7 ]
+{
+"49
+[v _l_offset `ui ~T0 @X0 1 a ]
+[; ;memory.c: 49: size_t l_offset = sizeof(block_t) + l_block->size;
+[e = _l_offset + -> # `S2 `ui . *U _l_block 0 ]
+[; ;memory.c: 50: while( l_block->next != (0) ) {
+"50
+[e $U 10  ]
+[e :U 11 ]
+{
+[; ;memory.c: 51: l_offset += sizeof(block_t) + l_block->next->size;
+"51
+[e =+ _l_offset + -> # `S2 `ui . *U . *U _l_block 1 0 ]
+[; ;memory.c: 52: l_block = l_block->next;
+"52
+[e = _l_block . *U _l_block 1 ]
+"53
+}
+[e :U 10 ]
+"50
+[e $ != . *U _l_block 1 -> -> 0 `i `*S2 11  ]
+[e :U 12 ]
+[; ;memory.c: 53: }
+[; ;memory.c: 55: if( ( sizeof(block_t) + l_offset + a_size ) >= 512 ) {
+"55
+[e $ ! >= + + -> # `S2 `ui _l_offset _a_size -> -> 512 `i `ui 13  ]
+{
+[; ;memory.c: 57: return (0);
+"57
+[e ) -> -> 0 `i `*v ]
+[e $UE 3  ]
+"58
+}
+[e :U 13 ]
+"60
+[v _l_previous `*S2 ~T0 @X0 1 a ]
+[; ;memory.c: 58: }
+[; ;memory.c: 60: block_t* l_previous = l_block;
+[e = _l_previous _l_block ]
+[; ;memory.c: 61: l_block = (block_t*)(&s_heap[l_offset]);
+"61
+[e = _l_block -> &U *U + &U _s_heap * -> _l_offset `ux -> -> # *U &U _s_heap `ui `ux `*S2 ]
+[; ;memory.c: 62: l_previous->next = l_block;
+"62
+[e = . *U _l_previous 1 _l_block ]
+"63
+}
+[e :U 9 ]
+"64
+}
+[e :U 6 ]
+[; ;memory.c: 63: }
+[; ;memory.c: 64: }
+[; ;memory.c: 66: l_block->size = a_size;
+"66
+[e = . *U _l_block 0 _a_size ]
+[; ;memory.c: 67: l_block->free_block = 0;
+"67
+[e = . *U _l_block 2 -> -> 0 `i `uc ]
+[; ;memory.c: 68: l_block->next = (0);
+"68
+[e = . *U _l_block 1 -> -> 0 `i `*S2 ]
+[; ;memory.c: 70: return l_block + 1;
+"70
+[e ) -> + _l_block * -> -> 1 `i `x -> -> # *U _l_block `i `x `*v ]
+[e $UE 3  ]
+[; ;memory.c: 71: }
+"71
+[e :UE 3 ]
+}
+"73
+[v _free `(v ~T0 @X0 1 ef1`*v ]
+{
+[; ;memory.c: 73: void free( void* a_pointer ) {
+[e :U _free ]
+[v _a_pointer `*v ~T0 @X0 1 r1 ]
+[f ]
+[; ;memory.c: 75: if( a_pointer == (0) ) {
+"75
+[e $ ! == _a_pointer -> -> 0 `i `*v 15  ]
+{
+[; ;memory.c: 76: return;
+"76
+[e $UE 14  ]
+"77
+}
+[e :U 15 ]
+"79
+[v _l_block `*S2 ~T0 @X0 1 a ]
+[; ;memory.c: 77: }
+[; ;memory.c: 79: block_t* l_block = ((block_t*) a_pointer ) - 1;
+[e = _l_block - -> _a_pointer `*S2 * -> -> 1 `i `x -> -> # *U -> _a_pointer `*S2 `i `x ]
+[; ;memory.c: 82: l_block->free_block = 1;
+"82
+[e = . *U _l_block 2 -> -> 1 `i `uc ]
+[; ;memory.c: 84: _merge_free_blocks();
+"84
+[e ( __merge_free_blocks ..  ]
+[; ;memory.c: 85: }
+"85
+[e :UE 14 ]
+}
+"93
+[v __find_free_block `(*S2 ~T0 @X0 1 ef1`ui ]
+{
+[; ;memory.c: 93: block_t* _find_free_block( size_t a_size ) {
+[e :U __find_free_block ]
+[v _a_size `ui ~T0 @X0 1 r1 ]
+[f ]
+"94
+[v _l_current `*S2 ~T0 @X0 1 a ]
+[; ;memory.c: 94: block_t* l_current = s_blocks;
+[e = _l_current _s_blocks ]
+[; ;memory.c: 96: while( l_current && ( l_current->free_block == 0 || l_current->size < a_size ) ) {
+"96
+[e $U 17  ]
+[e :U 18 ]
+{
+[; ;memory.c: 98: l_current = l_current->next;
+"98
+[e = _l_current . *U _l_current 1 ]
+"99
+}
+[e :U 17 ]
+"96
+[e $ && != _l_current -> -> 0 `i `*S2 || == -> . *U _l_current 2 `i -> 0 `i < . *U _l_current 0 _a_size 18  ]
+[e :U 19 ]
+[; ;memory.c: 99: }
+[; ;memory.c: 101: return l_current;
+"101
+[e ) _l_current ]
+[e $UE 16  ]
+[; ;memory.c: 102: }
+"102
+[e :UE 16 ]
+}
+"104
+[v __split_free_block `(v ~T0 @X0 1 ef2`*S2`ui ]
+{
+[; ;memory.c: 104: void _split_free_block( block_t* a_block, size_t a_resize ) {
+[e :U __split_free_block ]
+[v _a_block `*S2 ~T0 @X0 1 r1 ]
+[v _a_resize `ui ~T0 @X0 1 r2 ]
+[f ]
+"106
+[v _l_new `*S2 ~T0 @X0 1 a ]
+[; ;memory.c: 106: block_t* l_new = (block_t*)(((char*)a_block) + sizeof(block_t) + a_resize);
+[e = _l_new -> + + -> _a_block `*uc * -> -> # `S2 `ui `ux -> -> # *U -> _a_block `*uc `ui `ux * -> _a_resize `ux -> -> # *U + -> _a_block `*uc * -> -> # `S2 `ui `ux -> -> # *U -> _a_block `*uc `ui `ux `ui `ux `*S2 ]
+[; ;memory.c: 108: l_new->size = a_block->size - ( a_resize + sizeof(block_t) );
+"108
+[e = . *U _l_new 0 - . *U _a_block 0 + _a_resize -> # `S2 `ui ]
+[; ;memory.c: 110: l_new->free_block = 1;
+"110
+[e = . *U _l_new 2 -> -> 1 `i `uc ]
+[; ;memory.c: 113: l_new->next = a_block->next;
+"113
+[e = . *U _l_new 1 . *U _a_block 1 ]
+[; ;memory.c: 115: a_block->next = l_new;
+"115
+[e = . *U _a_block 1 _l_new ]
+[; ;memory.c: 117: a_block->size = a_resize;
+"117
+[e = . *U _a_block 0 _a_resize ]
+[; ;memory.c: 118: }
+"118
+[e :UE 20 ]
+}
+"120
+[v __merge_free_blocks `(v ~T0 @X0 1 ef ]
+{
+[; ;memory.c: 120: void _merge_free_blocks() {
+[e :U __merge_free_blocks ]
+[f ]
+"123
+[v _l_curr `*S2 ~T0 @X0 1 a ]
+[; ;memory.c: 123: block_t* l_curr = s_blocks;
+[e = _l_curr _s_blocks ]
+[; ;memory.c: 126: while( l_curr ) {
+"126
+[e $U 22  ]
+[e :U 23 ]
+{
+"128
+[v _l_next `*S2 ~T0 @X0 1 a ]
+[; ;memory.c: 128: block_t* l_next = l_curr->next;
+[e = _l_next . *U _l_curr 1 ]
+[; ;memory.c: 130: if( l_curr && l_curr->free_block && l_next && l_next->free_block ) {
+"130
+[e $ ! && && && != _l_curr -> -> 0 `i `*S2 != -> . *U _l_curr 2 `i -> -> -> 0 `i `uc `i != _l_next -> -> 0 `i `*S2 != -> . *U _l_next 2 `i -> -> -> 0 `i `uc `i 25  ]
+{
+[; ;memory.c: 132: l_curr->size += sizeof(block_t) + l_next->size;
+"132
+[e =+ . *U _l_curr 0 + -> # `S2 `ui . *U _l_next 0 ]
+[; ;memory.c: 134: l_curr->next = l_next->next;
+"134
+[e = . *U _l_curr 1 . *U _l_next 1 ]
+"137
+}
+[; ;memory.c: 137: } else {
+[e $U 26  ]
+[e :U 25 ]
+{
+[; ;memory.c: 139: l_curr = l_curr->next;
+"139
+[e = _l_curr . *U _l_curr 1 ]
+"140
+}
+[e :U 26 ]
+"141
+}
+[e :U 22 ]
+"126
+[e $ != _l_curr -> -> 0 `i `*S2 23  ]
+[e :U 24 ]
+[; ;memory.c: 140: }
+[; ;memory.c: 141: }
+[; ;memory.c: 142: }
+"142
+[e :UE 21 ]
+}

@@ -1,0 +1,316 @@
+
+# 1 "kernel/memory.c"
+
+# 4 "/home/bruno/Programs/microchip/xc8/v1.37/include/__size_t.h"
+typedef unsigned size_t;
+
+# 7 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 29 "/home/bruno/Programs/microchip/xc8/v1.37/include/errno.h"
+extern int errno;
+
+# 12 "/home/bruno/Programs/microchip/xc8/v1.37/include/conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 13 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdint.h"
+typedef signed char int8_t;
+
+# 20
+typedef signed int int16_t;
+
+# 28
+typedef signed short long int int24_t;
+
+# 36
+typedef signed long int int32_t;
+
+# 43
+typedef unsigned char uint8_t;
+
+# 49
+typedef unsigned int uint16_t;
+
+# 56
+typedef unsigned short long int uint24_t;
+
+# 63
+typedef unsigned long int uint32_t;
+
+# 71
+typedef signed char int_least8_t;
+
+# 78
+typedef signed int int_least16_t;
+
+# 90
+typedef signed short long int int_least24_t;
+
+# 98
+typedef signed long int int_least32_t;
+
+# 105
+typedef unsigned char uint_least8_t;
+
+# 111
+typedef unsigned int uint_least16_t;
+
+# 121
+typedef unsigned short long int uint_least24_t;
+
+# 128
+typedef unsigned long int uint_least32_t;
+
+# 137
+typedef signed char int_fast8_t;
+
+# 144
+typedef signed int int_fast16_t;
+
+# 156
+typedef signed short long int int_fast24_t;
+
+# 164
+typedef signed long int int_fast32_t;
+
+# 171
+typedef unsigned char uint_fast8_t;
+
+# 177
+typedef unsigned int uint_fast16_t;
+
+# 187
+typedef unsigned short long int uint_fast24_t;
+
+# 194
+typedef unsigned long int uint_fast32_t;
+
+# 200
+typedef int32_t intmax_t;
+
+
+
+
+typedef uint32_t uintmax_t;
+
+
+
+
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+
+# 11 "kernel/types.h"
+typedef unsigned char byte;
+
+typedef byte uint8_t;
+typedef unsigned int uint16_t;
+typedef unsigned short long uint24_t;
+typedef unsigned long uint32_t;
+
+typedef void* pointer_t;
+
+typedef void (*function_ptr_t)(void);
+
+# 10 "kernel/memory.h"
+extern byte _heap[512];
+
+
+void* malloc( size_t size );
+
+void free( void* a_pointer );
+
+typedef struct block_s block_t;
+
+
+# 3 "kernel/memory.c"
+#pragma pack(1)
+struct block_s {
+size_t size;
+block_t* next;
+byte free_block;
+};
+
+
+
+
+byte s_heap[512];
+
+block_t* s_blocks = (0);
+
+
+
+
+block_t* _find_free_block( size_t a_size );
+void _split_free_block( block_t* a_block, size_t a_resize );
+void _merge_free_blocks();
+
+
+void* malloc( size_t a_size ) {
+if( a_size == 0 ) {
+return (0);
+}
+block_t* l_block = s_blocks;
+
+if( l_block == (0) ) {
+s_blocks = (block_t*)s_heap;
+l_block = s_blocks;
+} else {
+
+block_t* l_free = _find_free_block( a_size );
+if( l_free ) {
+
+if( ( a_size + sizeof(block_t) ) < l_free->size ) {
+
+_split_free_block( l_free, a_size );
+}
+
+l_block = l_free;
+l_block->free_block = 0;
+return l_block + 1;
+} else {
+
+size_t l_offset = sizeof(block_t) + l_block->size;
+while( l_block->next != (0) ) {
+l_offset += sizeof(block_t) + l_block->next->size;
+l_block = l_block->next;
+}
+
+if( ( sizeof(block_t) + l_offset + a_size ) >= 512 ) {
+
+return (0);
+}
+
+block_t* l_previous = l_block;
+l_block = (block_t*)(&s_heap[l_offset]);
+l_previous->next = l_block;
+}
+}
+
+l_block->size = a_size;
+l_block->free_block = 0;
+l_block->next = (0);
+
+return l_block + 1;
+}
+
+void free( void* a_pointer ) {
+
+if( a_pointer == (0) ) {
+return;
+}
+
+block_t* l_block = ((block_t*) a_pointer ) - 1;
+
+
+l_block->free_block = 1;
+
+_merge_free_blocks();
+}
+
+# 93
+block_t* _find_free_block( size_t a_size ) {
+block_t* l_current = s_blocks;
+
+while( l_current && ( l_current->free_block == 0 || l_current->size < a_size ) ) {
+
+l_current = l_current->next;
+}
+
+return l_current;
+}
+
+void _split_free_block( block_t* a_block, size_t a_resize ) {
+
+block_t* l_new = (block_t*)(((char*)a_block) + sizeof(block_t) + a_resize);
+
+l_new->size = a_block->size - ( a_resize + sizeof(block_t) );
+
+l_new->free_block = 1;
+
+
+l_new->next = a_block->next;
+
+a_block->next = l_new;
+
+a_block->size = a_resize;
+}
+
+void _merge_free_blocks() {
+
+
+block_t* l_curr = s_blocks;
+
+
+while( l_curr ) {
+
+block_t* l_next = l_curr->next;
+
+if( l_curr && l_curr->free_block && l_next && l_next->free_block ) {
+
+l_curr->size += sizeof(block_t) + l_next->size;
+
+l_curr->next = l_next->next;
+
+
+} else {
+
+l_curr = l_curr->next;
+}
+}
+}
+
