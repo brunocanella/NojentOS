@@ -9,9 +9,9 @@
 // Config tem que vir antes de NojentOS, pois os defines dele sobrescrevem valores do SO.
 #include "config.h"
 
-#include "../NojentOS/kernel/linked_list.h"
-#include "../NojentOS/kernel/memory.h"
-
+#include "kernel/linked_list.h"
+#include "kernel/memory.h"
+#include "kernel/message_queue.h"
 #include "nojentOS.h"
 
 static void task_1() {
@@ -51,6 +51,9 @@ static void task_4() {
 }
 
 void main(void) {
+    
+    message_queue_t descritor;
+    message_queue_init(&descritor);
     
     nojo_init();
     

@@ -63,6 +63,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v ___nop `(v ~T0 @X0 0 ef ]
 [p i ___nop ]
 [p mainexit ]
+"11 kernel/linked_list.h
+[s S344 `*S344 1 `*v 1 ]
+[n S344 linked_list_s next data ]
+"13 kernel/message_queue.h
+[v _message_queue_init `(c ~T0 @X0 0 ef1`**S344 ]
 "16 nojentOS.h
 [v _nojo_init `(v ~T0 @X0 0 ef ]
 [v F3221 `(v ~T0 @X0 0 tf ]
@@ -3087,7 +3092,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
 [; ;linked_list.h: 6: struct linked_list_s;
 [; ;linked_list.h: 8: typedef struct linked_list_s linked_list_t;
-"10 ../NojentOS/kernel/linked_list.h
+"10 kernel/linked_list.h
 [p p 1 ]
 [; ;linked_list.h: 11: struct linked_list_s {
 [; ;linked_list.h: 12: linked_list_t* next;
@@ -3137,10 +3142,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;memory.h: 10: extern byte _heap[1024];
+[; ;memory.h: 10: extern byte _heap[512];
 [; ;memory.h: 13: void* malloc( size_t size );
 [; ;memory.h: 15: void free( void* a_pointer );
 [; ;memory.h: 17: typedef struct block_s block_t;
+[; ;message_queue.h: 6: typedef linked_list_t* message_queue_t;
+[; ;message_queue.h: 7: typedef struct
+[; ;message_queue.h: 8: {
+[; ;message_queue.h: 9: uint8_t width;
+[; ;message_queue.h: 10: pointer_t data;
+[; ;message_queue.h: 11: }message_queue_node_t;
+[; ;message_queue.h: 13: int8_t message_queue_init(message_queue_t* descriptor);
+[; ;message_queue.h: 14: uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t size);
+[; ;message_queue.h: 15: uint8_t message_queue_write(message_queue_t descriptor, pointer_t buff, uint8_t size);
 [; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
 [; ;timers.h: 13: void timer0_isr();
 [; ;task_context.h: 16: typedef struct task_context_stack_s {
@@ -3198,7 +3212,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _PORTDbits 0 0 -> -> 0 `i `uc ]
 [; ;main.c: 20: while(1) {
 "20
-[e :U 354 ]
+[e :U 355 ]
 {
 [; ;main.c: 21: PORTDbits.RD0 = !LATDbits.LATD0;
 "21
@@ -3208,26 +3222,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [v _i `ui ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 356  ]
-[e $U 357  ]
-[e :U 356 ]
+[e $ < -> _i `l -> 60000 `l 357  ]
+[e $U 358  ]
+[e :U 357 ]
 {
 [e ( ___nop ..  ]
 }
 [e ++ _i -> -> 1 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 356  ]
-[e :U 357 ]
+[e $ < -> _i `l -> 60000 `l 357  ]
+[e :U 358 ]
 }
 "23
 }
-[e :U 353 ]
+[e :U 354 ]
 "20
-[e $U 354  ]
-[e :U 355 ]
+[e $U 355  ]
+[e :U 356 ]
 [; ;main.c: 23: }
 [; ;main.c: 24: }
 "24
-[e :UE 352 ]
+[e :UE 353 ]
 }
 "26
 [v _task_2 `(v ~T0 @X0 1 sf ]
@@ -3243,7 +3257,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _PORTDbits 0 1 -> -> 0 `i `uc ]
 [; ;main.c: 29: while(1) {
 "29
-[e :U 361 ]
+[e :U 362 ]
 {
 [; ;main.c: 30: PORTDbits.RD1 = !LATDbits.LATD1;
 "30
@@ -3253,26 +3267,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [v _i `ui ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 363  ]
-[e $U 364  ]
-[e :U 363 ]
+[e $ < -> _i `l -> 60000 `l 364  ]
+[e $U 365  ]
+[e :U 364 ]
 {
 [e ( ___nop ..  ]
 }
 [e ++ _i -> -> 1 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 363  ]
-[e :U 364 ]
+[e $ < -> _i `l -> 60000 `l 364  ]
+[e :U 365 ]
 }
 "32
 }
-[e :U 360 ]
+[e :U 361 ]
 "29
-[e $U 361  ]
-[e :U 362 ]
+[e $U 362  ]
+[e :U 363 ]
 [; ;main.c: 32: }
 [; ;main.c: 33: }
 "33
-[e :UE 359 ]
+[e :UE 360 ]
 }
 "35
 [v _task_3 `(v ~T0 @X0 1 sf ]
@@ -3288,7 +3302,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _PORTDbits 0 2 -> -> 0 `i `uc ]
 [; ;main.c: 38: while(1) {
 "38
-[e :U 368 ]
+[e :U 369 ]
 {
 [; ;main.c: 39: PORTDbits.RD2 = !LATDbits.LATD2;
 "39
@@ -3298,26 +3312,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [v _i `ui ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 370  ]
-[e $U 371  ]
-[e :U 370 ]
+[e $ < -> _i `l -> 60000 `l 371  ]
+[e $U 372  ]
+[e :U 371 ]
 {
 [e ( ___nop ..  ]
 }
 [e ++ _i -> -> 1 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 370  ]
-[e :U 371 ]
+[e $ < -> _i `l -> 60000 `l 371  ]
+[e :U 372 ]
 }
 "41
 }
-[e :U 367 ]
+[e :U 368 ]
 "38
-[e $U 368  ]
-[e :U 369 ]
+[e $U 369  ]
+[e :U 370 ]
 [; ;main.c: 41: }
 [; ;main.c: 42: }
 "42
-[e :UE 366 ]
+[e :UE 367 ]
 }
 "44
 [v _task_4 `(v ~T0 @X0 1 sf ]
@@ -3333,7 +3347,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _PORTDbits 0 3 -> -> 0 `i `uc ]
 [; ;main.c: 47: while(1) {
 "47
-[e :U 375 ]
+[e :U 376 ]
 {
 [; ;main.c: 48: PORTDbits.RD3 = !LATDbits.LATD3;
 "48
@@ -3343,26 +3357,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [v _i `ui ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 377  ]
-[e $U 378  ]
-[e :U 377 ]
+[e $ < -> _i `l -> 60000 `l 378  ]
+[e $U 379  ]
+[e :U 378 ]
 {
 [e ( ___nop ..  ]
 }
 [e ++ _i -> -> 1 `i `ui ]
-[e $ < -> _i `l -> 60000 `l 377  ]
-[e :U 378 ]
+[e $ < -> _i `l -> 60000 `l 378  ]
+[e :U 379 ]
 }
 "50
 }
-[e :U 374 ]
+[e :U 375 ]
 "47
-[e $U 375  ]
-[e :U 376 ]
+[e $U 376  ]
+[e :U 377 ]
 [; ;main.c: 50: }
 [; ;main.c: 51: }
 "51
-[e :UE 373 ]
+[e :UE 374 ]
 }
 "53
 [v _main `(v ~T0 @X0 1 ef ]
@@ -3370,42 +3384,48 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 53: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 55: nojo_init();
 "55
+[v _descritor `*S344 ~T0 @X0 1 a ]
+[; ;main.c: 55: message_queue_t descritor;
+[; ;main.c: 56: message_queue_init(&descritor);
+"56
+[e ( _message_queue_init (1 &U _descritor ]
+[; ;main.c: 58: nojo_init();
+"58
 [e ( _nojo_init ..  ]
-[; ;main.c: 57: asm("GLOBAL _task_1, _task_2, _task_3, _task_4, _task_idle_callback");
-"57
-[; <" GLOBAL _task_1, _task_2, _task_3, _task_4, _task_idle_callback ;# ">
-[; ;main.c: 59: task_create( 1, 200, task_1 );
-"59
-[e ( _task_create (3 , , -> -> 1 `i `ui -> -> 200 `i `ui &U _task_1 ]
-[; ;main.c: 60: task_create( 2, 100, task_2 );
+[; ;main.c: 60: asm("GLOBAL _task_1, _task_2, _task_3, _task_4, _task_idle_callback");
 "60
-[e ( _task_create (3 , , -> -> 2 `i `ui -> -> 100 `i `ui &U _task_2 ]
-[; ;main.c: 61: task_create( 3, 50, task_3 );
-"61
-[e ( _task_create (3 , , -> -> 3 `i `ui -> -> 50 `i `ui &U _task_3 ]
-[; ;main.c: 62: task_create( 4, 400, task_4 );
+[; <" GLOBAL _task_1, _task_2, _task_3, _task_4, _task_idle_callback ;# ">
+[; ;main.c: 62: task_create( 1, 200, task_1 );
 "62
-[e ( _task_create (3 , , -> -> 4 `i `ui -> -> 400 `i `ui &U _task_4 ]
-[; ;main.c: 64: nojo_start();
+[e ( _task_create (3 , , -> -> 1 `i `ui -> -> 200 `i `ui &U _task_1 ]
+[; ;main.c: 63: task_create( 2, 100, task_2 );
+"63
+[e ( _task_create (3 , , -> -> 2 `i `ui -> -> 100 `i `ui &U _task_2 ]
+[; ;main.c: 64: task_create( 3, 50, task_3 );
 "64
-[e ( _nojo_start ..  ]
-[; ;main.c: 66: while(1) {
-"66
-[e :U 382 ]
-{
-[; ;main.c: 67: asm("nop");
+[e ( _task_create (3 , , -> -> 3 `i `ui -> -> 50 `i `ui &U _task_3 ]
+[; ;main.c: 65: task_create( 4, 400, task_4 );
+"65
+[e ( _task_create (3 , , -> -> 4 `i `ui -> -> 400 `i `ui &U _task_4 ]
+[; ;main.c: 67: nojo_start();
 "67
-[; <" nop ;# ">
-"68
-}
-[e :U 381 ]
-"66
-[e $U 382  ]
-[e :U 383 ]
-[; ;main.c: 68: }
-[; ;main.c: 69: }
+[e ( _nojo_start ..  ]
+[; ;main.c: 69: while(1) {
 "69
-[e :UE 380 ]
+[e :U 383 ]
+{
+[; ;main.c: 70: asm("nop");
+"70
+[; <" nop ;# ">
+"71
+}
+[e :U 382 ]
+"69
+[e $U 383  ]
+[e :U 384 ]
+[; ;main.c: 71: }
+[; ;main.c: 72: }
+"72
+[e :UE 381 ]
 }

@@ -4013,6 +4013,34 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
+# 26 "/opt/microchip/xc8/v1.37/include/htc.h"
+extern const char __xc8_OPTIM_SPEED;
+
+extern double __fpnormalize(double);
+
+
+# 13 "/opt/microchip/xc8/v1.37/include/xc8debug.h"
+#pragma intrinsic(__builtin_software_breakpoint)
+extern void __builtin_software_breakpoint(void);
+
+# 18 "/opt/microchip/xc8/v1.37/include/pic18.h"
+__attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
+__attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
+
+
+# 42
+#pragma intrinsic(__nop)
+extern void __nop(void);
+
+
+# 156
+#pragma intrinsic(_delay)
+extern __nonreentrant void _delay(unsigned long);
+#pragma intrinsic(_delaywdt)
+extern __nonreentrant void _delaywdt(unsigned long);
+#pragma intrinsic(_delay3)
+extern __nonreentrant void _delay3(unsigned char);
+
 # 11 "kernel/types.h"
 typedef unsigned char byte;
 
@@ -4130,7 +4158,7 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 10 "kernel/memory.h"
-extern byte _heap[1024];
+extern byte _heap[512];
 
 
 void* malloc( size_t size );

@@ -4047,7 +4047,7 @@ typedef uint16_t uintptr_t;
 #pragma config OSC = INTIO7
 #pragma config PBADEN = 0
 
-# 11 "../NojentOS/kernel/types.h"
+# 11 "kernel/types.h"
 typedef unsigned char byte;
 
 typedef byte uint8_t;
@@ -4059,7 +4059,7 @@ typedef void* pointer_t;
 
 typedef void (*function_ptr_t)(void);
 
-# 6 "../NojentOS/kernel/linked_list.h"
+# 6 "kernel/linked_list.h"
 struct linked_list_s;
 
 typedef struct linked_list_s linked_list_t;
@@ -4157,8 +4157,8 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-# 10 "../NojentOS/kernel/memory.h"
-extern byte _heap[1024];
+# 10 "kernel/memory.h"
+extern byte _heap[512];
 
 
 void* malloc( size_t size );
@@ -4166,6 +4166,18 @@ void* malloc( size_t size );
 void free( void* a_pointer );
 
 typedef struct block_s block_t;
+
+# 6 "kernel/message_queue.h"
+typedef linked_list_t* message_queue_t;
+typedef struct
+{
+uint8_t width;
+pointer_t data;
+}message_queue_node_t;
+
+int8_t message_queue_init(message_queue_t* descriptor);
+uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t size);
+uint8_t message_queue_write(message_queue_t descriptor, pointer_t buff, uint8_t size);
 
 # 11 "kernel/timers.h"
 void timer0_init( uint16_t delay_us, function_ptr_t callback );
@@ -4276,6 +4288,9 @@ for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
 }
 
 void main(void) {
+
+message_queue_t descritor;
+message_queue_init(&descritor);
 
 nojo_init();
 

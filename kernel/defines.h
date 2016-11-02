@@ -7,6 +7,7 @@
 #define	DEFINES_H
 
 #include <stdint.h>
+#include <xc.h> 
 
 #ifndef NULL
 #define NULL ((void*)0)
