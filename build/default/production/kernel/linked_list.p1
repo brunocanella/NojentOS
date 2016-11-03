@@ -9,6 +9,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S2 linked_list_head_data_s size last ]
 "15 kernel/memory.h
 [v _free `(v ~T0 @X0 0 ef1`*v ]
+"36 kernel/linked_list.h
+[v _linked_list_get_last `(*v ~T0 @X0 0 ef1`*S1 ]
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -97,7 +99,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;memory.h: 10: extern byte _heap[512];
+[; ;memory.h: 10: extern byte _heap[1024];
 [; ;memory.h: 13: void* malloc( size_t size );
 [; ;memory.h: 15: void free( void* a_pointer );
 [; ;memory.h: 17: typedef struct block_s block_t;
@@ -108,7 +110,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _linked_list_create ]
 [v _a_head `**S1 ~T0 @X0 1 r1 ]
 [f ]
-[; ;linked_list.c: 11: (*a_head) = (linked_list_t*) malloc( sizeof( linked_list_t ) );
+[; ;linked_list.c: 11: *a_head = (linked_list_t*) malloc( sizeof( linked_list_t ) );
 "11
 [e = *U _a_head -> ( _malloc (1 -> # `S1 `ui `*S1 ]
 "13
@@ -411,110 +413,113 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;linked_list.c: 131: {
 "131
 {
-[; ;linked_list.c: 132: return_result = linked_list_remove_last(a_head);
+[; ;linked_list.c: 132: free(linked_list_get_last(a_head));
 "132
-[e = _return_result ( _linked_list_remove_last (1 _a_head ]
+[e ( _free (1 ( _linked_list_get_last (1 _a_head ]
+[; ;linked_list.c: 133: return_result = linked_list_remove_last(a_head);
 "133
+[e = _return_result ( _linked_list_remove_last (1 _a_head ]
+"134
 }
 [e :U 26 ]
 "130
 [e $ == -> _return_result `i -> 0 `i 27  ]
 [e :U 28 ]
-[; ;linked_list.c: 133: }
-[; ;linked_list.c: 134: return return_result;
-"134
+[; ;linked_list.c: 134: }
+[; ;linked_list.c: 135: return return_result;
+"135
 [e ) _return_result ]
 [e $UE 25  ]
-[; ;linked_list.c: 135: }
-"135
+[; ;linked_list.c: 136: }
+"136
 [e :UE 25 ]
 }
-"137
+"138
 [v _linked_list_get_by_index `(*v ~T0 @X0 1 ef2`*S1`ui ]
 {
-[; ;linked_list.c: 137: pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index ){
+[; ;linked_list.c: 138: pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index ){
 [e :U _linked_list_get_by_index ]
 [v _a_head `*S1 ~T0 @X0 1 r1 ]
 [v _a_index `ui ~T0 @X0 1 r2 ]
 [f ]
-"138
-[v _l_head_data `*S2 ~T0 @X0 1 a ]
-[; ;linked_list.c: 138: linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
-[e = _l_head_data -> . *U _a_head 1 `*S2 ]
-[; ;linked_list.c: 139: if (a_index >= l_head_data->size)
 "139
-[e $ ! >= _a_index -> . *U _l_head_data 0 `ui 30  ]
-[; ;linked_list.c: 140: return ((void*)0);
+[v _l_head_data `*S2 ~T0 @X0 1 a ]
+[; ;linked_list.c: 139: linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+[e = _l_head_data -> . *U _a_head 1 `*S2 ]
+[; ;linked_list.c: 140: if (a_index >= l_head_data->size)
 "140
+[e $ ! >= _a_index -> . *U _l_head_data 0 `ui 30  ]
+[; ;linked_list.c: 141: return ((void*)0);
+"141
 [e ) -> -> 0 `i `*v ]
 [e $UE 29  ]
 [e :U 30 ]
-"142
-[v _iterator_num `ui ~T0 @X0 1 a ]
-[; ;linked_list.c: 142: uint16_t iterator_num = 0;
-[e = _iterator_num -> -> 0 `i `ui ]
 "143
+[v _iterator_num `ui ~T0 @X0 1 a ]
+[; ;linked_list.c: 143: uint16_t iterator_num = 0;
+[e = _iterator_num -> -> 0 `i `ui ]
+"144
 [v _iterator_ptr `*S1 ~T0 @X0 1 a ]
-[; ;linked_list.c: 143: linked_list_t* iterator_ptr = a_head->next;
+[; ;linked_list.c: 144: linked_list_t* iterator_ptr = a_head->next;
 [e = _iterator_ptr . *U _a_head 0 ]
-[; ;linked_list.c: 145: while(iterator_num < a_index){
-"145
+[; ;linked_list.c: 146: while(iterator_num < a_index){
+"146
 [e $U 31  ]
 [e :U 32 ]
 {
-[; ;linked_list.c: 146: iterator_num++;
-"146
-[e ++ _iterator_num -> -> 1 `i `ui ]
-[; ;linked_list.c: 147: iterator_ptr = iterator_ptr->next;
+[; ;linked_list.c: 147: iterator_num++;
 "147
-[e = _iterator_ptr . *U _iterator_ptr 0 ]
+[e ++ _iterator_num -> -> 1 `i `ui ]
+[; ;linked_list.c: 148: iterator_ptr = iterator_ptr->next;
 "148
+[e = _iterator_ptr . *U _iterator_ptr 0 ]
+"149
 }
 [e :U 31 ]
-"145
+"146
 [e $ < _iterator_num _a_index 32  ]
 [e :U 33 ]
-[; ;linked_list.c: 148: }
-[; ;linked_list.c: 150: return iterator_ptr->data;
-"150
+[; ;linked_list.c: 149: }
+[; ;linked_list.c: 151: return iterator_ptr->data;
+"151
 [e ) . *U _iterator_ptr 1 ]
 [e $UE 29  ]
-[; ;linked_list.c: 151: }
-"151
+[; ;linked_list.c: 152: }
+"152
 [e :UE 29 ]
 }
-"153
+"154
 [v _linked_list_get_last `(*v ~T0 @X0 1 ef1`*S1 ]
 {
-[; ;linked_list.c: 153: pointer_t linked_list_get_last( linked_list_t* a_head ){
+[; ;linked_list.c: 154: pointer_t linked_list_get_last( linked_list_t* a_head ){
 [e :U _linked_list_get_last ]
 [v _a_head `*S1 ~T0 @X0 1 r1 ]
 [f ]
-"154
-[v _l_head_data `*S2 ~T0 @X0 1 a ]
-[; ;linked_list.c: 154: linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
-[e = _l_head_data -> . *U _a_head 1 `*S2 ]
-[; ;linked_list.c: 155: return l_head_data->last->data;
 "155
+[v _l_head_data `*S2 ~T0 @X0 1 a ]
+[; ;linked_list.c: 155: linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+[e = _l_head_data -> . *U _a_head 1 `*S2 ]
+[; ;linked_list.c: 156: return l_head_data->last->data;
+"156
 [e ) . *U . *U _l_head_data 1 1 ]
 [e $UE 34  ]
-[; ;linked_list.c: 156: }
-"156
+[; ;linked_list.c: 157: }
+"157
 [e :UE 34 ]
 }
-"158
+"159
 [v _linked_list_get_first `(*v ~T0 @X0 1 ef1`*S1 ]
 {
-[; ;linked_list.c: 158: pointer_t linked_list_get_first( linked_list_t* a_head ){
+[; ;linked_list.c: 159: pointer_t linked_list_get_first( linked_list_t* a_head ){
 [e :U _linked_list_get_first ]
 [v _a_head `*S1 ~T0 @X0 1 r1 ]
 [f ]
-[; ;linked_list.c: 159: return a_head->next->data;
-"159
+[; ;linked_list.c: 160: return a_head->next->data;
+"160
 [e ) . *U . *U _a_head 0 1 ]
 [e $UE 35  ]
-[; ;linked_list.c: 160: }
-"160
+[; ;linked_list.c: 161: }
+"161
 [e :UE 35 ]
 }
 "162

@@ -73,7 +73,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 16: typedef unsigned long uint32_t;
 [; ;types.h: 18: typedef void* pointer_t;
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
-[; ;memory.h: 10: extern byte _heap[512];
+[; ;memory.h: 10: extern byte _heap[1024];
 [; ;memory.h: 13: void* malloc( size_t size );
 [; ;memory.h: 15: void free( void* a_pointer );
 [; ;memory.h: 17: typedef struct block_s block_t;
@@ -85,8 +85,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;memory.c: 7: byte free_block;
 [; ;memory.c: 8: };
 "13
-[v _s_heap `uc ~T0 @X0 -> 512 `i e ]
-[; ;memory.c: 13: byte s_heap[512];
+[v _s_heap `uc ~T0 @X0 -> 1024 `i e ]
+[; ;memory.c: 13: byte s_heap[1024];
 "15
 [v _s_blocks `*S2 ~T0 @X0 1 e ]
 [i _s_blocks
@@ -192,9 +192,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ != . *U _l_block 1 -> -> 0 `i `*S2 11  ]
 [e :U 12 ]
 [; ;memory.c: 53: }
-[; ;memory.c: 55: if( ( sizeof(block_t) + l_offset + a_size ) >= 512 ) {
+[; ;memory.c: 55: if( ( sizeof(block_t) + l_offset + a_size ) >= 1024 ) {
 "55
-[e $ ! >= + + -> # `S2 `ui _l_offset _a_size -> -> 512 `i `ui 13  ]
+[e $ ! >= + + -> # `S2 `ui _l_offset _a_size -> -> 1024 `i `ui 13  ]
 {
 [; ;memory.c: 57: return (0);
 "57

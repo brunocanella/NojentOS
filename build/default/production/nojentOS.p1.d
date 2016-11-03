@@ -10,5 +10,6 @@ kernel/linked_list.h  \
 kernel/semaphore.h  \
 kernel/dispatcher.h  \
 kernel/timers.h  \
+kernel/memory.h  \
 kernel/defines.h  \
 kernel/interrutps.h 

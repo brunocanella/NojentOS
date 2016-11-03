@@ -32,8 +32,8 @@ void interrupt global_isr() {
             p_context->work = _WREG;                                                       
             p_context->bsr = _BSR;                                                         
             p_context->status = _STATUS;                                                   
-            task_context_stack_t* p_stack = &p_context->stack;                              
-            while( (STKPTR & 0b11111) > 0 ) {                                                       
+            task_context_stack_t* p_stack = &(p_context->stack);                              
+            while( STACK_VALUE() > 0 ) {                                                       
                 uint8_t i = p_stack->size++;                                                              
                 p_stack->values[i] = (TOSU << 16) | (TOSH << 8) | TOSL;                                                 
                 POP();                                                                                  
@@ -49,7 +49,7 @@ void interrupt global_isr() {
             _WREG = n_context->work;                                                       
             _BSR = n_context->bsr;                                                         
             _STATUS = n_context->status;                                                   
-            task_context_stack_t* n_stack = &n_context->stack;                              
+            task_context_stack_t* n_stack = &(n_context->stack);                              
             while( n_stack->size > 0 ) {                                                  
                 uint8_t i = --n_stack->size;   
                 PUSH();                                                                 

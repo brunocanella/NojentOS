@@ -1,1 +1,6 @@
-/dist/default/
+build/**/*
+debug/**/*
+disassembly/**
+dist/**
+doc/**
+*.orig

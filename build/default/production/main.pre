@@ -1,17 +1,17 @@
 
 # 1 "main.c"
 
-# 26 "/home/bruno/Programs/microchip/xc8/v1.37/include/htc.h"
+# 26 "/opt/microchip/xc8/v1.37/include/htc.h"
 extern const char __xc8_OPTIM_SPEED;
 
 extern double __fpnormalize(double);
 
 
-# 13 "/home/bruno/Programs/microchip/xc8/v1.37/include/xc8debug.h"
+# 13 "/opt/microchip/xc8/v1.37/include/xc8debug.h"
 #pragma intrinsic(__builtin_software_breakpoint)
 extern void __builtin_software_breakpoint(void);
 
-# 49 "/home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h"
+# 49 "/opt/microchip/xc8/v1.37/include/pic18f4520.h"
 extern volatile unsigned char PORTA @ 0xF80;
 
 asm("PORTA equ 0F80h");
@@ -3933,7 +3933,7 @@ extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 
 extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
 
-# 18 "/home/bruno/Programs/microchip/xc8/v1.37/include/pic18.h"
+# 18 "/opt/microchip/xc8/v1.37/include/pic18.h"
 __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
 __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
 
@@ -3951,7 +3951,7 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 13 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdint.h"
+# 13 "/opt/microchip/xc8/v1.37/include/stdint.h"
 typedef signed char int8_t;
 
 # 20
@@ -4047,7 +4047,7 @@ typedef uint16_t uintptr_t;
 #pragma config OSC = INTIO7
 #pragma config PBADEN = 0
 
-# 11 "kernel/types.h"
+# 11 "../NojentOS/kernel/types.h"
 typedef unsigned char byte;
 
 typedef byte uint8_t;
@@ -4059,77 +4059,7 @@ typedef void* pointer_t;
 
 typedef void (*function_ptr_t)(void);
 
-# 11 "kernel/timers.h"
-void timer0_init( uint16_t delay_us, function_ptr_t callback );
-
-void timer0_isr();
-
-# 16 "kernel/task_context.h"
-typedef struct task_context_stack_s {
-uint24_t values[31];
-uint8_t size;
-} task_context_stack_t;
-
-typedef struct task_context_s {
-byte work;
-byte bsr;
-byte status;
-task_context_stack_t stack;
-} task_context_t;
-
-# 12 "kernel/task.h"
-typedef enum task_state_e {
-task_state_ready,
-task_state_running,
-task_state_blocked
-} task_state_t;
-
-typedef struct task_s {
-uint16_t id;
-uint16_t priority;
-task_state_t state;
-function_ptr_t callback;
-task_context_t context;
-} task_t;
-
-void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
-
-void task_ready( task_t* handle );
-
-void task_running( task_t* handle );
-
-void task_block( task_t* handle );
-
-# 13 "kernel/scheduler.h"
-typedef task_t* (*scheduler_function_ptr_t)(void);
-
-task_t* scheduler_priority();
-
-task_t* scheduler_round_robin();
-
-# 17 "kernel/dispatcher.h"
-typedef struct dispatcher_s {
-task_t tasks[3];
-uint8_t size;
-task_t* running;
-scheduler_function_ptr_t callback;
-} dispatcher_t;
-
-void dispatcher_init();
-
-void dispatcher_start();
-
-task_t* dispatcher_add_task();
-
-void dispatcher_change_context_isr();
-
-void dispatcher_change_context( task_state_t task_state );
-
-extern dispatcher_t dispatcher;
-
-extern task_t idle;
-
-# 6 "kernel/linked_list.h"
+# 6 "../NojentOS/kernel/linked_list.h"
 struct linked_list_s;
 
 typedef struct linked_list_s linked_list_t;
@@ -4164,60 +4094,184 @@ pointer_t linked_list_get_last( linked_list_t* a_head );
 
 pointer_t linked_list_get_first( linked_list_t* a_head );
 
-uint8_t linked_list_get_size( linked_list_t* a_head );
+# 4 "/opt/microchip/xc8/v1.37/include/__size_t.h"
+typedef unsigned size_t;
 
-# 14 "kernel/semaphore.h"
-typedef struct semaphore_s {
-int8_t value;
-linked_list_t* queue;
-} semaphore_t;
+# 7 "/opt/microchip/xc8/v1.37/include/stdarg.h"
+typedef void * va_list[1];
 
-void semaphore_init( semaphore_t* handle, int8_t initial_value );
-void semaphore_wait( semaphore_t* handle );
-void semaphore_signal( semaphore_t* handle );
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
 
-# 17 "nojentOS.h"
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "/opt/microchip/xc8/v1.37/include/stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 29 "/opt/microchip/xc8/v1.37/include/errno.h"
+extern int errno;
+
+# 12 "/opt/microchip/xc8/v1.37/include/conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "/opt/microchip/xc8/v1.37/include/stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 10 "../NojentOS/kernel/memory.h"
+extern byte _heap[1024];
+
+
+void* malloc( size_t size );
+
+void free( void* a_pointer );
+
+typedef struct block_s block_t;
+
+# 11 "kernel/timers.h"
+void timer0_init( uint16_t delay_us, function_ptr_t callback );
+
+void timer0_isr();
+
+# 16 "kernel/task_context.h"
+typedef struct task_context_stack_s {
+uint24_t* values;
+uint8_t size;
+} task_context_stack_t;
+
+typedef struct task_context_s {
+byte work;
+byte bsr;
+byte status;
+task_context_stack_t stack;
+} task_context_t;
+
+# 12 "kernel/task.h"
+typedef enum task_state_e {
+task_state_ready,
+task_state_running,
+task_state_blocked
+} task_state_t;
+
+typedef struct task_s {
+uint16_t id;
+uint16_t priority;
+task_state_t state;
+function_ptr_t callback;
+task_context_t context;
+} task_t;
+
+void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
+
+void task_ready( task_t* handle );
+
+void task_running( task_t* handle );
+
+# 13 "kernel/scheduler.h"
+typedef task_t* (*scheduler_function_ptr_t)(void);
+
+
+
+task_t* scheduler_round_robin();
+
+# 18 "kernel/dispatcher.h"
+typedef struct dispatcher_s {
+task_t tasks[3];
+uint8_t size;
+task_t* running;
+scheduler_function_ptr_t callback;
+} dispatcher_t;
+
+void dispatcher_init();
+
+void dispatcher_start();
+
+task_t* dispatcher_add_task();
+
+void dispatcher_change_context_isr();
+
+extern dispatcher_t dispatcher;
+
+extern task_t idle;
+
+# 16 "nojentOS.h"
 void nojo_init();
 
 void nojo_start();
 
-# 41 "main.c"
-semaphore_t g_sem_1;
-semaphore_t g_sem_2;
-
-
-static void task_1_priority() {
+# 17 "main.c"
+static void task_1() {
 TRISDbits.RD0 = 0;
 PORTDbits.RD0 = 0;
-
-semaphore_init( &g_sem_1, 0 );
-semaphore_init( &g_sem_2, 0 );
-
 while(1) {
 PORTDbits.RD0 = !LATDbits.LATD0;
 for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
-semaphore_wait( &g_sem_1 );
 }
 }
 
-static void task_2_priority() {
+static void task_2() {
 TRISDbits.RD1 = 0;
 PORTDbits.RD1 = 0;
 while(1) {
 PORTDbits.RD1 = !LATDbits.LATD1;
 for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
-semaphore_wait( &g_sem_2 );
-semaphore_signal( &g_sem_1 );
 }
 }
 
-static void task_3_priority() {
+static void task_3() {
 TRISDbits.RD2 = 0;
 PORTDbits.RD2 = 0;
 while(1) {
 PORTDbits.RD2 = !LATDbits.LATD2;
 for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
-semaphore_signal( &g_sem_2 );
+}
+}
+
+static void task_4() {
+TRISDbits.RD3 = 0;
+PORTDbits.RD3 = 0;
+while(1) {
+PORTDbits.RD3 = !LATDbits.LATD3;
+for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
 }
 }
 
@@ -4225,12 +4279,12 @@ void main(void) {
 
 nojo_init();
 
+asm("GLOBAL _task_1, _task_2, _task_3, _task_4, _task_idle_callback");
 
-asm("GLOBAL _task_1_priority, _task_2_priority, _task_3_priority, _task_idle_callback");
-
-task_create( 1, 200, task_1_priority );
-task_create( 2, 100, task_2_priority );
-task_create( 3, 50, task_3_priority );
+task_create( 1, 200, task_1 );
+task_create( 2, 100, task_2 );
+task_create( 3, 50, task_3 );
+task_create( 4, 400, task_4 );
 
 nojo_start();
 

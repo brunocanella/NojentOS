@@ -27,11 +27,12 @@ void dispatcher_init() {
     idle.priority = 0;
     idle.state = task_state_ready;
     idle.callback = task_idle_callback;     
-//    idle.context.work = WREG;
-//    idle.context.bsr = BSR;
-//    idle.context.status = STATUS;
-//    idle.context.stack.size = 1;
-//    idle.context.stack.values[0] = (uint24_t)task_idle_callback;
+    //idle.context.work = 0;
+    //idle.context.bsr = 0;
+    //idle.context.status = 0;
+    idle.context.stack.size = 1;
+    idle.context.stack.values = (uint24_t*)malloc(sizeof(uint24_t)); 
+    idle.context.stack.values[0] = (uint24_t)task_idle_callback;
     
     dispatcher.running = &idle;
 }

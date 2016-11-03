@@ -8,7 +8,7 @@
 #endif
 
 int8_t linked_list_create( linked_list_t** a_head ) {
-    (*a_head) = (linked_list_t*) malloc( sizeof( linked_list_t ) );
+    *a_head = (linked_list_t*) malloc( sizeof( linked_list_t ) );
     
     linked_list_head_data_t* l_head_data = (linked_list_head_data_t*) malloc( sizeof(linked_list_head_data_t) );
     
@@ -129,6 +129,7 @@ int8_t linked_list_remove_all( linked_list_t* a_head ) {
     int8_t return_result = ERROR_NONE;
     while (return_result == ERROR_NONE)
     {
+        free(linked_list_get_last(a_head));
         return_result = linked_list_remove_last(a_head);
     }
     return return_result;

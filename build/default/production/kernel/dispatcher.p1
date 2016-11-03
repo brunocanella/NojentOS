@@ -4,7 +4,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n E3210 task_state_e task_state_ready task_state_running task_state_blocked  ]
 [v F3198 `(v ~T0 @X0 0 tf ]
 "16 kernel/task_context.h
-[s S344 `um -> 10 `i `uc 1 ]
+[s S344 `*um 1 `uc 1 ]
 [n S344 task_context_stack_s values size ]
 "21
 [s S345 `uc 1 `uc 1 `uc 1 `S344 1 ]
@@ -12,46 +12,24 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18 kernel/task.h
 [s S346 `ui 1 `ui 1 `E3210 1 `*F3198 1 `S345 1 ]
 [n S346 task_s id priority state callback context ]
-[v F3233 `(*S346 ~T0 @X0 0 tf ]
-"17 kernel/dispatcher.h
-[s S347 `S346 -> 3 `i `uc 1 `*S346 1 `*F3233 1 ]
-[n S347 dispatcher_s tasks size running callback ]
-"15 kernel/scheduler.h
-[v _scheduler_priority `(*S346 ~T0 @X0 0 ef ]
+[v F3231 `(*S346 ~T0 @X0 0 tf ]
+"18 kernel/dispatcher.h
+[s S349 `S346 -> 4 `i `uc 1 `*S346 1 `*F3231 1 ]
+[n S349 dispatcher_s tasks size running callback ]
+"17 kernel/scheduler.h
+[v _scheduler_round_robin `(*S346 ~T0 @X0 0 ef ]
+"13 kernel/memory.h
+[v _malloc `(*v ~T0 @X0 0 ef1`ui ]
 "11 kernel/timers.h
 [v _timer0_init `(v ~T0 @X0 0 ef2`ui`*F3198 ]
-"30 kernel/dispatcher.h
+"31 kernel/dispatcher.h
 [v _dispatcher_change_context_isr `(v ~T0 @X0 0 ef ]
 "28 kernel/task.h
 [v _task_ready `(v ~T0 @X0 0 ef1`*S346 ]
 "30
 [v _task_running `(v ~T0 @X0 0 ef1`*S346 ]
-"6790 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
-[s S338 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S338 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
-"6800
-[s S339 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S339 . . INT0F T0IF . INT0E T0IE PEIE GIE ]
-"6810
-[s S340 :6 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S340 . . GIEL GIEH ]
-"6789
-[u S337 `S338 1 `S339 1 `S340 1 ]
-[n S337 . . . . ]
-"6816
-[v _INTCONbits `VS337 ~T0 @X0 0 e@4082 ]
-"6565
-[v _WREG `Vuc ~T0 @X0 0 e@4072 ]
-"6511
-[v _BSR `Vuc ~T0 @X0 0 e@4064 ]
-"6385
-[v _STATUS `Vuc ~T0 @X0 0 e@4056 ]
-"7055
-[v _TOS `Vum ~T0 @X0 0 e@4093 ]
-"6983
-[v _STKPTR `Vuc ~T0 @X0 0 e@4092 ]
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
-"51 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
+"51 /opt/microchip/xc8/v1.37/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
 [; <" PORTA equ 0F80h ;# ">
 [; ;pic18f4520.h: 54: typedef union {
@@ -3051,7 +3029,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 18: typedef void* pointer_t;
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
 [; ;task_context.h: 16: typedef struct task_context_stack_s {
-[; ;task_context.h: 17: uint24_t values[10];
+[; ;task_context.h: 17: uint24_t* values;
 [; ;task_context.h: 18: uint8_t size;
 [; ;task_context.h: 19: } task_context_stack_t;
 [; ;task_context.h: 21: typedef struct task_context_s {
@@ -3075,27 +3053,58 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
-[; ;task.h: 32: void task_block( task_t* handle );
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
-[; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
-[; ;dispatcher.h: 17: typedef struct dispatcher_s {
-[; ;dispatcher.h: 18: task_t tasks[3];
-[; ;dispatcher.h: 19: uint8_t size;
-[; ;dispatcher.h: 20: task_t* running;
-[; ;dispatcher.h: 21: scheduler_function_ptr_t callback;
-[; ;dispatcher.h: 22: } dispatcher_t;
-[; ;dispatcher.h: 24: void dispatcher_init();
-[; ;dispatcher.h: 26: void dispatcher_start();
-[; ;dispatcher.h: 28: task_t* dispatcher_add_task();
-[; ;dispatcher.h: 30: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 32: void dispatcher_change_context( task_state_t task_state );
-[; ;dispatcher.h: 34: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 36: extern task_t idle;
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stdarg.h: 7: typedef void * va_list[1];
+[; ;stdarg.h: 10: extern void * __va_start(void);
+[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
+[; ;stdio.h: 43: struct __prbuf
+[; ;stdio.h: 44: {
+[; ;stdio.h: 45: char * ptr;
+[; ;stdio.h: 46: void (* func)(char);
+[; ;stdio.h: 47: };
+[; ;errno.h: 29: extern int errno;
+[; ;conio.h: 12: extern void init_uart(void);
+[; ;conio.h: 14: extern char getch(void);
+[; ;conio.h: 15: extern char getche(void);
+[; ;conio.h: 16: extern void putch(char);
+[; ;conio.h: 17: extern void ungetch(char);
+[; ;conio.h: 19: extern __bit kbhit(void);
+[; ;conio.h: 23: extern char * cgets(char *);
+[; ;conio.h: 24: extern void cputs(const char *);
+[; ;stdio.h: 88: extern int cprintf(char *, ...);
+[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+[; ;stdio.h: 183: extern char * gets(char *);
+[; ;stdio.h: 184: extern int puts(const char *);
+[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
+[; ;stdio.h: 195: extern int printf(const char *, ...);
+[; ;memory.h: 10: extern byte _heap[1024];
+[; ;memory.h: 13: void* malloc( size_t size );
+[; ;memory.h: 15: void free( void* a_pointer );
+[; ;memory.h: 17: typedef struct block_s block_t;
+[; ;dispatcher.h: 18: typedef struct dispatcher_s {
+[; ;dispatcher.h: 19: task_t tasks[4];
+[; ;dispatcher.h: 20: uint8_t size;
+[; ;dispatcher.h: 21: task_t* running;
+[; ;dispatcher.h: 22: scheduler_function_ptr_t callback;
+[; ;dispatcher.h: 23: } dispatcher_t;
+[; ;dispatcher.h: 25: void dispatcher_init();
+[; ;dispatcher.h: 27: void dispatcher_start();
+[; ;dispatcher.h: 29: task_t* dispatcher_add_task();
+[; ;dispatcher.h: 31: void dispatcher_change_context_isr();
+[; ;dispatcher.h: 33: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 35: extern task_t idle;
 [; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
 [; ;timers.h: 13: void timer0_isr();
 "8 kernel/dispatcher.c
-[v _dispatcher `S347 ~T0 @X0 1 e ]
+[v _dispatcher `S349 ~T0 @X0 1 e ]
 [; ;dispatcher.c: 8: dispatcher_t dispatcher;
 "10
 [v _idle `S346 ~T0 @X0 1 e ]
@@ -3108,21 +3117,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;dispatcher.c: 13: while( 1 ) {
 "13
-[e :U 350 ]
+[e :U 352 ]
 {
 [; ;dispatcher.c: 14: asm("nop");
 "14
 [; <" nop ;# ">
 "15
 }
-[e :U 349 ]
-"13
-[e $U 350  ]
 [e :U 351 ]
+"13
+[e $U 352  ]
+[e :U 353 ]
 [; ;dispatcher.c: 15: }
 [; ;dispatcher.c: 16: }
 "16
-[e :UE 348 ]
+[e :UE 350 ]
 }
 "18
 [v _dispatcher_init `(v ~T0 @X0 1 ef ]
@@ -3133,182 +3142,91 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.c: 19: dispatcher.size = 0;
 "19
 [e = . _dispatcher 1 -> -> 0 `i `uc ]
-[; ;dispatcher.c: 23: dispatcher.callback = scheduler_priority;
-"23
-[e = . _dispatcher 3 &U _scheduler_priority ]
-[; ;dispatcher.c: 26: idle.id = 255;
-"26
+[; ;dispatcher.c: 20: dispatcher.callback = scheduler_round_robin;
+"20
+[e = . _dispatcher 3 &U _scheduler_round_robin ]
+[; ;dispatcher.c: 22: idle.id = 255;
+"22
 [e = . _idle 0 -> -> 255 `i `ui ]
-[; ;dispatcher.c: 27: idle.priority = 0;
-"27
+[; ;dispatcher.c: 23: idle.priority = 0;
+"23
 [e = . _idle 1 -> -> 0 `i `ui ]
-[; ;dispatcher.c: 28: idle.state = task_state_ready;
-"28
+[; ;dispatcher.c: 24: idle.state = task_state_ready;
+"24
 [e = . _idle 2 . `E3210 0 ]
-[; ;dispatcher.c: 29: idle.callback = task_idle_callback;
-"29
+[; ;dispatcher.c: 25: idle.callback = task_idle_callback;
+"25
 [e = . _idle 3 &U _task_idle_callback ]
-[; ;dispatcher.c: 36: dispatcher.running = &idle;
-"36
+[; ;dispatcher.c: 29: idle.context.stack.size = 1;
+"29
+[e = . . . _idle 4 3 1 -> -> 1 `i `uc ]
+[; ;dispatcher.c: 30: idle.context.stack.values = (uint24_t*)malloc(sizeof(uint24_t));
+"30
+[e = . . . _idle 4 3 0 -> ( _malloc (1 -> # `um `ui `*um ]
+[; ;dispatcher.c: 31: idle.context.stack.values[0] = (uint24_t)task_idle_callback;
+"31
+[e = *U + . . . _idle 4 3 0 * -> -> 0 `i `x -> -> # *U . . . _idle 4 3 0 `i `x -> &U _task_idle_callback `um ]
+[; ;dispatcher.c: 33: dispatcher.running = &idle;
+"33
 [e = . _dispatcher 2 &U _idle ]
-[; ;dispatcher.c: 37: }
-"37
-[e :UE 352 ]
-}
-"39
-[v _dispatcher_start `(v ~T0 @X0 1 ef ]
-{
-[; ;dispatcher.c: 39: void dispatcher_start() {
-[e :U _dispatcher_start ]
-[f ]
-[; ;dispatcher.c: 40: timer0_init( 10000, dispatcher_change_context_isr );
-"40
-[e ( _timer0_init (2 , -> -> 10000 `i `ui &U _dispatcher_change_context_isr ]
-[; ;dispatcher.c: 41: }
-"41
-[e :UE 353 ]
-}
-"43
-[v _dispatcher_add_task `(*S346 ~T0 @X0 1 ef ]
-{
-[; ;dispatcher.c: 43: task_t* dispatcher_add_task() {
-[e :U _dispatcher_add_task ]
-[f ]
-"44
-[v _task `*S346 ~T0 @X0 1 a ]
-[; ;dispatcher.c: 44: task_t* task = &dispatcher.tasks[dispatcher.size];
-[e = _task &U *U + &U . _dispatcher 0 * -> . _dispatcher 1 `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
-[; ;dispatcher.c: 45: dispatcher.size++;
-"45
-[e ++ . _dispatcher 1 -> -> 1 `i `uc ]
-[; ;dispatcher.c: 46: return task;
-"46
-[e ) _task ]
-[e $UE 354  ]
-[; ;dispatcher.c: 47: }
-"47
+[; ;dispatcher.c: 34: }
+"34
 [e :UE 354 ]
 }
-"52
-[v _dispatcher_change_context_isr `(v ~T0 @X0 1 ef ]
+"36
+[v _dispatcher_start `(v ~T0 @X0 1 ef ]
 {
-[; ;dispatcher.c: 52: void dispatcher_change_context_isr() {
-[e :U _dispatcher_change_context_isr ]
+[; ;dispatcher.c: 36: void dispatcher_start() {
+[e :U _dispatcher_start ]
 [f ]
-"54
-[v _next `*S346 ~T0 @X0 1 a ]
-[; ;dispatcher.c: 54: task_t* next = dispatcher.callback();
-[e = _next ( *U . _dispatcher 3 ..  ]
-[; ;dispatcher.c: 56: task_ready( dispatcher.running );
-"56
-[e ( _task_ready (1 . _dispatcher 2 ]
-[; ;dispatcher.c: 58: dispatcher.running = next;
-"58
-[e = . _dispatcher 2 _next ]
-[; ;dispatcher.c: 60: task_running( dispatcher.running );
-"60
-[e ( _task_running (1 . _dispatcher 2 ]
-[; ;dispatcher.c: 61: }
-"61
+[; ;dispatcher.c: 37: timer0_init( 10000, dispatcher_change_context_isr );
+"37
+[e ( _timer0_init (2 , -> -> 10000 `i `ui &U _dispatcher_change_context_isr ]
+[; ;dispatcher.c: 38: }
+"38
 [e :UE 355 ]
 }
-"63
-[v _dispatcher_change_context `(v ~T0 @X0 1 ef1`E3210 ]
+"40
+[v _dispatcher_add_task `(*S346 ~T0 @X0 1 ef ]
 {
-[; ;dispatcher.c: 63: void dispatcher_change_context( task_state_t task_state ) {
-[e :U _dispatcher_change_context ]
-[v _task_state `E3210 ~T0 @X0 1 r1 ]
+[; ;dispatcher.c: 40: task_t* dispatcher_add_task() {
+[e :U _dispatcher_add_task ]
 [f ]
-[; ;dispatcher.c: 65: do{ INTCONbits.GIE = 0; }while(0);
-"65
-[e :U 359 ]
-{
-[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-}
-[e :U 358 ]
-[; ;dispatcher.c: 67: do { task_t* task = (dispatcher.running); if( task == ((void*)0) ) { break; } task_context_t* context = &(task->context); context->work = WREG; context->bsr = BSR; context->status = STATUS; task_context_stack_t* stack = &context->stack; while( STKPTR
-"67
-[e :U 362 ]
-{
+"41
 [v _task `*S346 ~T0 @X0 1 a ]
-[e = _task . _dispatcher 2 ]
-[e $ ! == -> _task `*v -> -> 0 `i `*v 363  ]
-{
-[e $U 361  ]
-}
-[e :U 363 ]
-[v _context `*S345 ~T0 @X0 1 a ]
-[e = _context &U . *U _task 4 ]
-[e = . *U _context 0 _WREG ]
-[e = . *U _context 1 _BSR ]
-[e = . *U _context 2 _STATUS ]
-[v _stack `*S344 ~T0 @X0 1 a ]
-[e = _stack &U . *U _context 3 ]
-[e $U 364  ]
-[e :U 365 ]
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i ++ . *U _stack 1 -> -> 1 `i `uc ]
-[e = *U + &U . *U _stack 0 * -> _i `ux -> -> # *U &U . *U _stack 0 `ui `ux _TOS ]
-[; <" POP ;# ">
-}
-[e :U 364 ]
-[e $ > -> _STKPTR `i -> 0 `i 365  ]
-[e :U 366 ]
-}
-[e :U 361 ]
-[; ;dispatcher.c: 69: dispatcher.running->state = task_state;
-"69
-[e = . *U . _dispatcher 2 2 _task_state ]
-"71
-[v _next `*S346 ~T0 @X0 1 a ]
-[; ;dispatcher.c: 71: task_t* next = dispatcher.callback();
-[e = _next ( *U . _dispatcher 3 ..  ]
-[; ;dispatcher.c: 73: dispatcher.running = next;
-"73
-[e = . _dispatcher 2 _next ]
-[; ;dispatcher.c: 75: task_running( dispatcher.running );
-"75
-[e ( _task_running (1 . _dispatcher 2 ]
-[; ;dispatcher.c: 77: do { task_t* task = (dispatcher.running); if( task == ((void*)0) ) { break; } task_context_t* context = &(task->context); WREG = context->work; BSR = context->bsr; STATUS = context->status; task_context_stack_t* stack = &context->stack; while( stack-
-"77
-[e :U 369 ]
-{
-[v _task `*S346 ~T0 @X0 1 a ]
-[e = _task . _dispatcher 2 ]
-[e $ ! == -> _task `*v -> -> 0 `i `*v 370  ]
-{
-[e $U 368  ]
-}
-[e :U 370 ]
-[v _context `*S345 ~T0 @X0 1 a ]
-[e = _context &U . *U _task 4 ]
-[e = _WREG . *U _context 0 ]
-[e = _BSR . *U _context 1 ]
-[e = _STATUS . *U _context 2 ]
-[v _stack `*S344 ~T0 @X0 1 a ]
-[e = _stack &U . *U _context 3 ]
-[e $U 371  ]
-[e :U 372 ]
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i =- . *U _stack 1 -> -> 1 `i `uc ]
-[; <" PUSH ;# ">
-[e = _TOS *U + &U . *U _stack 0 * -> _i `ux -> -> # *U &U . *U _stack 0 `ui `ux ]
-}
-[e :U 371 ]
-[e $ > -> . *U _stack 1 `i -> 0 `i 372  ]
-[e :U 373 ]
-}
-[e :U 368 ]
-[; ;dispatcher.c: 79: do{ INTCONbits.GIE = 1; }while(0);
-"79
-[e :U 376 ]
-{
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-}
-[e :U 375 ]
-[; ;dispatcher.c: 80: }
-"80
+[; ;dispatcher.c: 41: task_t* task = &dispatcher.tasks[dispatcher.size];
+[e = _task &U *U + &U . _dispatcher 0 * -> . _dispatcher 1 `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
+[; ;dispatcher.c: 42: dispatcher.size++;
+"42
+[e ++ . _dispatcher 1 -> -> 1 `i `uc ]
+[; ;dispatcher.c: 43: return task;
+"43
+[e ) _task ]
+[e $UE 356  ]
+[; ;dispatcher.c: 44: }
+"44
 [e :UE 356 ]
+}
+"49
+[v _dispatcher_change_context_isr `(v ~T0 @X0 1 ef ]
+{
+[; ;dispatcher.c: 49: void dispatcher_change_context_isr() {
+[e :U _dispatcher_change_context_isr ]
+[f ]
+"51
+[v _next `*S346 ~T0 @X0 1 a ]
+[; ;dispatcher.c: 51: task_t* next = dispatcher.callback();
+[e = _next ( *U . _dispatcher 3 ..  ]
+[; ;dispatcher.c: 53: task_ready( dispatcher.running );
+"53
+[e ( _task_ready (1 . _dispatcher 2 ]
+[; ;dispatcher.c: 55: dispatcher.running = next;
+"55
+[e = . _dispatcher 2 _next ]
+[; ;dispatcher.c: 57: task_running( dispatcher.running );
+"57
+[e ( _task_running (1 . _dispatcher 2 ]
+[; ;dispatcher.c: 58: }
+"58
+[e :UE 357 ]
 }

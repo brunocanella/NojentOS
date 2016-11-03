@@ -9,6 +9,9 @@
 // Config tem que vir antes de NojentOS, pois os defines dele sobrescrevem valores do SO.
 #include "config.h"
 
+#include "../NojentOS/kernel/linked_list.h"
+#include "../NojentOS/kernel/memory.h"
+
 #include "nojentOS.h"
 
 /*static void task_1() {
@@ -80,7 +83,6 @@ static void task_3_priority() {
 void main(void) {
     
     nojo_init();
-    
     //asm("GLOBAL _task_1, _task_2, _task_3, _task_idle_callback");
     asm("GLOBAL _task_1_priority, _task_2_priority, _task_3_priority, _task_idle_callback");
     

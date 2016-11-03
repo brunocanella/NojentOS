@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-#define HEAP_SIZE 512
+#define HEAP_SIZE 1024
 
 extern byte _heap[HEAP_SIZE];
 
