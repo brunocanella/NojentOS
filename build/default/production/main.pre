@@ -4063,8 +4063,15 @@ typedef void* pointer_t;
 
 typedef void (*function_ptr_t)(void);
 
+<<<<<<< HEAD
 # 11 "kernel/timers.h"
 void timer0_init( uint16_t delay_us, function_ptr_t callback );
+=======
+# 6 "kernel/linked_list.h"
+struct linked_list_s;
+
+typedef struct linked_list_s linked_list_t;
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 
 void timer0_isr();
 
@@ -4173,7 +4180,12 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 10 "kernel/memory.h"
+<<<<<<< HEAD
 extern byte _heap[700];
+=======
+extern byte _heap[512];
+
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 
 void* malloc( size_t size );
 
@@ -4181,6 +4193,67 @@ void free( void* a_pointer );
 
 typedef struct block_s block_t;
 
+<<<<<<< HEAD
+=======
+# 6 "kernel/message_queue.h"
+typedef linked_list_t* message_queue_t;
+typedef struct
+{
+uint8_t width;
+pointer_t data;
+}message_queue_node_t;
+
+int8_t message_queue_init(message_queue_t* descriptor);
+uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t size);
+uint8_t message_queue_write(message_queue_t descriptor, pointer_t buff, uint8_t size);
+
+# 11 "kernel/timers.h"
+void timer0_init( uint16_t delay_us, function_ptr_t callback );
+
+void timer0_isr();
+
+# 16 "kernel/task_context.h"
+typedef struct task_context_stack_s {
+uint24_t* values;
+uint8_t size;
+} task_context_stack_t;
+
+typedef struct task_context_s {
+byte work;
+byte bsr;
+byte status;
+task_context_stack_t stack;
+} task_context_t;
+
+# 12 "kernel/task.h"
+typedef enum task_state_e {
+task_state_ready,
+task_state_running,
+task_state_blocked
+} task_state_t;
+
+typedef struct task_s {
+uint16_t id;
+uint16_t priority;
+task_state_t state;
+function_ptr_t callback;
+task_context_t context;
+} task_t;
+
+void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
+
+void task_ready( task_t* handle );
+
+void task_running( task_t* handle );
+
+# 13 "kernel/scheduler.h"
+typedef task_t* (*scheduler_function_ptr_t)(void);
+
+
+
+task_t* scheduler_round_robin();
+
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 # 18 "kernel/dispatcher.h"
 typedef struct dispatcher_s {
 task_t tasks[3];
@@ -4297,6 +4370,9 @@ semaphore_signal( &g_sem_2 );
 
 
 void main(void) {
+
+message_queue_t descritor;
+message_queue_init(&descritor);
 
 nojo_init();
 

@@ -69,15 +69,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;types.h: 11: typedef unsigned char byte;
-[; ;types.h: 13: typedef byte uint8_t;
-[; ;types.h: 14: typedef unsigned int uint16_t;
-[; ;types.h: 15: typedef unsigned short long uint24_t;
-[; ;types.h: 16: typedef unsigned long uint32_t;
-[; ;types.h: 18: typedef void* pointer_t;
-[; ;types.h: 20: typedef void (*function_ptr_t)(void);
-[; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
-[; ;timers.h: 13: void timer0_isr();
+[; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
+[; ;htc.h: 28: extern double __fpnormalize(double);
+[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
 "51 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
@@ -3043,6 +3037,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18f4520.h: 8310: extern volatile __bit nW @ (((unsigned) &SSPSTAT)*8) + 2;
 [; ;pic18f4520.h: 8312: extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 [; ;pic18f4520.h: 8314: extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
+[; ;pic18.h: 18: __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
+[; ;pic18.h: 19: __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
+[; ;pic18.h: 43: extern void __nop(void);
+[; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
+[; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
+[; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
+[; ;types.h: 11: typedef unsigned char byte;
+[; ;types.h: 13: typedef byte uint8_t;
+[; ;types.h: 14: typedef unsigned int uint16_t;
+[; ;types.h: 15: typedef unsigned short long uint24_t;
+[; ;types.h: 16: typedef unsigned long uint32_t;
+[; ;types.h: 18: typedef void* pointer_t;
+[; ;types.h: 20: typedef void (*function_ptr_t)(void);
+[; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
+[; ;timers.h: 13: void timer0_isr();
 "5 kernel/timers.c
 [v __timer0_delay_us `ui ~T0 @X0 1 e ]
 [i __timer0_delay_us
@@ -3050,9 +3059,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;timers.c: 5: uint16_t _timer0_delay_us = 0;
 "6
-[v __timer0_callback `*F32 ~T0 @X0 1 e ]
+[v __timer0_callback `*F3221 ~T0 @X0 1 e ]
 [i __timer0_callback
--> -> -> 0 `i `*v `*F32
+-> -> -> 0 `i `*v `*F3221
 ]
 [; ;timers.c: 6: function_ptr_t _timer0_callback = ((void*)0);
 "8
@@ -3072,12 +3081,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 344 ]
 }
 "15
-[v _timer0_init `(v ~T0 @X0 1 ef2`ui`*F32 ]
+[v _timer0_init `(v ~T0 @X0 1 ef2`ui`*F3221 ]
 {
 [; ;timers.c: 15: void timer0_init( uint16_t delay_us, function_ptr_t callback ) {
 [e :U _timer0_init ]
 [v _delay_us `ui ~T0 @X0 1 r1 ]
-[v _callback `*F32 ~T0 @X0 1 r2 ]
+[v _callback `*F3221 ~T0 @X0 1 r2 ]
 [f ]
 [; ;timers.c: 17: T0CONbits.TMR0ON = 0;
 "17
@@ -3136,7 +3145,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _timer0_reset ..  ]
 [; ;timers.c: 54: if( _timer0_callback ) {
 "54
-[e $ ! != __timer0_callback -> -> 0 `i `*F32 347  ]
+[e $ ! != __timer0_callback -> -> 0 `i `*F3221 347  ]
 {
 [; ;timers.c: 55: _timer0_callback();
 "55

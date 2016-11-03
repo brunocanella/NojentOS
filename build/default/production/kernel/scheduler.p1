@@ -19,7 +19,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [s S349 `S3 -> 3 `i `uc 1 `*S3 1 `*F65 1 ]
 [n S349 dispatcher_s tasks size running callback ]
 "35
+<<<<<<< HEAD
 [v _dispatcher `S349 ~T0 @X0 0 e ]
+=======
+[v _idle `S346 ~T0 @X0 0 e ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -48,6 +52,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
+<<<<<<< HEAD
 [; ;types.h: 11: typedef unsigned char byte;
 [; ;types.h: 13: typedef byte uint8_t;
 [; ;types.h: 14: typedef unsigned int uint16_t;
@@ -83,6 +88,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
 [; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
+=======
+[; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
+[; ;htc.h: 28: extern double __fpnormalize(double);
+[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
 "51 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
@@ -3048,6 +3058,46 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18f4520.h: 8310: extern volatile __bit nW @ (((unsigned) &SSPSTAT)*8) + 2;
 [; ;pic18f4520.h: 8312: extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 [; ;pic18f4520.h: 8314: extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
+[; ;pic18.h: 18: __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
+[; ;pic18.h: 19: __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
+[; ;pic18.h: 43: extern void __nop(void);
+[; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
+[; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
+[; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
+[; ;types.h: 11: typedef unsigned char byte;
+[; ;types.h: 13: typedef byte uint8_t;
+[; ;types.h: 14: typedef unsigned int uint16_t;
+[; ;types.h: 15: typedef unsigned short long uint24_t;
+[; ;types.h: 16: typedef unsigned long uint32_t;
+[; ;types.h: 18: typedef void* pointer_t;
+[; ;types.h: 20: typedef void (*function_ptr_t)(void);
+[; ;task_context.h: 16: typedef struct task_context_stack_s {
+[; ;task_context.h: 17: uint24_t* values;
+[; ;task_context.h: 18: uint8_t size;
+[; ;task_context.h: 19: } task_context_stack_t;
+[; ;task_context.h: 21: typedef struct task_context_s {
+[; ;task_context.h: 22: byte work;
+[; ;task_context.h: 23: byte bsr;
+[; ;task_context.h: 24: byte status;
+[; ;task_context.h: 25: task_context_stack_t stack;
+[; ;task_context.h: 26: } task_context_t;
+[; ;task.h: 12: typedef enum task_state_e {
+[; ;task.h: 13: task_state_ready,
+[; ;task.h: 14: task_state_running,
+[; ;task.h: 15: task_state_blocked
+[; ;task.h: 16: } task_state_t;
+[; ;task.h: 18: typedef struct task_s {
+[; ;task.h: 19: uint16_t id;
+[; ;task.h: 20: uint16_t priority;
+[; ;task.h: 21: task_state_t state;
+[; ;task.h: 22: function_ptr_t callback;
+[; ;task.h: 23: task_context_t context;
+[; ;task.h: 24: } task_t;
+[; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
+[; ;task.h: 28: void task_ready( task_t* handle );
+[; ;task.h: 30: void task_running( task_t* handle );
+[; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
+[; ;scheduler.h: 17: task_t* scheduler_round_robin();
 [; ;__size_t.h: 4: typedef unsigned size_t;
 [; ;stdarg.h: 7: typedef void * va_list[1];
 [; ;stdarg.h: 10: extern void * __va_start(void);
@@ -3078,10 +3128,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
+<<<<<<< HEAD
 [; ;memory.h: 10: extern byte _heap[700];
 [; ;memory.h: 12: void* malloc( size_t size );
 [; ;memory.h: 14: void free( void* a_pointer );
 [; ;memory.h: 16: typedef struct block_s block_t;
+=======
+[; ;memory.h: 10: extern byte _heap[512];
+[; ;memory.h: 13: void* malloc( size_t size );
+[; ;memory.h: 15: void free( void* a_pointer );
+[; ;memory.h: 17: typedef struct block_s block_t;
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [; ;dispatcher.h: 18: typedef struct dispatcher_s {
 [; ;dispatcher.h: 19: task_t tasks[3];
 [; ;dispatcher.h: 20: uint8_t size;
@@ -3092,11 +3149,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 27: void dispatcher_start();
 [; ;dispatcher.h: 29: task_t* dispatcher_add_task();
 [; ;dispatcher.h: 31: void dispatcher_change_context_isr();
+<<<<<<< HEAD
 [; ;dispatcher.h: 33: void dispatcher_change_context( task_state_t task_state );
 [; ;dispatcher.h: 35: extern dispatcher_t dispatcher;
 [; ;dispatcher.h: 37: extern task_t idle;
 "5 kernel/scheduler.c
 [v _scheduler_priority `(*S3 ~T0 @X0 1 ef ]
+=======
+[; ;dispatcher.h: 33: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 35: extern task_t idle;
+"18 kernel/scheduler.c
+[v _scheduler_round_robin `(*S346 ~T0 @X0 1 ef ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 {
 [; ;scheduler.c: 5: task_t* scheduler_priority() {
 [e :U _scheduler_priority ]
@@ -3172,6 +3236,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 358  ]
 "25
 }
+<<<<<<< HEAD
 [e :U 361 ]
 "26
 }
@@ -3184,6 +3249,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 "30
 [v _next `*S3 ~T0 @X0 1 a ]
+=======
+"29
+[v _next `*S346 ~T0 @X0 1 a ]
+[; ;scheduler.c: 24: }
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [; ;scheduler.c: 25: }
 [; ;scheduler.c: 26: }
 [; ;scheduler.c: 30: task_t* next = &idle;
@@ -3200,7 +3270,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _j `i ~T0 @X0 1 a ]
 [; ;scheduler.c: 34: int j = (offset+1+i) % dispatcher.size;
 [e = _j % + + _offset -> 1 `i _i -> . _dispatcher 1 `i ]
+<<<<<<< HEAD
 [; ;scheduler.c: 35: if( dispatcher.tasks[j].state == task_state_ready ) {
+=======
+[; ;scheduler.c: 34: if( dispatcher.tasks[j].state == task_state_ready ) {
+"34
+[e $ ! == -> . *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E3233 0 `i 360  ]
+{
+[; ;scheduler.c: 35: next = &dispatcher.tasks[j];
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 "35
 [e $ ! == -> . *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E44 0 `i 366  ]
 {

@@ -10,18 +10,29 @@ Version 3.2 HI-TECH Software Intermediate Code
 [s S345 `uc 1 `uc 1 `uc 1 `S344 1 ]
 [n S345 task_context_s work bsr status stack ]
 "18 kernel/task.h
-[s S346 `ui 1 `ui 1 `E3210 1 `*F3198 1 `S345 1 ]
+[s S346 `ui 1 `ui 1 `E3233 1 `*F3221 1 `S345 1 ]
 [n S346 task_s id priority state callback context ]
-[v F3231 `(*S346 ~T0 @X0 0 tf ]
+[v F3254 `(*S346 ~T0 @X0 0 tf ]
 "18 kernel/dispatcher.h
+<<<<<<< HEAD
 [s S349 `S346 -> 3 `i `uc 1 `*S346 1 `*F3231 1 ]
+=======
+[s S349 `S346 -> 4 `i `uc 1 `*S346 1 `*F3254 1 ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [n S349 dispatcher_s tasks size running callback ]
 "15 kernel/scheduler.h
 [v _scheduler_priority `(*S346 ~T0 @X0 0 ef ]
 "12 kernel/memory.h
 [v _malloc `(*v ~T0 @X0 0 ef1`ui ]
+<<<<<<< HEAD
 "33 kernel/dispatcher.h
 [v _dispatcher_change_context `(v ~T0 @X0 0 ef1`E3210 ]
+=======
+"11 kernel/timers.h
+[v _timer0_init `(v ~T0 @X0 0 ef2`ui`*F3221 ]
+"31 kernel/dispatcher.h
+[v _dispatcher_change_context_isr `(v ~T0 @X0 0 ef ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 "28 kernel/task.h
 [v _task_ready `(v ~T0 @X0 0 ef1`*S346 ]
 "30
@@ -3049,6 +3060,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
+[; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
+[; ;htc.h: 28: extern double __fpnormalize(double);
+[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
+[; ;pic18.h: 18: __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
+[; ;pic18.h: 19: __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
+[; ;pic18.h: 43: extern void __nop(void);
+[; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
+[; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
+[; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
 [; ;types.h: 11: typedef unsigned char byte;
 [; ;types.h: 13: typedef byte uint8_t;
 [; ;types.h: 14: typedef unsigned int uint16_t;
@@ -3114,10 +3134,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
+<<<<<<< HEAD
 [; ;memory.h: 10: extern byte _heap[700];
 [; ;memory.h: 12: void* malloc( size_t size );
 [; ;memory.h: 14: void free( void* a_pointer );
 [; ;memory.h: 16: typedef struct block_s block_t;
+=======
+[; ;memory.h: 10: extern byte _heap[512];
+[; ;memory.h: 13: void* malloc( size_t size );
+[; ;memory.h: 15: void free( void* a_pointer );
+[; ;memory.h: 17: typedef struct block_s block_t;
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [; ;dispatcher.h: 18: typedef struct dispatcher_s {
 [; ;dispatcher.h: 19: task_t tasks[3];
 [; ;dispatcher.h: 20: uint8_t size;
@@ -3181,11 +3208,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.c: 26: idle.priority = 0;
 "26
 [e = . _idle 1 -> -> 0 `i `ui ]
+<<<<<<< HEAD
 [; ;dispatcher.c: 27: idle.state = task_state_ready;
 "27
 [e = . _idle 2 . `E3210 0 ]
 [; ;dispatcher.c: 28: idle.callback = task_idle_callback;
 "28
+=======
+[; ;dispatcher.c: 24: idle.state = task_state_ready;
+"24
+[e = . _idle 2 . `E3233 0 ]
+[; ;dispatcher.c: 25: idle.callback = task_idle_callback;
+"25
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [e = . _idle 3 &U _task_idle_callback ]
 [; ;dispatcher.c: 32: idle.context.stack.size = 1;
 "32

@@ -13,22 +13,34 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S337 . . . . ]
 "6816
 [v _INTCONbits `VS337 ~T0 @X0 0 e@4082 ]
+<<<<<<< HEAD
 "21 kernel/interrutps.h
 [c E3214 0 1 2 .. ]
 [n E3214 task_state_e task_state_ready task_state_running task_state_blocked  ]
 [v F3198 `(v ~T0 @X0 0 tf ]
 "12 kernel/task_context.h
+=======
+"29 kernel/interrutps.h
+[c E3237 0 1 2 .. ]
+[n E3237 task_state_e task_state_ready task_state_running task_state_blocked  ]
+[v F3221 `(v ~T0 @X0 0 tf ]
+"16 kernel/task_context.h
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [s S344 `*um 1 `uc 1 ]
 [n S344 task_context_stack_s values size ]
 "17
 [s S345 `uc 1 `uc 1 `uc 1 `S344 1 ]
 [n S345 task_context_s work bsr status stack ]
 "18 kernel/task.h
-[s S346 `ui 1 `ui 1 `E3214 1 `*F3198 1 `S345 1 ]
+[s S346 `ui 1 `ui 1 `E3237 1 `*F3221 1 `S345 1 ]
 [n S346 task_s id priority state callback context ]
-[v F3235 `(*S346 ~T0 @X0 0 tf ]
+[v F3258 `(*S346 ~T0 @X0 0 tf ]
 "18 kernel/dispatcher.h
+<<<<<<< HEAD
 [s S349 `S346 -> 3 `i `uc 1 `*S346 1 `*F3235 1 ]
+=======
+[s S349 `S346 -> 4 `i `uc 1 `*S346 1 `*F3258 1 ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [n S349 dispatcher_s tasks size running callback ]
 "35
 [v _dispatcher `S349 ~T0 @X0 0 e ]
@@ -3073,6 +3085,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
+[; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
+[; ;htc.h: 28: extern double __fpnormalize(double);
+[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
+[; ;pic18.h: 18: __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
+[; ;pic18.h: 19: __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
+[; ;pic18.h: 43: extern void __nop(void);
+[; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
+[; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
+[; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
 [; ;types.h: 11: typedef unsigned char byte;
 [; ;types.h: 13: typedef byte uint8_t;
 [; ;types.h: 14: typedef unsigned int uint16_t;
@@ -3140,10 +3161,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
+<<<<<<< HEAD
 [; ;memory.h: 10: extern byte _heap[700];
 [; ;memory.h: 12: void* malloc( size_t size );
 [; ;memory.h: 14: void free( void* a_pointer );
 [; ;memory.h: 16: typedef struct block_s block_t;
+=======
+[; ;memory.h: 10: extern byte _heap[512];
+[; ;memory.h: 13: void* malloc( size_t size );
+[; ;memory.h: 15: void free( void* a_pointer );
+[; ;memory.h: 17: typedef struct block_s block_t;
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [; ;dispatcher.h: 18: typedef struct dispatcher_s {
 [; ;dispatcher.h: 19: task_t tasks[3];
 [; ;dispatcher.h: 20: uint8_t size;
@@ -3154,6 +3182,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 27: void dispatcher_start();
 [; ;dispatcher.h: 29: task_t* dispatcher_add_task();
 [; ;dispatcher.h: 31: void dispatcher_change_context_isr();
+<<<<<<< HEAD
 [; ;dispatcher.h: 33: void dispatcher_change_context( task_state_t task_state );
 [; ;dispatcher.h: 35: extern dispatcher_t dispatcher;
 [; ;dispatcher.h: 37: extern task_t idle;
@@ -3201,6 +3230,24 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v F3387 `(v ~T0 @X0 1 tf ]
 "17 kernel/interrutps.h
 [v _global_isr `IF3387 ~T0 @X0 1 e ]
+=======
+[; ;dispatcher.h: 33: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 35: extern task_t idle;
+[; ;nojentOS.h: 16: void nojo_init();
+[; ;nojentOS.h: 18: void nojo_start();
+"14 kernel/interrutps.h
+[v __WREG `uc ~T0 @X0 1 e ]
+[; ;interrutps.h: 14: byte _WREG;
+"15
+[v __BSR `uc ~T0 @X0 1 e ]
+[; ;interrutps.h: 15: byte _BSR;
+"16
+[v __STATUS `uc ~T0 @X0 1 e ]
+[; ;interrutps.h: 16: byte _STATUS;
+[v F3348 `(v ~T0 @X0 1 tf ]
+"21
+[v _global_isr `IF3348 ~T0 @X0 1 e ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 {
 [; ;interrutps.h: 17: void interrupt global_isr() {
 [e :U _global_isr ]

@@ -75,7 +75,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 "21
 [v _semaphore_signal `(v ~T0 @X0 0 ef1`*S352 ]
 [p mainexit ]
+<<<<<<< HEAD
 "17 nojentOS.h
+=======
+"11 kernel/linked_list.h
+[s S344 `*S344 1 `*v 1 ]
+[n S344 linked_list_s next data ]
+"13 kernel/message_queue.h
+[v _message_queue_init `(c ~T0 @X0 0 ef1`**S344 ]
+"16 nojentOS.h
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [v _nojo_init `(v ~T0 @X0 0 ef ]
 [v F3221 `(v ~T0 @X0 0 tf ]
 "26 kernel/task.h
@@ -3099,6 +3108,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 16: typedef unsigned long uint32_t;
 [; ;types.h: 18: typedef void* pointer_t;
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
+<<<<<<< HEAD
 [; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
 [; ;timers.h: 13: void timer0_isr();
 [; ;task_context.h: 12: typedef struct task_context_stack_s {
@@ -3129,6 +3139,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
 [; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
+=======
+[; ;linked_list.h: 6: struct linked_list_s;
+[; ;linked_list.h: 8: typedef struct linked_list_s linked_list_t;
+"10 kernel/linked_list.h
+[p p 1 ]
+[; ;linked_list.h: 11: struct linked_list_s {
+[; ;linked_list.h: 12: linked_list_t* next;
+[; ;linked_list.h: 13: pointer_t data;
+[; ;linked_list.h: 14: };
+"16
+[p p 1 ]
+[; ;linked_list.h: 17: typedef struct linked_list_head_data_s {
+[; ;linked_list.h: 18: uint8_t size;
+[; ;linked_list.h: 19: linked_list_t* last;
+[; ;linked_list.h: 20: } linked_list_head_data_t;
+[; ;linked_list.h: 22: int8_t linked_list_create( linked_list_t** a_head );
+[; ;linked_list.h: 24: int8_t linked_list_insert( linked_list_t* a_head, pointer_t a_data );
+[; ;linked_list.h: 28: int8_t linked_list_remove_last( linked_list_t* a_head );
+[; ;linked_list.h: 30: int8_t linked_list_remove_first( linked_list_t* a_head );
+[; ;linked_list.h: 32: int8_t linked_list_remove_all( linked_list_t* a_head );
+[; ;linked_list.h: 34: pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index );
+[; ;linked_list.h: 36: pointer_t linked_list_get_last( linked_list_t* a_head );
+[; ;linked_list.h: 38: pointer_t linked_list_get_first( linked_list_t* a_head );
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [; ;__size_t.h: 4: typedef unsigned size_t;
 [; ;stdarg.h: 7: typedef void * va_list[1];
 [; ;stdarg.h: 10: extern void * __va_start(void);
@@ -3159,10 +3193,55 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
+<<<<<<< HEAD
 [; ;memory.h: 10: extern byte _heap[700];
 [; ;memory.h: 12: void* malloc( size_t size );
 [; ;memory.h: 14: void free( void* a_pointer );
 [; ;memory.h: 16: typedef struct block_s block_t;
+=======
+[; ;memory.h: 10: extern byte _heap[512];
+[; ;memory.h: 13: void* malloc( size_t size );
+[; ;memory.h: 15: void free( void* a_pointer );
+[; ;memory.h: 17: typedef struct block_s block_t;
+[; ;message_queue.h: 6: typedef linked_list_t* message_queue_t;
+[; ;message_queue.h: 7: typedef struct
+[; ;message_queue.h: 8: {
+[; ;message_queue.h: 9: uint8_t width;
+[; ;message_queue.h: 10: pointer_t data;
+[; ;message_queue.h: 11: }message_queue_node_t;
+[; ;message_queue.h: 13: int8_t message_queue_init(message_queue_t* descriptor);
+[; ;message_queue.h: 14: uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t size);
+[; ;message_queue.h: 15: uint8_t message_queue_write(message_queue_t descriptor, pointer_t buff, uint8_t size);
+[; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
+[; ;timers.h: 13: void timer0_isr();
+[; ;task_context.h: 16: typedef struct task_context_stack_s {
+[; ;task_context.h: 17: uint24_t* values;
+[; ;task_context.h: 18: uint8_t size;
+[; ;task_context.h: 19: } task_context_stack_t;
+[; ;task_context.h: 21: typedef struct task_context_s {
+[; ;task_context.h: 22: byte work;
+[; ;task_context.h: 23: byte bsr;
+[; ;task_context.h: 24: byte status;
+[; ;task_context.h: 25: task_context_stack_t stack;
+[; ;task_context.h: 26: } task_context_t;
+[; ;task.h: 12: typedef enum task_state_e {
+[; ;task.h: 13: task_state_ready,
+[; ;task.h: 14: task_state_running,
+[; ;task.h: 15: task_state_blocked
+[; ;task.h: 16: } task_state_t;
+[; ;task.h: 18: typedef struct task_s {
+[; ;task.h: 19: uint16_t id;
+[; ;task.h: 20: uint16_t priority;
+[; ;task.h: 21: task_state_t state;
+[; ;task.h: 22: function_ptr_t callback;
+[; ;task.h: 23: task_context_t context;
+[; ;task.h: 24: } task_t;
+[; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
+[; ;task.h: 28: void task_ready( task_t* handle );
+[; ;task.h: 30: void task_running( task_t* handle );
+[; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
+[; ;scheduler.h: 17: task_t* scheduler_round_robin();
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [; ;dispatcher.h: 18: typedef struct dispatcher_s {
 [; ;dispatcher.h: 19: task_t tasks[3];
 [; ;dispatcher.h: 20: uint8_t size;
@@ -3226,6 +3305,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 52: PORTDbits.RD0 = 0;
 "52
 [e = . . _PORTDbits 0 0 -> -> 0 `i `uc ]
+<<<<<<< HEAD
 [; ;main.c: 54: semaphore_init( &g_sem_1, 0 );
 "54
 [e ( _semaphore_init (2 , &U _g_sem_1 -> -> 0 `i `c ]
@@ -3234,6 +3314,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _semaphore_init (2 , &U _g_sem_2 -> -> 0 `i `c ]
 [; ;main.c: 57: while(1) {
 "57
+=======
+[; ;main.c: 20: while(1) {
+"20
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [e :U 355 ]
 {
 [; ;main.c: 58: PORTDbits.RD0 = !LATDbits.LATD0;
@@ -3260,12 +3344,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 "61
 }
 [e :U 354 ]
+<<<<<<< HEAD
 "57
 [e $U 355  ]
 [e :U 356 ]
 [; ;main.c: 61: }
 [; ;main.c: 62: }
 "62
+=======
+"20
+[e $U 355  ]
+[e :U 356 ]
+[; ;main.c: 23: }
+[; ;main.c: 24: }
+"24
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [e :UE 353 ]
 }
 "64
@@ -3280,8 +3373,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 66: PORTDbits.RD1 = 0;
 "66
 [e = . . _PORTDbits 0 1 -> -> 0 `i `uc ]
+<<<<<<< HEAD
 [; ;main.c: 67: while(1) {
 "67
+=======
+[; ;main.c: 29: while(1) {
+"29
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [e :U 362 ]
 {
 [; ;main.c: 68: PORTDbits.RD1 = !LATDbits.LATD1;
@@ -3311,12 +3409,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 "72
 }
 [e :U 361 ]
+<<<<<<< HEAD
 "67
 [e $U 362  ]
 [e :U 363 ]
 [; ;main.c: 72: }
 [; ;main.c: 73: }
 "73
+=======
+"29
+[e $U 362  ]
+[e :U 363 ]
+[; ;main.c: 32: }
+[; ;main.c: 33: }
+"33
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [e :UE 360 ]
 }
 "75
@@ -3331,8 +3438,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 77: PORTDbits.RD2 = 0;
 "77
 [e = . . _PORTDbits 0 2 -> -> 0 `i `uc ]
+<<<<<<< HEAD
 [; ;main.c: 78: while(1) {
 "78
+=======
+[; ;main.c: 38: while(1) {
+"38
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 [e :U 369 ]
 {
 [; ;main.c: 79: PORTDbits.RD2 = !LATDbits.LATD2;
@@ -3346,6 +3458,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ < -> _i `l -> 60000 `l 371  ]
 [e $U 372  ]
 [e :U 371 ]
+<<<<<<< HEAD
+=======
 {
 [e ( ___nop ..  ]
 }
@@ -3353,11 +3467,63 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ < -> _i `l -> 60000 `l 371  ]
 [e :U 372 ]
 }
+"41
+}
+[e :U 368 ]
+"38
+[e $U 369  ]
+[e :U 370 ]
+[; ;main.c: 41: }
+[; ;main.c: 42: }
+"42
+[e :UE 367 ]
+}
+"44
+[v _task_4 `(v ~T0 @X0 1 sf ]
+{
+[; ;main.c: 44: static void task_4() {
+[e :U _task_4 ]
+[f ]
+[; ;main.c: 45: TRISDbits.RD3 = 0;
+"45
+[e = . . _TRISDbits 1 3 -> -> 0 `i `uc ]
+[; ;main.c: 46: PORTDbits.RD3 = 0;
+"46
+[e = . . _PORTDbits 0 3 -> -> 0 `i `uc ]
+[; ;main.c: 47: while(1) {
+"47
+[e :U 376 ]
+{
+[; ;main.c: 48: PORTDbits.RD3 = !LATDbits.LATD3;
+"48
+[e = . . _PORTDbits 0 3 -> -> ! != -> . . _LATDbits 0 3 `i -> -> -> 0 `i `Vuc `i `i `uc ]
+[; ;main.c: 49: for( uint16_t i = 0; i < 60000; i++ ) { __nop(); }
+"49
+{
+[v _i `ui ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `ui ]
+[e $ < -> _i `l -> 60000 `l 378  ]
+[e $U 379  ]
+[e :U 378 ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
+{
+[e ( ___nop ..  ]
+}
+[e ++ _i -> -> 1 `i `ui ]
+<<<<<<< HEAD
+[e $ < -> _i `l -> 60000 `l 371  ]
+[e :U 372 ]
+=======
+[e $ < -> _i `l -> 60000 `l 378  ]
+[e :U 379 ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
+}
 [; ;main.c: 81: semaphore_signal( &g_sem_2 );
 "81
 [e ( _semaphore_signal (1 &U _g_sem_2 ]
 "82
 }
+<<<<<<< HEAD
 [e :U 368 ]
 "78
 [e $U 369  ]
@@ -3366,6 +3532,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 83: }
 "83
 [e :UE 367 ]
+=======
+[e :U 375 ]
+"47
+[e $U 376  ]
+[e :U 377 ]
+[; ;main.c: 50: }
+[; ;main.c: 51: }
+"51
+[e :UE 374 ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 }
 "87
 [v _main `(v ~T0 @X0 1 ef ]
@@ -3373,6 +3549,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 87: void main(void) {
 [e :U _main ]
 [f ]
+<<<<<<< HEAD
 [; ;main.c: 89: nojo_init();
 "89
 [e ( _nojo_init ..  ]
@@ -3408,4 +3585,50 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 107: }
 "107
 [e :UE 374 ]
+=======
+"55
+[v _descritor `*S344 ~T0 @X0 1 a ]
+[; ;main.c: 55: message_queue_t descritor;
+[; ;main.c: 56: message_queue_init(&descritor);
+"56
+[e ( _message_queue_init (1 &U _descritor ]
+[; ;main.c: 58: nojo_init();
+"58
+[e ( _nojo_init ..  ]
+[; ;main.c: 60: asm("GLOBAL _task_1, _task_2, _task_3, _task_4, _task_idle_callback");
+"60
+[; <" GLOBAL _task_1, _task_2, _task_3, _task_4, _task_idle_callback ;# ">
+[; ;main.c: 62: task_create( 1, 200, task_1 );
+"62
+[e ( _task_create (3 , , -> -> 1 `i `ui -> -> 200 `i `ui &U _task_1 ]
+[; ;main.c: 63: task_create( 2, 100, task_2 );
+"63
+[e ( _task_create (3 , , -> -> 2 `i `ui -> -> 100 `i `ui &U _task_2 ]
+[; ;main.c: 64: task_create( 3, 50, task_3 );
+"64
+[e ( _task_create (3 , , -> -> 3 `i `ui -> -> 50 `i `ui &U _task_3 ]
+[; ;main.c: 65: task_create( 4, 400, task_4 );
+"65
+[e ( _task_create (3 , , -> -> 4 `i `ui -> -> 400 `i `ui &U _task_4 ]
+[; ;main.c: 67: nojo_start();
+"67
+[e ( _nojo_start ..  ]
+[; ;main.c: 69: while(1) {
+"69
+[e :U 383 ]
+{
+[; ;main.c: 70: asm("nop");
+"70
+[; <" nop ;# ">
+"71
+}
+[e :U 382 ]
+"69
+[e $U 383  ]
+[e :U 384 ]
+[; ;main.c: 71: }
+[; ;main.c: 72: }
+"72
+[e :UE 381 ]
+>>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
 }
