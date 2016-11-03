@@ -33,11 +33,8 @@
       <itemPath>kernel/task.c</itemPath>
       <itemPath>kernel/memory.c</itemPath>
       <itemPath>kernel/linked_list.c</itemPath>
-<<<<<<< HEAD
       <itemPath>kernel/semaphore.c</itemPath>
-=======
       <itemPath>kernel/message_queue.c</itemPath>
->>>>>>> 9025476d3526198088f21a2e4fdf4f1349aafccd
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
