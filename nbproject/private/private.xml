@@ -6,11 +6,13 @@
             <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/interrutps.h</file>
             <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/scheduler.c</file>
             <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/defines.h</file>
-            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/task.c</file>
             <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/dispatcher.c</file>
             <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/semaphore.c</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/timers.c</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/message_queue.c</file>
             <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/main.c</file>
             <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/linked_list.c</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/semaphore.h</file>
         </group>
     </open-files>
 </project-private>

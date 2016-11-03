@@ -84,11 +84,7 @@ static void task_3_priority() {
 
 #endif
 
-void main(void) {
-    
-    message_queue_t descritor;
-    message_queue_init(&descritor);
-    
+void main(void) {    
     nojo_init();
 #if SCHEDULER == SCHEDULER_ROUND_ROBIN
     asm("GLOBAL _task_1, _task_2, _task_3, _task_idle_callback");

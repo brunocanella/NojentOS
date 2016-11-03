@@ -49,6 +49,7 @@ do {                                                                            
     free(context->stack.values);                                                \
     context->stack.values = (uint24_t*)malloc(sizeof(uint24_t) * STACK_VALUE());\
     task_context_stack_t* stack = &(context->stack);                            \
+    stack->size = 0;                                                            \
     while( STACK_VALUE() > 0 ) {                                                \
         uint8_t i = stack->size++;                                              \
         stack->values[i] = TOS;                                                 \

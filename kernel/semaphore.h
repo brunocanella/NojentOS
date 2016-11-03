@@ -10,10 +10,13 @@
 
 #include "types.h"
 #include "linked_list.h"
+#include "dispatcher.h"
 
 typedef struct semaphore_s {
     int8_t value;
-    linked_list_t* queue;
+    task_t* queue[TASKS_MAX];
+    uint8_t queue_size;
+    uint8_t queue_first;
 } semaphore_t;
 
 void semaphore_init( semaphore_t* handle, int8_t initial_value );

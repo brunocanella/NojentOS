@@ -21,8 +21,9 @@ uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t s
     
     //Atribuindo o conteudo ao buffer para dar free no dado que estava salvo na lista
     uint8_t i;
-    for(i = 0; i < size; i++)
+    for(i = 0; i < size; i++) {
         ((uint8_t*)buff)[i] = ((uint8_t*)(message_queue_node->data))[i];
+    }
     
     //buffer já está salvo, retirando dado da lista
     linked_list_remove_first((linked_list_t*)descriptor);
