@@ -3,4 +3,5 @@ debug/**/*
 disassembly/**
 dist/**
 doc/**
+*.mk
 *.orig
