@@ -6,6 +6,10 @@
 #ifndef CONFIG_H
 #define	CONFIG_H
 
+#pragma warning disable 752
+
+#define __OPTIMIZE_NONE__ 1
+
 #include "kernel/defines.h"
 
 #pragma config WDT = OFF                                                        // Desabilita watchdog timer
@@ -16,7 +20,6 @@
 #define OSC_PLLENABLE ON                                                        // Oscilador Interno x4 >> 8MHz x4 >> 32 MHz
 
 #define TASKS_MAX 3                                                             // Numero máximo de tarefas
-#define STACK_LEVEL_MAX 31                                                      // Níveis da pilha de hardware
 
 #endif	/* CONFIG_H */
 

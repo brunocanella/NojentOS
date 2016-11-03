@@ -2,12 +2,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 "11 kernel/linked_list.h
 [s S1 `*S1 1 `*v 1 ]
 [n S1 linked_list_s next data ]
-"13 kernel/memory.h
+"12 kernel/memory.h
 [v _malloc `(*v ~T0 @X0 0 ef1`ui ]
 "17 kernel/linked_list.h
 [s S2 `uc 1 `*S1 1 ]
 [n S2 linked_list_head_data_s size last ]
-"15 kernel/memory.h
+"14 kernel/memory.h
 [v _free `(v ~T0 @X0 0 ef1`*v ]
 "36 kernel/linked_list.h
 [v _linked_list_get_last `(*v ~T0 @X0 0 ef1`*S1 ]
@@ -99,10 +99,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;memory.h: 10: extern byte _heap[1024];
-[; ;memory.h: 13: void* malloc( size_t size );
-[; ;memory.h: 15: void free( void* a_pointer );
-[; ;memory.h: 17: typedef struct block_s block_t;
+[; ;memory.h: 10: extern byte _heap[700];
+[; ;memory.h: 12: void* malloc( size_t size );
+[; ;memory.h: 14: void free( void* a_pointer );
+[; ;memory.h: 16: typedef struct block_s block_t;
 "10 kernel/linked_list.c
 [v _linked_list_create `(c ~T0 @X0 1 ef1`**S1 ]
 {
@@ -522,22 +522,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 "161
 [e :UE 35 ]
 }
-"162
+"163
 [v _linked_list_get_size `(uc ~T0 @X0 1 ef1`*S1 ]
 {
-[; ;linked_list.c: 162: uint8_t linked_list_get_size( linked_list_t* a_head ) {
+[; ;linked_list.c: 163: uint8_t linked_list_get_size( linked_list_t* a_head ) {
 [e :U _linked_list_get_size ]
 [v _a_head `*S1 ~T0 @X0 1 r1 ]
 [f ]
-"163
-[v _l_head_data `*S2 ~T0 @X0 1 a ]
-[; ;linked_list.c: 163: linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
-[e = _l_head_data -> . *U _a_head 1 `*S2 ]
-[; ;linked_list.c: 164: return l_head_data->size;
 "164
+[v _l_head_data `*S2 ~T0 @X0 1 a ]
+[; ;linked_list.c: 164: linked_list_head_data_t* l_head_data = (linked_list_head_data_t*)(a_head->data);
+[e = _l_head_data -> . *U _a_head 1 `*S2 ]
+[; ;linked_list.c: 165: return l_head_data->size;
+"165
 [e ) . *U _l_head_data 0 ]
 [e $UE 36  ]
-[; ;linked_list.c: 165: }
-"165
+[; ;linked_list.c: 166: }
+"166
 [e :UE 36 ]
 }

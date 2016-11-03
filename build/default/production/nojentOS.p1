@@ -1,11 +1,5 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"6565 /opt/microchip/xc8/v1.37/include/pic18f4520.h
-[v _WREG `Vuc ~T0 @X0 0 e@4072 ]
-"6511
-[v _BSR `Vuc ~T0 @X0 0 e@4064 ]
-"6385
-[v _STATUS `Vuc ~T0 @X0 0 e@4056 ]
-"6790
+"6790 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [s S338 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S338 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
 "6800
@@ -19,14 +13,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S337 . . . . ]
 "6816
 [v _INTCONbits `VS337 ~T0 @X0 0 e@4082 ]
-"29 kernel/interrutps.h
+"21 kernel/interrutps.h
 [c E3214 0 1 2 .. ]
 [n E3214 task_state_e task_state_ready task_state_running task_state_blocked  ]
 [v F3198 `(v ~T0 @X0 0 tf ]
-"16 kernel/task_context.h
+"12 kernel/task_context.h
 [s S344 `*um 1 `uc 1 ]
 [n S344 task_context_stack_s values size ]
-"21
+"17
 [s S345 `uc 1 `uc 1 `uc 1 `S344 1 ]
 [n S345 task_context_s work bsr status stack ]
 "18 kernel/task.h
@@ -34,21 +28,33 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S346 task_s id priority state callback context ]
 [v F3235 `(*S346 ~T0 @X0 0 tf ]
 "18 kernel/dispatcher.h
-[s S349 `S346 -> 4 `i `uc 1 `*S346 1 `*F3235 1 ]
+[s S349 `S346 -> 3 `i `uc 1 `*S346 1 `*F3235 1 ]
 [n S349 dispatcher_s tasks size running callback ]
-"33
+"35
 [v _dispatcher `S349 ~T0 @X0 0 e ]
-"7074 /opt/microchip/xc8/v1.37/include/pic18f4520.h
+"6565 /opt/microchip/xc8/v1.38/include/pic18f4520.h
+[v _WREG `Vuc ~T0 @X0 0 e@4072 ]
+"6511
+[v _BSR `Vuc ~T0 @X0 0 e@4064 ]
+"6385
+[v _STATUS `Vuc ~T0 @X0 0 e@4056 ]
+"14 kernel/memory.h
+[v _free `(v ~T0 @X0 0 ef1`*v ]
+"12
+[v _malloc `(*v ~T0 @X0 0 ef1`ui ]
+"6983 /opt/microchip/xc8/v1.38/include/pic18f4520.h
+[v _STKPTR `Vuc ~T0 @X0 0 e@4092 ]
+"7055
+[v _TOS `Vum ~T0 @X0 0 e@4093 ]
+"13 kernel/timers.h
+[v _timer0_isr `(v ~T0 @X0 0 ef ]
+"7074 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [v _TOSU `Vuc ~T0 @X0 0 e@4095 ]
 "7068
 [v _TOSH `Vuc ~T0 @X0 0 e@4094 ]
 "7062
 [v _TOSL `Vuc ~T0 @X0 0 e@4093 ]
-"6983
-[v _STKPTR `Vuc ~T0 @X0 0 e@4092 ]
-"13 kernel/timers.h
-[v _timer0_isr `(v ~T0 @X0 0 ef ]
-"6209 /opt/microchip/xc8/v1.37/include/pic18f4520.h
+"6209
 [s S319 :2 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 ]
 [n S319 . SCS IOFS OSTS IRCF IDLEN ]
 "6216
@@ -75,7 +81,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "27
 [v _dispatcher_start `(v ~T0 @X0 0 ef ]
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
-"51 /opt/microchip/xc8/v1.37/include/pic18f4520.h
+"51 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
 [; <" PORTA equ 0F80h ;# ">
 [; ;pic18f4520.h: 54: typedef union {
@@ -3076,18 +3082,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
 [; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
 [; ;timers.h: 13: void timer0_isr();
-[; ;task_context.h: 16: typedef struct task_context_stack_s {
-[; ;task_context.h: 17: uint24_t* values;
-[; ;task_context.h: 18: uint8_t size;
-[; ;task_context.h: 19: } task_context_stack_t;
-[; ;task_context.h: 21: typedef struct task_context_s {
-[; ;task_context.h: 22: byte work;
-[; ;task_context.h: 23: byte bsr;
-[; ;task_context.h: 24: byte status;
-[; ;task_context.h: 25: task_context_stack_t stack;
-[; ;task_context.h: 26: } task_context_t;
+[; ;task_context.h: 12: typedef struct task_context_stack_s {
+[; ;task_context.h: 13: uint24_t* values;
+[; ;task_context.h: 14: uint8_t size;
+[; ;task_context.h: 15: } task_context_stack_t;
+[; ;task_context.h: 17: typedef struct task_context_s {
+[; ;task_context.h: 18: byte work;
+[; ;task_context.h: 19: byte bsr;
+[; ;task_context.h: 20: byte status;
+[; ;task_context.h: 21: task_context_stack_t stack;
+[; ;task_context.h: 22: } task_context_t;
 [; ;task.h: 12: typedef enum task_state_e {
-[; ;task.h: 13: task_state_ready,
+[; ;task.h: 13: task_state_ready = 0,
 [; ;task.h: 14: task_state_running,
 [; ;task.h: 15: task_state_blocked
 [; ;task.h: 16: } task_state_t;
@@ -3102,6 +3108,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
+[; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
 [; ;__size_t.h: 4: typedef unsigned size_t;
 [; ;stdarg.h: 7: typedef void * va_list[1];
@@ -3133,12 +3140,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;memory.h: 10: extern byte _heap[1024];
-[; ;memory.h: 13: void* malloc( size_t size );
-[; ;memory.h: 15: void free( void* a_pointer );
-[; ;memory.h: 17: typedef struct block_s block_t;
+[; ;memory.h: 10: extern byte _heap[700];
+[; ;memory.h: 12: void* malloc( size_t size );
+[; ;memory.h: 14: void free( void* a_pointer );
+[; ;memory.h: 16: typedef struct block_s block_t;
 [; ;dispatcher.h: 18: typedef struct dispatcher_s {
-[; ;dispatcher.h: 19: task_t tasks[4];
+[; ;dispatcher.h: 19: task_t tasks[3];
 [; ;dispatcher.h: 20: uint8_t size;
 [; ;dispatcher.h: 21: task_t* running;
 [; ;dispatcher.h: 22: scheduler_function_ptr_t callback;
@@ -3147,10 +3154,41 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 27: void dispatcher_start();
 [; ;dispatcher.h: 29: task_t* dispatcher_add_task();
 [; ;dispatcher.h: 31: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 33: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 35: extern task_t idle;
-[; ;nojentOS.h: 16: void nojo_init();
-[; ;nojentOS.h: 18: void nojo_start();
+[; ;dispatcher.h: 33: void dispatcher_change_context( task_state_t task_state );
+[; ;dispatcher.h: 35: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 37: extern task_t idle;
+[; ;linked_list.h: 6: struct linked_list_s;
+[; ;linked_list.h: 8: typedef struct linked_list_s linked_list_t;
+"10 kernel/linked_list.h
+[p p 1 ]
+[; ;linked_list.h: 11: struct linked_list_s {
+[; ;linked_list.h: 12: linked_list_t* next;
+[; ;linked_list.h: 13: pointer_t data;
+[; ;linked_list.h: 14: };
+"16
+[p p 1 ]
+[; ;linked_list.h: 17: typedef struct linked_list_head_data_s {
+[; ;linked_list.h: 18: uint8_t size;
+[; ;linked_list.h: 19: linked_list_t* last;
+[; ;linked_list.h: 20: } linked_list_head_data_t;
+[; ;linked_list.h: 22: int8_t linked_list_create( linked_list_t** a_head );
+[; ;linked_list.h: 24: int8_t linked_list_insert( linked_list_t* a_head, pointer_t a_data );
+[; ;linked_list.h: 28: int8_t linked_list_remove_last( linked_list_t* a_head );
+[; ;linked_list.h: 30: int8_t linked_list_remove_first( linked_list_t* a_head );
+[; ;linked_list.h: 32: int8_t linked_list_remove_all( linked_list_t* a_head );
+[; ;linked_list.h: 34: pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index );
+[; ;linked_list.h: 36: pointer_t linked_list_get_last( linked_list_t* a_head );
+[; ;linked_list.h: 38: pointer_t linked_list_get_first( linked_list_t* a_head );
+[; ;linked_list.h: 40: uint8_t linked_list_get_size( linked_list_t* a_head );
+[; ;semaphore.h: 14: typedef struct semaphore_s {
+[; ;semaphore.h: 15: int8_t value;
+[; ;semaphore.h: 16: linked_list_t* queue;
+[; ;semaphore.h: 17: } semaphore_t;
+[; ;semaphore.h: 19: void semaphore_init( semaphore_t* handle, int8_t initial_value );
+[; ;semaphore.h: 20: void semaphore_wait( semaphore_t* handle );
+[; ;semaphore.h: 21: void semaphore_signal( semaphore_t* handle );
+[; ;nojentOS.h: 17: void nojo_init();
+[; ;nojentOS.h: 19: void nojo_start();
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -3160,176 +3198,93 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
-"14 kernel/interrutps.h
-[v __WREG `uc ~T0 @X0 1 e ]
-[; ;interrutps.h: 14: byte _WREG;
-"15
-[v __BSR `uc ~T0 @X0 1 e ]
-[; ;interrutps.h: 15: byte _BSR;
-"16
-[v __STATUS `uc ~T0 @X0 1 e ]
-[; ;interrutps.h: 16: byte _STATUS;
-[v F3348 `(v ~T0 @X0 1 tf ]
-"21
-[v _global_isr `IF3348 ~T0 @X0 1 e ]
+[v F3387 `(v ~T0 @X0 1 tf ]
+"17 kernel/interrutps.h
+[v _global_isr `IF3387 ~T0 @X0 1 e ]
 {
-[; ;interrutps.h: 21: void interrupt global_isr() {
+[; ;interrutps.h: 17: void interrupt global_isr() {
 [e :U _global_isr ]
 [f ]
-[; ;interrutps.h: 22: _WREG = WREG;
-"22
-[e = __WREG _WREG ]
-[; ;interrutps.h: 23: _BSR = BSR;
-"23
-[e = __BSR _BSR ]
-[; ;interrutps.h: 24: _STATUS = STATUS;
-"24
-[e = __STATUS _STATUS ]
-[; ;interrutps.h: 26: if( INTCONbits.TMR0IE && INTCONbits.TMR0IF ) {
-"26
-[e $ ! && != -> . . _INTCONbits 0 5 `i -> -> -> 0 `i `Vuc `i != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 351  ]
+[; ;interrutps.h: 19: if( INTCONbits.TMR0IE && INTCONbits.TMR0IF ) {
+"19
+[e $ ! && != -> . . _INTCONbits 0 5 `i -> -> -> 0 `i `Vuc `i != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 354  ]
 {
-[; ;interrutps.h: 28: do {
-"28
-[e :U 354 ]
-{
-"29
-[v _p_task `*S346 ~T0 @X0 1 a ]
-[; ;interrutps.h: 29: task_t* p_task = (dispatcher.running);
-[e = _p_task . _dispatcher 2 ]
-[; ;interrutps.h: 30: if( p_task == ((void*)0) ) { break; }
-"30
-[e $ ! == -> _p_task `*v -> -> 0 `i `*v 355  ]
-{
-[e $U 353  ]
-}
-[e :U 355 ]
-"31
-[v _p_context `*S345 ~T0 @X0 1 a ]
-[; ;interrutps.h: 31: task_context_t* p_context = &(p_task->context);
-[e = _p_context &U . *U _p_task 4 ]
-[; ;interrutps.h: 32: p_context->work = _WREG;
-"32
-[e = . *U _p_context 0 __WREG ]
-[; ;interrutps.h: 33: p_context->bsr = _BSR;
-"33
-[e = . *U _p_context 1 __BSR ]
-[; ;interrutps.h: 34: p_context->status = _STATUS;
-"34
-[e = . *U _p_context 2 __STATUS ]
-"35
-[v _p_stack `*S344 ~T0 @X0 1 a ]
-[; ;interrutps.h: 35: task_context_stack_t* p_stack = &(p_context->stack);
-[e = _p_stack &U . *U _p_context 3 ]
-[; ;interrutps.h: 36: while( (STKPTR & 0b11111) > 0 ) {
-"36
-[e $U 356  ]
+[; ;interrutps.h: 21: do { task_t* task = (dispatcher.running); if( task == ((void*)0) ) { break; } task_context_t* context = &(task->context); context->work = WREG; context->bsr = BSR; context->status = STATUS; free(context->stack.values); context->stack.values = (uint24
+"21
 [e :U 357 ]
 {
-"37
+[v _task `*S346 ~T0 @X0 1 a ]
+[e = _task . _dispatcher 2 ]
+[e $ ! == -> _task `*v -> -> 0 `i `*v 358  ]
+{
+[e $U 356  ]
+}
+[e :U 358 ]
+[v _context `*S345 ~T0 @X0 1 a ]
+[e = _context &U . *U _task 4 ]
+[e = . *U _context 0 _WREG ]
+[e = . *U _context 1 _BSR ]
+[e = . *U _context 2 _STATUS ]
+[e ( _free (1 -> . . *U _context 3 0 `*v ]
+[e = . . *U _context 3 0 -> ( _malloc (1 * -> # `um `ui -> & -> _STKPTR `i -> 31 `i `ui `*um ]
+[v _stack `*S344 ~T0 @X0 1 a ]
+[e = _stack &U . *U _context 3 ]
+[e $U 359  ]
+[e :U 360 ]
+{
 [v _i `uc ~T0 @X0 1 a ]
-[; ;interrutps.h: 37: uint8_t i = p_stack->size++;
-[e = _i ++ . *U _p_stack 1 -> -> 1 `i `uc ]
-[; ;interrutps.h: 38: p_stack->values[i] = (TOSU << 16) | (TOSH << 8) | TOSL;
-"38
-[e = *U + . *U _p_stack 0 * -> _i `ux -> -> # *U . *U _p_stack 0 `ui `ux -> -> | | << -> _TOSU `i -> 16 `i << -> _TOSH `i -> 8 `i -> _TOSL `i `m `um ]
-[; ;interrutps.h: 39: asm("POP");
-"39
+[e = _i ++ . *U _stack 1 -> -> 1 `i `uc ]
+[e = *U + . *U _stack 0 * -> _i `ux -> -> # *U . *U _stack 0 `ui `ux _TOS ]
 [; <" POP ;# ">
-"40
+}
+[e :U 359 ]
+[e $ > & -> _STKPTR `i -> 31 `i -> 0 `i 360  ]
+[e :U 361 ]
 }
 [e :U 356 ]
-"36
-[e $ > & -> _STKPTR `i -> 31 `i -> 0 `i 357  ]
-[e :U 358 ]
-"41
-}
-[e :U 353 ]
-[; ;interrutps.h: 40: }
-[; ;interrutps.h: 41: }while(0);
-[; ;interrutps.h: 43: timer0_isr();
-"43
+[; ;interrutps.h: 23: timer0_isr();
+"23
 [e ( _timer0_isr ..  ]
-[; ;interrutps.h: 45: do {
-"45
-[e :U 361 ]
-{
-"46
-[v _n_task `*S346 ~T0 @X0 1 a ]
-[; ;interrutps.h: 46: task_t* n_task = (dispatcher.running);
-[e = _n_task . _dispatcher 2 ]
-[; ;interrutps.h: 47: if( n_task == ((void*)0) ) { break; }
-"47
-[e $ ! == -> _n_task `*v -> -> 0 `i `*v 362  ]
-{
-[e $U 360  ]
-}
-[e :U 362 ]
-"48
-[v _n_context `*S345 ~T0 @X0 1 a ]
-[; ;interrutps.h: 48: task_context_t* n_context = &(n_task->context);
-[e = _n_context &U . *U _n_task 4 ]
-[; ;interrutps.h: 49: _WREG = n_context->work;
-"49
-[e = __WREG . *U _n_context 0 ]
-[; ;interrutps.h: 50: _BSR = n_context->bsr;
-"50
-[e = __BSR . *U _n_context 1 ]
-[; ;interrutps.h: 51: _STATUS = n_context->status;
-"51
-[e = __STATUS . *U _n_context 2 ]
-"52
-[v _n_stack `*S344 ~T0 @X0 1 a ]
-[; ;interrutps.h: 52: task_context_stack_t* n_stack = &(n_context->stack);
-[e = _n_stack &U . *U _n_context 3 ]
-[; ;interrutps.h: 53: while( n_stack->size > 0 ) {
-"53
-[e $U 363  ]
+[; ;interrutps.h: 25: do { task_t* task = (dispatcher.running); if( task == ((void*)0) ) { break; } task_context_t* context = &(task->context); WREG = context->work; BSR = context->bsr; STATUS = context->status; task_context_stack_t* stack = &(context->stack); while( stac
+"25
 [e :U 364 ]
 {
-"54
+[v _task `*S346 ~T0 @X0 1 a ]
+[e = _task . _dispatcher 2 ]
+[e $ ! == -> _task `*v -> -> 0 `i `*v 365  ]
+{
+[e $U 363  ]
+}
+[e :U 365 ]
+[v _context `*S345 ~T0 @X0 1 a ]
+[e = _context &U . *U _task 4 ]
+[e = _WREG . *U _context 0 ]
+[e = _BSR . *U _context 1 ]
+[e = _STATUS . *U _context 2 ]
+[v _stack `*S344 ~T0 @X0 1 a ]
+[e = _stack &U . *U _context 3 ]
+[e $U 366  ]
+[e :U 367 ]
+{
 [v _i `uc ~T0 @X0 1 a ]
-[; ;interrutps.h: 54: uint8_t i = --n_stack->size;
-[e = _i =- . *U _n_stack 1 -> -> 1 `i `uc ]
-[; ;interrutps.h: 55: asm("PUSH");
-"55
+[e = _i =- . *U _stack 1 -> -> 1 `i `uc ]
 [; <" PUSH ;# ">
-[; ;interrutps.h: 56: TOSU = n_stack->values[i] >> 16;
-"56
-[e = _TOSU -> >> *U + . *U _n_stack 0 * -> _i `ux -> -> # *U . *U _n_stack 0 `ui `ux -> 16 `i `uc ]
-[; ;interrutps.h: 57: TOSH = n_stack->values[i] >> 8;
-"57
-[e = _TOSH -> >> *U + . *U _n_stack 0 * -> _i `ux -> -> # *U . *U _n_stack 0 `ui `ux -> 8 `i `uc ]
-[; ;interrutps.h: 58: TOSL = n_stack->values[i] >> 0;
-"58
-[e = _TOSL -> >> *U + . *U _n_stack 0 * -> _i `ux -> -> # *U . *U _n_stack 0 `ui `ux -> 0 `i `uc ]
-"61
+[e = _TOSU -> >> *U + . *U _stack 0 * -> _i `ux -> -> # *U . *U _stack 0 `ui `ux -> 16 `i `uc ]
+[e = _TOSH -> >> *U + . *U _stack 0 * -> _i `ux -> -> # *U . *U _stack 0 `ui `ux -> 8 `i `uc ]
+[e = _TOSL -> >> *U + . *U _stack 0 * -> _i `ux -> -> # *U . *U _stack 0 `ui `ux -> 0 `i `uc ]
+}
+[e :U 366 ]
+[e $ > -> . *U _stack 1 `i -> 0 `i 367  ]
+[e :U 368 ]
 }
 [e :U 363 ]
-"53
-[e $ > -> . *U _n_stack 1 `i -> 0 `i 364  ]
-[e :U 365 ]
-"62
+"26
 }
-[e :U 360 ]
-"63
-}
-[e :U 351 ]
-[; ;interrutps.h: 61: }
-[; ;interrutps.h: 62: } while(0);
-[; ;interrutps.h: 63: }
-[; ;interrutps.h: 64: BSR = _BSR;
-"64
-[e = _BSR __BSR ]
-[; ;interrutps.h: 65: STATUS = _STATUS;
-"65
-[e = _STATUS __STATUS ]
-[; ;interrutps.h: 66: WREG = _WREG;
-"66
-[e = _WREG __WREG ]
-[; ;interrutps.h: 67: }
-"67
-[e :UE 350 ]
+[e :U 354 ]
+[; ;interrutps.h: 26: }
+[; ;interrutps.h: 27: }
+"27
+[e :UE 353 ]
 }
 "15 nojentOS.c
 [v _nojo_init `(v ~T0 @X0 1 ef ]
@@ -3348,7 +3303,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _dispatcher_init ..  ]
 [; ;nojentOS.c: 21: }
 "21
-[e :UE 366 ]
+[e :UE 369 ]
 }
 "23
 [v _nojo_start `(v ~T0 @X0 1 ef ]
@@ -3361,12 +3316,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _dispatcher_start ..  ]
 [; ;nojentOS.c: 26: do{ INTCONbits.GIE = 1; }while(0);
 "26
-[e :U 370 ]
+[e :U 373 ]
 {
 [e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
 }
-[e :U 369 ]
+[e :U 372 ]
 [; ;nojentOS.c: 27: }
 "27
-[e :UE 367 ]
+[e :UE 370 ]
 }

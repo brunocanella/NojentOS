@@ -8,4 +8,5 @@ kernel/task.h  \
 kernel/linked_list.h  \
 kernel/semaphore.h  \
 kernel/dispatcher.h  \
+kernel/memory.h  \
 kernel/defines.h 

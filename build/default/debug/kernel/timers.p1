@@ -1,6 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [v F32 `(v ~T0 @X0 0 tf ]
-"6790 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
+"6790 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [s S338 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S338 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
 "6800
@@ -79,7 +79,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timers.h: 11: void timer0_init( uint16_t delay_us, function_ptr_t callback );
 [; ;timers.h: 13: void timer0_isr();
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
-"51 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
+"51 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
 [; <" PORTA equ 0F80h ;# ">
 [; ;pic18f4520.h: 54: typedef union {

@@ -5,8 +5,6 @@
 #include "memory.h"
 
 void task_create( uint16_t id, uint16_t priority, function_ptr_t callback ) {
-    
-    
     task_t* handle = dispatcher_add_task();
     
     handle->id = id;
@@ -32,11 +30,11 @@ void task_running( task_t* handle ) {
     handle->state = task_state_running;
 }
 
+/*asm("GLOBAL _task_block");
+
 void task_block( task_t* handle ) {
     handle->state = task_state_blocked;    
-}
-
-asm("GLOBAL _task_block");
+}*/
 
 //
 //void task_delay( task_t* handle ) {

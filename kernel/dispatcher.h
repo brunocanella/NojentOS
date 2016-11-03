@@ -7,7 +7,7 @@
 #define	DISPATCHER_H
 
 #ifndef TASKS_MAX
-#define TASKS_MAX 4
+#define TASKS_MAX 3
 #endif//TASKS_MAX
 
 #include <pic18f4520.h>
@@ -68,9 +68,10 @@ do {                                                                            
     while( stack->size > 0 ) {                                                  \
         uint8_t i = --stack->size;                                              \
         PUSH();                                                                 \
-        TOS = stack->values[i];                                                 \
+        TOSU = stack->values[i] >> 16;                                          \
+        TOSH = stack->values[i] >>  8;                                          \
+        TOSL = stack->values[i] >>  0;                                          \
     }                                                                           \
-    free(context->stack.values);                                                \
 } while(0)
 
 

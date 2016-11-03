@@ -1,10 +1,10 @@
 
 # 1 "kernel/memory.c"
 
-# 4 "/home/bruno/Programs/microchip/xc8/v1.37/include/__size_t.h"
+# 4 "/opt/microchip/xc8/v1.38/include/__size_t.h"
 typedef unsigned size_t;
 
-# 7 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdarg.h"
+# 7 "/opt/microchip/xc8/v1.38/include/stdarg.h"
 typedef void * va_list[1];
 
 #pragma intrinsic(__va_start)
@@ -13,17 +13,17 @@ extern void * __va_start(void);
 #pragma intrinsic(__va_arg)
 extern void * __va_arg(void *, ...);
 
-# 43 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdio.h"
+# 43 "/opt/microchip/xc8/v1.38/include/stdio.h"
 struct __prbuf
 {
 char * ptr;
 void (* func)(char);
 };
 
-# 29 "/home/bruno/Programs/microchip/xc8/v1.37/include/errno.h"
+# 29 "/opt/microchip/xc8/v1.38/include/errno.h"
 extern int errno;
 
-# 12 "/home/bruno/Programs/microchip/xc8/v1.37/include/conio.h"
+# 12 "/opt/microchip/xc8/v1.38/include/conio.h"
 extern void init_uart(void);
 
 extern char getch(void);
@@ -37,7 +37,7 @@ extern __bit kbhit(void);
 extern char * cgets(char *);
 extern void cputs(const char *);
 
-# 88 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdio.h"
+# 88 "/opt/microchip/xc8/v1.38/include/stdio.h"
 extern int cprintf(char *, ...);
 #pragma printf_check(cprintf)
 
@@ -64,7 +64,7 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-# 13 "/home/bruno/Programs/microchip/xc8/v1.37/include/stdint.h"
+# 13 "/opt/microchip/xc8/v1.38/include/stdint.h"
 typedef signed char int8_t;
 
 # 20
@@ -167,8 +167,7 @@ typedef void* pointer_t;
 typedef void (*function_ptr_t)(void);
 
 # 10 "kernel/memory.h"
-extern byte _heap[512];
-
+extern byte _heap[700];
 
 void* malloc( size_t size );
 
@@ -188,7 +187,7 @@ byte free_block;
 
 
 
-byte s_heap[512];
+byte s_heap[700];
 
 block_t* s_blocks = (0);
 
@@ -230,7 +229,7 @@ l_offset += sizeof(block_t) + l_block->next->size;
 l_block = l_block->next;
 }
 
-if( ( sizeof(block_t) + l_offset + a_size ) >= 512 ) {
+if( ( sizeof(block_t) + l_offset + a_size ) >= 700 ) {
 
 return (0);
 }

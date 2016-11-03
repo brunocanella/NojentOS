@@ -9,12 +9,13 @@
 // Config tem que vir antes de NojentOS, pois os defines dele sobrescrevem valores do SO.
 #include "config.h"
 
-#include "../NojentOS/kernel/linked_list.h"
-#include "../NojentOS/kernel/memory.h"
 
+#include "kernel/defines.h"
 #include "nojentOS.h"
 
-/*static void task_1() {
+#if SCHEDULER == SCHEDULER_ROUND_ROBIN
+
+static void task_1() {
     TRISDbits.RD0 = OUTPUT;
     PORTDbits.RD0 = LOW;
     while(TRUE) {
@@ -39,11 +40,12 @@ static void task_3() {
         PORTDbits.RD2 = !LATDbits.LATD2;
         for( uint16_t i = 0; i < 60000; i++ ) { NOP(); }
     }
-}*/
+}
+
+#else
 
 semaphore_t g_sem_1;
 semaphore_t g_sem_2;
-//semaphore_t g_sem_3;
 
 static void task_1_priority() {
     TRISDbits.RD0 = OUTPUT;
@@ -80,15 +82,22 @@ static void task_3_priority() {
     }
 }
 
+#endif
+
 void main(void) {
     
     nojo_init();
-    //asm("GLOBAL _task_1, _task_2, _task_3, _task_idle_callback");
+#if SCHEDULER == SCHEDULER_ROUND_ROBIN
+    asm("GLOBAL _task_1, _task_2, _task_3, _task_idle_callback");
+    task_create( 1, 200, task_1 );
+    task_create( 2, 100, task_2 );
+    task_create( 3,  50, task_3 );
+#else
     asm("GLOBAL _task_1_priority, _task_2_priority, _task_3_priority, _task_idle_callback");
-    
     task_create( 1, 200, task_1_priority );
     task_create( 2, 100, task_2_priority );
     task_create( 3,  50, task_3_priority );
+#endif
     
     nojo_start();
     

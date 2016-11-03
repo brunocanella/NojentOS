@@ -13,22 +13,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [c E3249 0 1 2 .. ]
 [n E3249 task_state_e task_state_ready task_state_running task_state_blocked  ]
 [v F32 `(v ~T0 @X0 0 tf ]
-"16 kernel/task_context.h
-[s S347 `um -> 10 `i `uc 1 ]
+"12 kernel/task_context.h
+[s S347 `*um 1 `uc 1 ]
 [n S347 task_context_stack_s values size ]
-"21
+"17
 [s S348 `uc 1 `uc 1 `uc 1 `S347 1 ]
 [n S348 task_context_s work bsr status stack ]
 "18 kernel/task.h
 [s S349 `ui 1 `ui 1 `E3249 1 `*F32 1 `S348 1 ]
 [n S349 task_s id priority state callback context ]
-[v F3272 `(*S349 ~T0 @X0 0 tf ]
-"17 kernel/dispatcher.h
-[s S350 `S349 -> 3 `i `uc 1 `*S349 1 `*F3272 1 ]
-[n S350 dispatcher_s tasks size running callback ]
-"34
-[v _dispatcher `S350 ~T0 @X0 0 e ]
-"32
+[v F3270 `(*S349 ~T0 @X0 0 tf ]
+"18 kernel/dispatcher.h
+[s S352 `S349 -> 3 `i `uc 1 `*S349 1 `*F3270 1 ]
+[n S352 dispatcher_s tasks size running callback ]
+"35
+[v _dispatcher `S352 ~T0 @X0 0 e ]
+"33
 [v _dispatcher_change_context `(v ~T0 @X0 0 ef1`E3249 ]
 "40 kernel/linked_list.h
 [v _linked_list_get_size `(uc ~T0 @X0 0 ef1`*S1 ]
@@ -104,7 +104,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;semaphore.h: 20: void semaphore_wait( semaphore_t* handle );
 [; ;semaphore.h: 21: void semaphore_signal( semaphore_t* handle );
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
-"51 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
+"51 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
 [; <" PORTA equ 0F80h ;# ">
 [; ;pic18f4520.h: 54: typedef union {
@@ -3068,18 +3068,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18f4520.h: 8310: extern volatile __bit nW @ (((unsigned) &SSPSTAT)*8) + 2;
 [; ;pic18f4520.h: 8312: extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 [; ;pic18f4520.h: 8314: extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
-[; ;task_context.h: 16: typedef struct task_context_stack_s {
-[; ;task_context.h: 17: uint24_t values[10];
-[; ;task_context.h: 18: uint8_t size;
-[; ;task_context.h: 19: } task_context_stack_t;
-[; ;task_context.h: 21: typedef struct task_context_s {
-[; ;task_context.h: 22: byte work;
-[; ;task_context.h: 23: byte bsr;
-[; ;task_context.h: 24: byte status;
-[; ;task_context.h: 25: task_context_stack_t stack;
-[; ;task_context.h: 26: } task_context_t;
+[; ;task_context.h: 12: typedef struct task_context_stack_s {
+[; ;task_context.h: 13: uint24_t* values;
+[; ;task_context.h: 14: uint8_t size;
+[; ;task_context.h: 15: } task_context_stack_t;
+[; ;task_context.h: 17: typedef struct task_context_s {
+[; ;task_context.h: 18: byte work;
+[; ;task_context.h: 19: byte bsr;
+[; ;task_context.h: 20: byte status;
+[; ;task_context.h: 21: task_context_stack_t stack;
+[; ;task_context.h: 22: } task_context_t;
 [; ;task.h: 12: typedef enum task_state_e {
-[; ;task.h: 13: task_state_ready,
+[; ;task.h: 13: task_state_ready = 0,
 [; ;task.h: 14: task_state_running,
 [; ;task.h: 15: task_state_blocked
 [; ;task.h: 16: } task_state_t;
@@ -3093,23 +3093,56 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
-[; ;task.h: 32: void task_block( task_t* handle );
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
 [; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
-[; ;dispatcher.h: 17: typedef struct dispatcher_s {
-[; ;dispatcher.h: 18: task_t tasks[3];
-[; ;dispatcher.h: 19: uint8_t size;
-[; ;dispatcher.h: 20: task_t* running;
-[; ;dispatcher.h: 21: scheduler_function_ptr_t callback;
-[; ;dispatcher.h: 22: } dispatcher_t;
-[; ;dispatcher.h: 24: void dispatcher_init();
-[; ;dispatcher.h: 26: void dispatcher_start();
-[; ;dispatcher.h: 28: task_t* dispatcher_add_task();
-[; ;dispatcher.h: 30: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 32: void dispatcher_change_context( task_state_t task_state );
-[; ;dispatcher.h: 34: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 36: extern task_t idle;
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stdarg.h: 7: typedef void * va_list[1];
+[; ;stdarg.h: 10: extern void * __va_start(void);
+[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
+[; ;stdio.h: 43: struct __prbuf
+[; ;stdio.h: 44: {
+[; ;stdio.h: 45: char * ptr;
+[; ;stdio.h: 46: void (* func)(char);
+[; ;stdio.h: 47: };
+[; ;errno.h: 29: extern int errno;
+[; ;conio.h: 12: extern void init_uart(void);
+[; ;conio.h: 14: extern char getch(void);
+[; ;conio.h: 15: extern char getche(void);
+[; ;conio.h: 16: extern void putch(char);
+[; ;conio.h: 17: extern void ungetch(char);
+[; ;conio.h: 19: extern __bit kbhit(void);
+[; ;conio.h: 23: extern char * cgets(char *);
+[; ;conio.h: 24: extern void cputs(const char *);
+[; ;stdio.h: 88: extern int cprintf(char *, ...);
+[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+[; ;stdio.h: 183: extern char * gets(char *);
+[; ;stdio.h: 184: extern int puts(const char *);
+[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
+[; ;stdio.h: 195: extern int printf(const char *, ...);
+[; ;memory.h: 10: extern byte _heap[700];
+[; ;memory.h: 12: void* malloc( size_t size );
+[; ;memory.h: 14: void free( void* a_pointer );
+[; ;memory.h: 16: typedef struct block_s block_t;
+[; ;dispatcher.h: 18: typedef struct dispatcher_s {
+[; ;dispatcher.h: 19: task_t tasks[3];
+[; ;dispatcher.h: 20: uint8_t size;
+[; ;dispatcher.h: 21: task_t* running;
+[; ;dispatcher.h: 22: scheduler_function_ptr_t callback;
+[; ;dispatcher.h: 23: } dispatcher_t;
+[; ;dispatcher.h: 25: void dispatcher_init();
+[; ;dispatcher.h: 27: void dispatcher_start();
+[; ;dispatcher.h: 29: task_t* dispatcher_add_task();
+[; ;dispatcher.h: 31: void dispatcher_change_context_isr();
+[; ;dispatcher.h: 33: void dispatcher_change_context( task_state_t task_state );
+[; ;dispatcher.h: 35: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 37: extern task_t idle;
 "5 kernel/semaphore.c
 [v _semaphore_init `(v ~T0 @X0 1 ef2`*S3`c ]
 {
@@ -3126,7 +3159,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _linked_list_create (1 &U . *U _handle 1 ]
 [; ;semaphore.c: 8: }
 "8
-[e :UE 351 ]
+[e :UE 353 ]
 }
 "10
 [v _semaphore_wait `(v ~T0 @X0 1 ef1`*S3 ]
@@ -3137,7 +3170,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;semaphore.c: 12: if( --handle->value < 0 ) {
 "12
-[e $ ! < -> =- . *U _handle 0 -> -> 1 `i `c `i -> 0 `i 353  ]
+[e $ ! < -> =- . *U _handle 0 -> -> 1 `i `c `i -> 0 `i 355  ]
 {
 [; ;semaphore.c: 14: linked_list_insert( handle->queue, (pointer_t)dispatcher.running );
 "14
@@ -3147,11 +3180,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _dispatcher_change_context (1 . `E3249 2 ]
 "17
 }
-[e :U 353 ]
+[e :U 355 ]
 [; ;semaphore.c: 17: }
 [; ;semaphore.c: 18: }
 "18
-[e :UE 352 ]
+[e :UE 354 ]
 }
 "20
 [v _semaphore_signal `(v ~T0 @X0 1 ef1`*S3 ]
@@ -3162,7 +3195,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;semaphore.c: 22: if( ++handle->value <= 0 && linked_list_get_size( handle->queue ) > 0 ) {
 "22
-[e $ ! && <= -> =+ . *U _handle 0 -> -> 1 `i `c `i -> 0 `i > -> ( _linked_list_get_size (1 . *U _handle 1 `i -> 0 `i 355  ]
+[e $ ! && <= -> =+ . *U _handle 0 -> -> 1 `i `c `i -> 0 `i > -> ( _linked_list_get_size (1 . *U _handle 1 `i -> 0 `i 357  ]
 {
 "24
 [v _l_task `*S349 ~T0 @X0 1 a ]
@@ -3179,9 +3212,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _dispatcher_change_context (1 . `E3249 0 ]
 "31
 }
-[e :U 355 ]
+[e :U 357 ]
 [; ;semaphore.c: 31: }
 [; ;semaphore.c: 32: }
 "32
-[e :UE 354 ]
+[e :UE 356 ]
 }

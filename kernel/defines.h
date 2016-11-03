@@ -42,8 +42,8 @@
 /**Tentou remover item foram do tamanho da lista*/
 #define ERROR_LIST_OUT_OF_RANGE -3
  
-#define SCHEDULER_ROUND_ROBIN 0
-#define SCHEDULER_PRIORITY    1
+#define SCHEDULER_ROUND_ROBIN 1
+#define SCHEDULER_PRIORITY    2
 
 #define SCHEDULER SCHEDULER_PRIORITY
 

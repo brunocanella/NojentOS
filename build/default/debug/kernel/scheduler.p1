@@ -3,23 +3,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 [c E44 0 1 2 .. ]
 [n E44 task_state_e task_state_ready task_state_running task_state_blocked  ]
 [v F32 `(v ~T0 @X0 0 tf ]
-"16 kernel/task_context.h
-[s S1 `um -> 10 `i `uc 1 ]
+"12 kernel/task_context.h
+[s S1 `*um 1 `uc 1 ]
 [n S1 task_context_stack_s values size ]
-"21
+"17
 [s S2 `uc 1 `uc 1 `uc 1 `S1 1 ]
 [n S2 task_context_s work bsr status stack ]
 "18 kernel/task.h
 [s S3 `ui 1 `ui 1 `E44 1 `*F32 1 `S2 1 ]
 [n S3 task_s id priority state callback context ]
-"36 kernel/dispatcher.h
+"37 kernel/dispatcher.h
 [v _idle `S3 ~T0 @X0 0 e ]
-[v F67 `(*S3 ~T0 @X0 0 tf ]
-"17
-[s S347 `S3 -> 3 `i `uc 1 `*S3 1 `*F67 1 ]
-[n S347 dispatcher_s tasks size running callback ]
-"34
-[v _dispatcher `S347 ~T0 @X0 0 e ]
+[v F65 `(*S3 ~T0 @X0 0 tf ]
+"18
+[s S349 `S3 -> 3 `i `uc 1 `*S3 1 `*F65 1 ]
+[n S349 dispatcher_s tasks size running callback ]
+"35
+[v _dispatcher `S349 ~T0 @X0 0 e ]
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -55,18 +55,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 16: typedef unsigned long uint32_t;
 [; ;types.h: 18: typedef void* pointer_t;
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
-[; ;task_context.h: 16: typedef struct task_context_stack_s {
-[; ;task_context.h: 17: uint24_t values[10];
-[; ;task_context.h: 18: uint8_t size;
-[; ;task_context.h: 19: } task_context_stack_t;
-[; ;task_context.h: 21: typedef struct task_context_s {
-[; ;task_context.h: 22: byte work;
-[; ;task_context.h: 23: byte bsr;
-[; ;task_context.h: 24: byte status;
-[; ;task_context.h: 25: task_context_stack_t stack;
-[; ;task_context.h: 26: } task_context_t;
+[; ;task_context.h: 12: typedef struct task_context_stack_s {
+[; ;task_context.h: 13: uint24_t* values;
+[; ;task_context.h: 14: uint8_t size;
+[; ;task_context.h: 15: } task_context_stack_t;
+[; ;task_context.h: 17: typedef struct task_context_s {
+[; ;task_context.h: 18: byte work;
+[; ;task_context.h: 19: byte bsr;
+[; ;task_context.h: 20: byte status;
+[; ;task_context.h: 21: task_context_stack_t stack;
+[; ;task_context.h: 22: } task_context_t;
 [; ;task.h: 12: typedef enum task_state_e {
-[; ;task.h: 13: task_state_ready,
+[; ;task.h: 13: task_state_ready = 0,
 [; ;task.h: 14: task_state_running,
 [; ;task.h: 15: task_state_blocked
 [; ;task.h: 16: } task_state_t;
@@ -80,12 +80,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 26: void task_create( uint16_t id, uint16_t priority, function_ptr_t callback );
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
-[; ;task.h: 32: void task_block( task_t* handle );
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
 [; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
-"51 /home/bruno/Programs/microchip/xc8/v1.37/include/pic18f4520.h
+"51 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
 [; <" PORTA equ 0F80h ;# ">
 [; ;pic18f4520.h: 54: typedef union {
@@ -3049,19 +3048,53 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18f4520.h: 8310: extern volatile __bit nW @ (((unsigned) &SSPSTAT)*8) + 2;
 [; ;pic18f4520.h: 8312: extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 [; ;pic18f4520.h: 8314: extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
-[; ;dispatcher.h: 17: typedef struct dispatcher_s {
-[; ;dispatcher.h: 18: task_t tasks[3];
-[; ;dispatcher.h: 19: uint8_t size;
-[; ;dispatcher.h: 20: task_t* running;
-[; ;dispatcher.h: 21: scheduler_function_ptr_t callback;
-[; ;dispatcher.h: 22: } dispatcher_t;
-[; ;dispatcher.h: 24: void dispatcher_init();
-[; ;dispatcher.h: 26: void dispatcher_start();
-[; ;dispatcher.h: 28: task_t* dispatcher_add_task();
-[; ;dispatcher.h: 30: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 32: void dispatcher_change_context( task_state_t task_state );
-[; ;dispatcher.h: 34: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 36: extern task_t idle;
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stdarg.h: 7: typedef void * va_list[1];
+[; ;stdarg.h: 10: extern void * __va_start(void);
+[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
+[; ;stdio.h: 43: struct __prbuf
+[; ;stdio.h: 44: {
+[; ;stdio.h: 45: char * ptr;
+[; ;stdio.h: 46: void (* func)(char);
+[; ;stdio.h: 47: };
+[; ;errno.h: 29: extern int errno;
+[; ;conio.h: 12: extern void init_uart(void);
+[; ;conio.h: 14: extern char getch(void);
+[; ;conio.h: 15: extern char getche(void);
+[; ;conio.h: 16: extern void putch(char);
+[; ;conio.h: 17: extern void ungetch(char);
+[; ;conio.h: 19: extern __bit kbhit(void);
+[; ;conio.h: 23: extern char * cgets(char *);
+[; ;conio.h: 24: extern void cputs(const char *);
+[; ;stdio.h: 88: extern int cprintf(char *, ...);
+[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+[; ;stdio.h: 183: extern char * gets(char *);
+[; ;stdio.h: 184: extern int puts(const char *);
+[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
+[; ;stdio.h: 195: extern int printf(const char *, ...);
+[; ;memory.h: 10: extern byte _heap[700];
+[; ;memory.h: 12: void* malloc( size_t size );
+[; ;memory.h: 14: void free( void* a_pointer );
+[; ;memory.h: 16: typedef struct block_s block_t;
+[; ;dispatcher.h: 18: typedef struct dispatcher_s {
+[; ;dispatcher.h: 19: task_t tasks[3];
+[; ;dispatcher.h: 20: uint8_t size;
+[; ;dispatcher.h: 21: task_t* running;
+[; ;dispatcher.h: 22: scheduler_function_ptr_t callback;
+[; ;dispatcher.h: 23: } dispatcher_t;
+[; ;dispatcher.h: 25: void dispatcher_init();
+[; ;dispatcher.h: 27: void dispatcher_start();
+[; ;dispatcher.h: 29: task_t* dispatcher_add_task();
+[; ;dispatcher.h: 31: void dispatcher_change_context_isr();
+[; ;dispatcher.h: 33: void dispatcher_change_context( task_state_t task_state );
+[; ;dispatcher.h: 35: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 37: extern task_t idle;
 "5 kernel/scheduler.c
 [v _scheduler_priority `(*S3 ~T0 @X0 1 ef ]
 {
@@ -3077,129 +3110,125 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $U 352  ]
-[e :U 349 ]
+[e $U 354  ]
+[e :U 351 ]
 {
+[; ;scheduler.c: 11: if( ( dispatcher.tasks[i].state == task_state_ready ) && ( highest->priority < dispatcher.tasks[i].priority ) ) {
 "11
-[v _current `*S3 ~T0 @X0 1 a ]
-[; ;scheduler.c: 11: task_t* current = &dispatcher.tasks[i];
-[e = _current &U *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
-[; ;scheduler.c: 13: if( ( current->state == task_state_ready ) && ( highest->priority < current->priority ) ) {
-"13
-[e $ ! && == -> . *U _current 2 `i -> . `E44 0 `i < . *U _highest 1 . *U _current 1 353  ]
+[e $ ! && == -> . *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E44 0 `i < . *U _highest 1 . *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 1 355  ]
 {
-[; ;scheduler.c: 14: highest = current;
-"14
-[e = _highest _current ]
-"15
+[; ;scheduler.c: 12: highest = &(dispatcher.tasks[i]);
+"12
+[e = _highest &U *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
+"13
 }
-[e :U 353 ]
-"16
+[e :U 355 ]
+"14
 }
 "9
 [e ++ _i -> 1 `i ]
+[e :U 354 ]
+[e $ < _i -> . _dispatcher 1 `i 351  ]
 [e :U 352 ]
-[e $ < _i -> . _dispatcher 1 `i 349  ]
-[e :U 350 ]
+"14
+}
+[; ;scheduler.c: 13: }
+[; ;scheduler.c: 14: }
+[; ;scheduler.c: 16: return highest;
 "16
-}
-[; ;scheduler.c: 15: }
-[; ;scheduler.c: 16: }
-[; ;scheduler.c: 18: return highest;
-"18
 [e ) _highest ]
-[e $UE 348  ]
-[; ;scheduler.c: 19: }
-"19
-[e :UE 348 ]
+[e $UE 350  ]
+[; ;scheduler.c: 17: }
+"17
+[e :UE 350 ]
 }
-"21
+"19
 [v _scheduler_round_robin `(*S3 ~T0 @X0 1 ef ]
 {
-[; ;scheduler.c: 21: task_t* scheduler_round_robin() {
+[; ;scheduler.c: 19: task_t* scheduler_round_robin() {
 [e :U _scheduler_round_robin ]
 [f ]
-"22
+"20
 [v _offset `i ~T0 @X0 1 a ]
-[; ;scheduler.c: 22: int offset = -1;
+[; ;scheduler.c: 20: int offset = -1;
 [e = _offset -U -> 1 `i ]
-[; ;scheduler.c: 23: for( int i = 0; i < 3; i++ ) {
-"23
+[; ;scheduler.c: 21: for( int i = 0; i < dispatcher.size; i++ ) {
+"21
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 3 `i 355  ]
-[e $U 356  ]
-[e :U 355 ]
+[e $U 360  ]
+[e :U 357 ]
 {
-[; ;scheduler.c: 24: if( (&dispatcher.tasks[i]) == dispatcher.running ) {
-"24
-[e $ ! == &U *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux . _dispatcher 2 358  ]
+[; ;scheduler.c: 22: if( (&dispatcher.tasks[i]) == dispatcher.running ) {
+"22
+[e $ ! == &U *U + &U . _dispatcher 0 * -> -> _i `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux . _dispatcher 2 361  ]
 {
-[; ;scheduler.c: 25: offset = i;
-"25
+[; ;scheduler.c: 23: offset = i;
+"23
 [e = _offset _i ]
-[; ;scheduler.c: 26: break;
+[; ;scheduler.c: 24: break;
+"24
+[e $U 358  ]
+"25
+}
+[e :U 361 ]
 "26
-[e $U 356  ]
-"27
 }
-[e :U 358 ]
-"28
-}
-"23
+"21
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 3 `i 355  ]
-[e :U 356 ]
-"28
+[e :U 360 ]
+[e $ < _i -> . _dispatcher 1 `i 357  ]
+[e :U 358 ]
+"26
 }
-"32
+"30
 [v _next `*S3 ~T0 @X0 1 a ]
-[; ;scheduler.c: 27: }
-[; ;scheduler.c: 28: }
-[; ;scheduler.c: 32: task_t* next = &idle;
+[; ;scheduler.c: 25: }
+[; ;scheduler.c: 26: }
+[; ;scheduler.c: 30: task_t* next = &idle;
 [e = _next &U _idle ]
-[; ;scheduler.c: 33: for( int i = 0; i < 3; i++ ) {
-"33
+[; ;scheduler.c: 31: for( int i = 0; i < dispatcher.size; i++ ) {
+"31
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 3 `i 359  ]
-[e $U 360  ]
-[e :U 359 ]
-{
-"36
-[v _j `i ~T0 @X0 1 a ]
-[; ;scheduler.c: 36: int j = (offset+1+i) % 3;
-[e = _j % + + _offset -> 1 `i _i -> 3 `i ]
-[; ;scheduler.c: 37: if( dispatcher.tasks[j].state == task_state_ready ) {
-"37
-[e $ ! == -> . *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E44 0 `i 362  ]
-{
-[; ;scheduler.c: 38: next = &dispatcher.tasks[j];
-"38
-[e = _next &U *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
-[; ;scheduler.c: 39: break;
-"39
-[e $U 360  ]
-"40
-}
+[e $U 365  ]
 [e :U 362 ]
-"41
+{
+"34
+[v _j `i ~T0 @X0 1 a ]
+[; ;scheduler.c: 34: int j = (offset+1+i) % dispatcher.size;
+[e = _j % + + _offset -> 1 `i _i -> . _dispatcher 1 `i ]
+[; ;scheduler.c: 35: if( dispatcher.tasks[j].state == task_state_ready ) {
+"35
+[e $ ! == -> . *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux 2 `i -> . `E44 0 `i 366  ]
+{
+[; ;scheduler.c: 36: next = &dispatcher.tasks[j];
+"36
+[e = _next &U *U + &U . _dispatcher 0 * -> -> _j `ui `ux -> -> # *U &U . _dispatcher 0 `ui `ux ]
+[; ;scheduler.c: 37: break;
+"37
+[e $U 363  ]
+"38
 }
-"33
+[e :U 366 ]
+"39
+}
+"31
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 3 `i 359  ]
-[e :U 360 ]
-"41
+[e :U 365 ]
+[e $ < _i -> . _dispatcher 1 `i 362  ]
+[e :U 363 ]
+"39
 }
-[; ;scheduler.c: 40: }
-[; ;scheduler.c: 41: }
-[; ;scheduler.c: 43: return next;
-"43
+[; ;scheduler.c: 38: }
+[; ;scheduler.c: 39: }
+[; ;scheduler.c: 41: return next;
+"41
 [e ) _next ]
-[e $UE 354  ]
-[; ;scheduler.c: 44: }
-"44
-[e :UE 354 ]
+[e $UE 356  ]
+[; ;scheduler.c: 42: }
+"42
+[e :UE 356 ]
 }

@@ -5,10 +5,9 @@
 
 #include "types.h"
 
-#define HEAP_SIZE 1024
+#define HEAP_SIZE 700
 
 extern byte _heap[HEAP_SIZE];
-
 
 void* malloc( size_t size );
 

@@ -15,13 +15,15 @@
      <ITEM name="Version">100</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="350" x="54" flags="00000032" y="150" h="200" pid="1" iid="-1">
+   <POPUP w="350" x="516" flags="00000032" y="369" h="200" pid="1" iid="-1">
     <PROPERTIES>
      <ITEM name="Address Column Width">85</ITEM>
      <ITEM name="AutoResize">No</ITEM>
      <ITEM name="Gridlines">Yes</ITEM>
-     <ITEM name="Item 0">"callback","0x00ED",00000001,00000004,237,0,-1,FFFFFFFF,0,00000000,0000FFFF</ITEM>
-     <ITEM name="Name Column Width">85</ITEM>
+     <ITEM name="Item 0">"*queue","0x02B2",00000001,00000004,690,1,6,00000000,0,00000000,00000000</ITEM>
+     <ITEM name="Item 1">"*semaphore_wait@handle","0x0097",00000001,00000004,151,4,-1,904E0000,0,00000000,00000000</ITEM>
+     <ITEM name="Item 2">"g_sem_1","0x0097",00000001,00000004,151,4,-1,904E0000,1,00000000,00000000</ITEM>
+     <ITEM name="Name Column Width">133</ITEM>
      <ITEM name="ShowAddresses">Yes</ITEM>
      <ITEM name="ShowPreviousValues">No</ITEM>
      <ITEM name="ShowTypes">No</ITEM>
@@ -30,7 +32,8 @@
      <ITEM name="Value Column Width">85</ITEM>
      <ITEM name="Version">100</ITEM>
      <ITEM name="Watch Expression Column Width">85</ITEM>
-     <ITEM name="nItems">0</ITEM>
+     <ITEM name="WatchPoint 2">0,0,00000000,</ITEM>
+     <ITEM name="nItems">1</ITEM>
     </PROPERTIES>
    </POPUP>
    <POPUP w="52" x="74" flags="00000008" y="170" h="12" pid="3" iid="1">
@@ -96,7 +99,7 @@
      <ITEM name="TopLineAddress">00300000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="18" x="214" flags="00000008" y="310" h="32" pid="10" iid="1">
+   <POPUP w="18" x="1207" flags="00008009" y="318" h="32" pid="10" iid="1">
     <PROPERTIES/>
    </POPUP>
    <POPUP w="8" x="234" flags="00000002" y="330" h="8" pid="13" iid="1">
@@ -109,13 +112,13 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1223" x="34" flags="0000802b" y="130" h="735" pid="1" iid="1">
+   <POPUP w="938" x="49" flags="0000002b" y="90" h="911" pid="1" iid="1">
     <PROPERTIES>
-     <ITEM name="Breakpoint 0">"",0008,0000,D5E8,8D9E,1
+     <ITEM name="Breakpoint 0">"",1BAA,0000,6E8C,33BA,1
 </ITEM>
-     <ITEM name="Breakpoint 1">"",00EE,0000,D61C,8D9E,1
+     <ITEM name="Breakpoint 1">"",195A,0000,E454,33BA,1
 </ITEM>
-     <ITEM name="Breakpoint 2">"",03FA,0000,16D5,33BA,1
+     <ITEM name="Breakpoint 2">"",02BC,0000,D004,46CA,1
 </ITEM>
      <ITEM name="CaseSensitive">No</ITEM>
      <ITEM name="DISPADDRS">Yes</ITEM>
@@ -123,23 +126,24 @@
      <ITEM name="DISPOPCODES">No</ITEM>
      <ITEM name="FIXUPBPTS">Yes</ITEM>
      <ITEM name="WordsOnly">No</ITEM>
-     <ITEM name="nBreakpoints">0</ITEM>
+     <ITEM name="nBreakpoints">1</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="563" x="1281" flags="0000000b" y="172" h="574" pid="2" iid="1">
+   <POPUP w="903" x="1002" flags="0000000b" y="103" h="909" pid="2" iid="1">
     <PROPERTIES>
      <ITEM name="Address Column Width">133</ITEM>
      <ITEM name="AutoResize">No</ITEM>
      <ITEM name="Gridlines">Yes</ITEM>
-     <ITEM name="Name Column Width">152</ITEM>
-     <ITEM name="ShowAddresses">Yes</ITEM>
+     <ITEM name="Name Column Width">461</ITEM>
+     <ITEM name="Previous Value Column Width">126</ITEM>
+     <ITEM name="ShowAddresses">No</ITEM>
      <ITEM name="ShowGlobals">Yes</ITEM>
      <ITEM name="ShowPreviousValues">No</ITEM>
-     <ITEM name="ShowTypes">Yes</ITEM>
+     <ITEM name="ShowTypes">No</ITEM>
      <ITEM name="ShowWatchPoint">No</ITEM>
      <ITEM name="TriggerMode">0</ITEM>
      <ITEM name="Type Column Width">100</ITEM>
-     <ITEM name="Value Column Width">96</ITEM>
+     <ITEM name="Value Column Width">155</ITEM>
      <ITEM name="Version">100</ITEM>
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>

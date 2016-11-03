@@ -10,7 +10,7 @@
 #include "task_context.h"
 
 typedef enum task_state_e {
-    task_state_ready,
+    task_state_ready = 0,
     task_state_running,
     task_state_blocked
 } task_state_t;
@@ -29,7 +29,7 @@ void task_ready( task_t* handle );
 
 void task_running( task_t* handle );
 
-void task_block( task_t* handle );
+//void task_block( task_t* handle );
 
 // void task_delay( task_t* handle );
 

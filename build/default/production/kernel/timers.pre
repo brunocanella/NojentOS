@@ -1,7 +1,7 @@
 
 # 1 "kernel/timers.c"
 
-# 13 "/opt/microchip/xc8/v1.37/include/stdint.h"
+# 13 "/opt/microchip/xc8/v1.38/include/stdint.h"
 typedef signed char int8_t;
 
 # 20
@@ -108,7 +108,7 @@ void timer0_init( uint16_t delay_us, function_ptr_t callback );
 
 void timer0_isr();
 
-# 49 "/opt/microchip/xc8/v1.37/include/pic18f4520.h"
+# 49 "/opt/microchip/xc8/v1.38/include/pic18f4520.h"
 extern volatile unsigned char PORTA @ 0xF80;
 
 asm("PORTA equ 0F80h");

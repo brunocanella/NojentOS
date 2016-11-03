@@ -7,11 +7,9 @@ task_t* scheduler_priority() {
     task_t* highest = &idle;
     // Procura agora em todas as tarefas, qual é a tarefa de maior prioridade.
     for( int i = 0; i < dispatcher.size; i++ ) {
-        // Separa a tarefa atual
-        task_t* current = &dispatcher.tasks[i];
         // current == ready && current > highest
-        if( ( current->state == task_state_ready ) && ( highest->priority < current->priority ) ) {
-            highest = current;
+        if( ( dispatcher.tasks[i].state == task_state_ready ) && ( highest->priority < dispatcher.tasks[i].priority ) ) {
+            highest = &(dispatcher.tasks[i]);
         }
     }
     // Retorna a tarefa de maior prioridade que está pronta para rodar.

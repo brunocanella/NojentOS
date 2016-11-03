@@ -1,12 +1,12 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [v F32 `(v ~T0 @X0 0 tf ]
-"10 kernel/task.c
+"8 kernel/task.c
 [c E44 0 1 2 .. ]
 [n E44 task_state_e task_state_ready task_state_running task_state_blocked  ]
-"16 kernel/task_context.h
+"12 kernel/task_context.h
 [s S1 `*um 1 `uc 1 ]
 [n S1 task_context_stack_s values size ]
-"21
+"17
 [s S2 `uc 1 `uc 1 `uc 1 `S1 1 ]
 [n S2 task_context_s work bsr status stack ]
 "18 kernel/task.h
@@ -14,7 +14,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S3 task_s id priority state callback context ]
 "29 kernel/dispatcher.h
 [v _dispatcher_add_task `(*S3 ~T0 @X0 0 ef ]
-"13 kernel/memory.h
+"12 kernel/memory.h
 [v _malloc `(*v ~T0 @X0 0 ef1`ui ]
 "28 kernel/task.h
 [v _task_ready `(v ~T0 @X0 0 ef1`*S3 ]
@@ -53,18 +53,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 16: typedef unsigned long uint32_t;
 [; ;types.h: 18: typedef void* pointer_t;
 [; ;types.h: 20: typedef void (*function_ptr_t)(void);
-[; ;task_context.h: 16: typedef struct task_context_stack_s {
-[; ;task_context.h: 17: uint24_t* values;
-[; ;task_context.h: 18: uint8_t size;
-[; ;task_context.h: 19: } task_context_stack_t;
-[; ;task_context.h: 21: typedef struct task_context_s {
-[; ;task_context.h: 22: byte work;
-[; ;task_context.h: 23: byte bsr;
-[; ;task_context.h: 24: byte status;
-[; ;task_context.h: 25: task_context_stack_t stack;
-[; ;task_context.h: 26: } task_context_t;
+[; ;task_context.h: 12: typedef struct task_context_stack_s {
+[; ;task_context.h: 13: uint24_t* values;
+[; ;task_context.h: 14: uint8_t size;
+[; ;task_context.h: 15: } task_context_stack_t;
+[; ;task_context.h: 17: typedef struct task_context_s {
+[; ;task_context.h: 18: byte work;
+[; ;task_context.h: 19: byte bsr;
+[; ;task_context.h: 20: byte status;
+[; ;task_context.h: 21: task_context_stack_t stack;
+[; ;task_context.h: 22: } task_context_t;
 [; ;task.h: 12: typedef enum task_state_e {
-[; ;task.h: 13: task_state_ready,
+[; ;task.h: 13: task_state_ready = 0,
 [; ;task.h: 14: task_state_running,
 [; ;task.h: 15: task_state_blocked
 [; ;task.h: 16: } task_state_t;
@@ -79,7 +79,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;task.h: 28: void task_ready( task_t* handle );
 [; ;task.h: 30: void task_running( task_t* handle );
 [; ;pic18f4520.h: 49: extern volatile unsigned char PORTA @ 0xF80;
-"51 /opt/microchip/xc8/v1.37/include/pic18f4520.h
+"51 /opt/microchip/xc8/v1.38/include/pic18f4520.h
 [; ;pic18f4520.h: 51: asm("PORTA equ 0F80h");
 [; <" PORTA equ 0F80h ;# ">
 [; ;pic18f4520.h: 54: typedef union {
@@ -3044,6 +3044,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18f4520.h: 8312: extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 [; ;pic18f4520.h: 8314: extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
 [; ;scheduler.h: 13: typedef task_t* (*scheduler_function_ptr_t)(void);
+[; ;scheduler.h: 15: task_t* scheduler_priority();
 [; ;scheduler.h: 17: task_t* scheduler_round_robin();
 [; ;__size_t.h: 4: typedef unsigned size_t;
 [; ;stdarg.h: 7: typedef void * va_list[1];
@@ -3075,12 +3076,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;memory.h: 10: extern byte _heap[1024];
-[; ;memory.h: 13: void* malloc( size_t size );
-[; ;memory.h: 15: void free( void* a_pointer );
-[; ;memory.h: 17: typedef struct block_s block_t;
+[; ;memory.h: 10: extern byte _heap[700];
+[; ;memory.h: 12: void* malloc( size_t size );
+[; ;memory.h: 14: void free( void* a_pointer );
+[; ;memory.h: 16: typedef struct block_s block_t;
 [; ;dispatcher.h: 18: typedef struct dispatcher_s {
-[; ;dispatcher.h: 19: task_t tasks[4];
+[; ;dispatcher.h: 19: task_t tasks[3];
 [; ;dispatcher.h: 20: uint8_t size;
 [; ;dispatcher.h: 21: task_t* running;
 [; ;dispatcher.h: 22: scheduler_function_ptr_t callback;
@@ -3089,8 +3090,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dispatcher.h: 27: void dispatcher_start();
 [; ;dispatcher.h: 29: task_t* dispatcher_add_task();
 [; ;dispatcher.h: 31: void dispatcher_change_context_isr();
-[; ;dispatcher.h: 33: extern dispatcher_t dispatcher;
-[; ;dispatcher.h: 35: extern task_t idle;
+[; ;dispatcher.h: 33: void dispatcher_change_context( task_state_t task_state );
+[; ;dispatcher.h: 35: extern dispatcher_t dispatcher;
+[; ;dispatcher.h: 37: extern task_t idle;
 "7 kernel/task.c
 [v _task_create `(v ~T0 @X0 1 ef3`ui`ui`*F32 ]
 {
@@ -3100,69 +3102,69 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _priority `ui ~T0 @X0 1 r2 ]
 [v _callback `*F32 ~T0 @X0 1 r3 ]
 [f ]
-"10
+"8
 [v _handle `*S3 ~T0 @X0 1 a ]
-[; ;task.c: 10: task_t* handle = dispatcher_add_task();
+[; ;task.c: 8: task_t* handle = dispatcher_add_task();
 [e = _handle ( _dispatcher_add_task ..  ]
-[; ;task.c: 12: handle->id = id;
-"12
+[; ;task.c: 10: handle->id = id;
+"10
 [e = . *U _handle 0 _id ]
-[; ;task.c: 13: handle->priority = priority;
-"13
+[; ;task.c: 11: handle->priority = priority;
+"11
 [e = . *U _handle 1 _priority ]
-[; ;task.c: 14: handle->callback = callback;
-"14
+[; ;task.c: 12: handle->callback = callback;
+"12
 [e = . *U _handle 3 _callback ]
-[; ;task.c: 17: handle->context.work = 0;
-"17
+[; ;task.c: 15: handle->context.work = 0;
+"15
 [e = . . *U _handle 4 0 -> -> 0 `i `uc ]
-[; ;task.c: 18: handle->context.bsr = 0;
-"18
+[; ;task.c: 16: handle->context.bsr = 0;
+"16
 [e = . . *U _handle 4 1 -> -> 0 `i `uc ]
-[; ;task.c: 19: handle->context.status = 0;
-"19
+[; ;task.c: 17: handle->context.status = 0;
+"17
 [e = . . *U _handle 4 2 -> -> 0 `i `uc ]
-[; ;task.c: 20: handle->context.stack.size = 1;
-"20
+[; ;task.c: 18: handle->context.stack.size = 1;
+"18
 [e = . . . *U _handle 4 3 1 -> -> 1 `i `uc ]
-[; ;task.c: 21: handle->context.stack.values = (uint24_t*)malloc(sizeof(uint24_t));
-"21
+[; ;task.c: 19: handle->context.stack.values = (uint24_t*)malloc(sizeof(uint24_t));
+"19
 [e = . . . *U _handle 4 3 0 -> ( _malloc (1 -> # `um `ui `*um ]
-[; ;task.c: 22: handle->context.stack.values[0] = (uint24_t)callback;
-"22
+[; ;task.c: 20: handle->context.stack.values[0] = (uint24_t)callback;
+"20
 [e = *U + . . . *U _handle 4 3 0 * -> -> 0 `i `x -> -> # *U . . . *U _handle 4 3 0 `i `x -> _callback `um ]
-[; ;task.c: 24: task_ready( handle );
-"24
+[; ;task.c: 22: task_ready( handle );
+"22
 [e ( _task_ready (1 _handle ]
-[; ;task.c: 25: }
-"25
+[; ;task.c: 23: }
+"23
 [e :UE 350 ]
 }
-"27
+"25
 [v _task_ready `(v ~T0 @X0 1 ef1`*S3 ]
 {
-[; ;task.c: 27: void task_ready( task_t* handle ) {
+[; ;task.c: 25: void task_ready( task_t* handle ) {
 [e :U _task_ready ]
 [v _handle `*S3 ~T0 @X0 1 r1 ]
 [f ]
-[; ;task.c: 28: handle->state = task_state_ready;
-"28
+[; ;task.c: 26: handle->state = task_state_ready;
+"26
 [e = . *U _handle 2 . `E44 0 ]
-[; ;task.c: 29: }
-"29
+[; ;task.c: 27: }
+"27
 [e :UE 351 ]
 }
-"31
+"29
 [v _task_running `(v ~T0 @X0 1 ef1`*S3 ]
 {
-[; ;task.c: 31: void task_running( task_t* handle ) {
+[; ;task.c: 29: void task_running( task_t* handle ) {
 [e :U _task_running ]
 [v _handle `*S3 ~T0 @X0 1 r1 ]
 [f ]
-[; ;task.c: 32: handle->state = task_state_running;
-"32
+[; ;task.c: 30: handle->state = task_state_running;
+"30
 [e = . *U _handle 2 . `E44 1 ]
-[; ;task.c: 33: }
-"33
+[; ;task.c: 31: }
+"31
 [e :UE 352 ]
 }

@@ -1,7 +1,7 @@
 
 # 1 "nojentOS.c"
 
-# 49 "/opt/microchip/xc8/v1.37/include/pic18f4520.h"
+# 49 "/opt/microchip/xc8/v1.38/include/pic18f4520.h"
 extern volatile unsigned char PORTA @ 0xF80;
 
 asm("PORTA equ 0F80h");
@@ -3923,7 +3923,7 @@ extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 
 extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
 
-# 13 "/opt/microchip/xc8/v1.37/include/stdint.h"
+# 13 "/opt/microchip/xc8/v1.38/include/stdint.h"
 typedef signed char int8_t;
 
 # 20
@@ -4030,7 +4030,7 @@ void timer0_init( uint16_t delay_us, function_ptr_t callback );
 
 void timer0_isr();
 
-# 16 "kernel/task_context.h"
+# 12 "kernel/task_context.h"
 typedef struct task_context_stack_s {
 uint24_t* values;
 uint8_t size;
@@ -4045,7 +4045,7 @@ task_context_stack_t stack;
 
 # 12 "kernel/task.h"
 typedef enum task_state_e {
-task_state_ready,
+task_state_ready = 0,
 task_state_running,
 task_state_blocked
 } task_state_t;
@@ -4067,14 +4067,14 @@ void task_running( task_t* handle );
 # 13 "kernel/scheduler.h"
 typedef task_t* (*scheduler_function_ptr_t)(void);
 
-
+task_t* scheduler_priority();
 
 task_t* scheduler_round_robin();
 
-# 4 "/opt/microchip/xc8/v1.37/include/__size_t.h"
+# 4 "/opt/microchip/xc8/v1.38/include/__size_t.h"
 typedef unsigned size_t;
 
-# 7 "/opt/microchip/xc8/v1.37/include/stdarg.h"
+# 7 "/opt/microchip/xc8/v1.38/include/stdarg.h"
 typedef void * va_list[1];
 
 #pragma intrinsic(__va_start)
@@ -4083,17 +4083,17 @@ extern void * __va_start(void);
 #pragma intrinsic(__va_arg)
 extern void * __va_arg(void *, ...);
 
-# 43 "/opt/microchip/xc8/v1.37/include/stdio.h"
+# 43 "/opt/microchip/xc8/v1.38/include/stdio.h"
 struct __prbuf
 {
 char * ptr;
 void (* func)(char);
 };
 
-# 29 "/opt/microchip/xc8/v1.37/include/errno.h"
+# 29 "/opt/microchip/xc8/v1.38/include/errno.h"
 extern int errno;
 
-# 12 "/opt/microchip/xc8/v1.37/include/conio.h"
+# 12 "/opt/microchip/xc8/v1.38/include/conio.h"
 extern void init_uart(void);
 
 extern char getch(void);
@@ -4107,7 +4107,7 @@ extern __bit kbhit(void);
 extern char * cgets(char *);
 extern void cputs(const char *);
 
-# 88 "/opt/microchip/xc8/v1.37/include/stdio.h"
+# 88 "/opt/microchip/xc8/v1.38/include/stdio.h"
 extern int cprintf(char *, ...);
 #pragma printf_check(cprintf)
 
@@ -4135,8 +4135,7 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 10 "kernel/memory.h"
-extern byte _heap[1024];
-
+extern byte _heap[700];
 
 void* malloc( size_t size );
 
@@ -4146,7 +4145,7 @@ typedef struct block_s block_t;
 
 # 18 "kernel/dispatcher.h"
 typedef struct dispatcher_s {
-task_t tasks[4];
+task_t tasks[3];
 uint8_t size;
 task_t* running;
 scheduler_function_ptr_t callback;
@@ -4160,26 +4159,75 @@ task_t* dispatcher_add_task();
 
 void dispatcher_change_context_isr();
 
+void dispatcher_change_context( task_state_t task_state );
+
 extern dispatcher_t dispatcher;
 
 extern task_t idle;
 
-# 16 "nojentOS.h"
+# 6 "kernel/linked_list.h"
+struct linked_list_s;
+
+typedef struct linked_list_s linked_list_t;
+
+#pragma pack(1)
+struct linked_list_s {
+linked_list_t* next;
+pointer_t data;
+};
+
+#pragma pack(1)
+typedef struct linked_list_head_data_s {
+uint8_t size;
+linked_list_t* last;
+} linked_list_head_data_t;
+
+int8_t linked_list_create( linked_list_t** a_head );
+
+int8_t linked_list_insert( linked_list_t* a_head, pointer_t a_data );
+
+
+
+int8_t linked_list_remove_last( linked_list_t* a_head );
+
+int8_t linked_list_remove_first( linked_list_t* a_head );
+
+int8_t linked_list_remove_all( linked_list_t* a_head );
+
+pointer_t linked_list_get_by_index( linked_list_t* a_head, uint16_t a_index );
+
+pointer_t linked_list_get_last( linked_list_t* a_head );
+
+pointer_t linked_list_get_first( linked_list_t* a_head );
+
+uint8_t linked_list_get_size( linked_list_t* a_head );
+
+# 14 "kernel/semaphore.h"
+typedef struct semaphore_s {
+int8_t value;
+linked_list_t* queue;
+} semaphore_t;
+
+void semaphore_init( semaphore_t* handle, int8_t initial_value );
+void semaphore_wait( semaphore_t* handle );
+void semaphore_signal( semaphore_t* handle );
+
+# 17 "nojentOS.h"
 void nojo_init();
 
 void nojo_start();
 
-# 26 "/opt/microchip/xc8/v1.37/include/htc.h"
+# 26 "/opt/microchip/xc8/v1.38/include/htc.h"
 extern const char __xc8_OPTIM_SPEED;
 
 extern double __fpnormalize(double);
 
 
-# 13 "/opt/microchip/xc8/v1.37/include/xc8debug.h"
+# 13 "/opt/microchip/xc8/v1.38/include/xc8debug.h"
 #pragma intrinsic(__builtin_software_breakpoint)
 extern void __builtin_software_breakpoint(void);
 
-# 18 "/opt/microchip/xc8/v1.37/include/pic18.h"
+# 18 "/opt/microchip/xc8/v1.38/include/pic18.h"
 __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
 __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
 
@@ -4197,58 +4245,17 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 14 "kernel/interrutps.h"
-byte _WREG;
-byte _BSR;
-byte _STATUS;
-
-# 21
+# 17 "kernel/interrutps.h"
 void interrupt global_isr() {
-_WREG = WREG;
-_BSR = BSR;
-_STATUS = STATUS;
 
 if( INTCONbits.TMR0IE && INTCONbits.TMR0IF ) {
 
-do {
-task_t* p_task = (dispatcher.running);
-if( p_task == ((void*)0) ) { break; }
-task_context_t* p_context = &(p_task->context);
-p_context->work = _WREG;
-p_context->bsr = _BSR;
-p_context->status = _STATUS;
-task_context_stack_t* p_stack = &(p_context->stack);
-while( (STKPTR & 0b11111) > 0 ) {
-uint8_t i = p_stack->size++;
-p_stack->values[i] = (TOSU << 16) | (TOSH << 8) | TOSL;
-asm("POP");
-}
-}while(0);
+do { task_t* task = (dispatcher.running); if( task == ((void*)0) ) { break; } task_context_t* context = &(task->context); context->work = WREG; context->bsr = BSR; context->status = STATUS; free(context->stack.values); context->stack.values = (uint24_t*)malloc(sizeof(uint24_t) * (STKPTR & 0b11111)); task_context_stack_t* stack = &(context->stack); while( (STKPTR & 0b11111) > 0 ) { uint8_t i = stack->size++; stack->values[i] = TOS; asm("POP"); } } while(0);
 
 timer0_isr();
 
-do {
-task_t* n_task = (dispatcher.running);
-if( n_task == ((void*)0) ) { break; }
-task_context_t* n_context = &(n_task->context);
-_WREG = n_context->work;
-_BSR = n_context->bsr;
-_STATUS = n_context->status;
-task_context_stack_t* n_stack = &(n_context->stack);
-while( n_stack->size > 0 ) {
-uint8_t i = --n_stack->size;
-asm("PUSH");
-TOSU = n_stack->values[i] >> 16;
-TOSH = n_stack->values[i] >> 8;
-TOSL = n_stack->values[i] >> 0;
-
-
+do { task_t* task = (dispatcher.running); if( task == ((void*)0) ) { break; } task_context_t* context = &(task->context); WREG = context->work; BSR = context->bsr; STATUS = context->status; task_context_stack_t* stack = &(context->stack); while( stack->size > 0 ) { uint8_t i = --stack->size; asm("PUSH"); TOSU = stack->values[i] >> 16; TOSH = stack->values[i] >> 8; TOSL = stack->values[i] >> 0; } } while(0);
 }
-} while(0);
-}
-BSR = _BSR;
-STATUS = _STATUS;
-WREG = _WREG;
 }
 
 # 15 "nojentOS.c"

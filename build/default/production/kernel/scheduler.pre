@@ -1,7 +1,7 @@
 
 # 1 "kernel/scheduler.c"
 
-# 13 "/opt/microchip/xc8/v1.37/include/stdint.h"
+# 13 "/opt/microchip/xc8/v1.38/include/stdint.h"
 typedef signed char int8_t;
 
 # 20
@@ -103,7 +103,7 @@ typedef void* pointer_t;
 
 typedef void (*function_ptr_t)(void);
 
-# 16 "kernel/task_context.h"
+# 12 "kernel/task_context.h"
 typedef struct task_context_stack_s {
 uint24_t* values;
 uint8_t size;
@@ -118,7 +118,7 @@ task_context_stack_t stack;
 
 # 12 "kernel/task.h"
 typedef enum task_state_e {
-task_state_ready,
+task_state_ready = 0,
 task_state_running,
 task_state_blocked
 } task_state_t;
@@ -140,11 +140,11 @@ void task_running( task_t* handle );
 # 13 "kernel/scheduler.h"
 typedef task_t* (*scheduler_function_ptr_t)(void);
 
-
+task_t* scheduler_priority();
 
 task_t* scheduler_round_robin();
 
-# 49 "/opt/microchip/xc8/v1.37/include/pic18f4520.h"
+# 49 "/opt/microchip/xc8/v1.38/include/pic18f4520.h"
 extern volatile unsigned char PORTA @ 0xF80;
 
 asm("PORTA equ 0F80h");
@@ -4066,10 +4066,10 @@ extern volatile __bit nWR @ (((unsigned) &PORTE)*8) + 1;
 
 extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
 
-# 4 "/opt/microchip/xc8/v1.37/include/__size_t.h"
+# 4 "/opt/microchip/xc8/v1.38/include/__size_t.h"
 typedef unsigned size_t;
 
-# 7 "/opt/microchip/xc8/v1.37/include/stdarg.h"
+# 7 "/opt/microchip/xc8/v1.38/include/stdarg.h"
 typedef void * va_list[1];
 
 #pragma intrinsic(__va_start)
@@ -4078,17 +4078,17 @@ extern void * __va_start(void);
 #pragma intrinsic(__va_arg)
 extern void * __va_arg(void *, ...);
 
-# 43 "/opt/microchip/xc8/v1.37/include/stdio.h"
+# 43 "/opt/microchip/xc8/v1.38/include/stdio.h"
 struct __prbuf
 {
 char * ptr;
 void (* func)(char);
 };
 
-# 29 "/opt/microchip/xc8/v1.37/include/errno.h"
+# 29 "/opt/microchip/xc8/v1.38/include/errno.h"
 extern int errno;
 
-# 12 "/opt/microchip/xc8/v1.37/include/conio.h"
+# 12 "/opt/microchip/xc8/v1.38/include/conio.h"
 extern void init_uart(void);
 
 extern char getch(void);
@@ -4102,7 +4102,7 @@ extern __bit kbhit(void);
 extern char * cgets(char *);
 extern void cputs(const char *);
 
-# 88 "/opt/microchip/xc8/v1.37/include/stdio.h"
+# 88 "/opt/microchip/xc8/v1.38/include/stdio.h"
 extern int cprintf(char *, ...);
 #pragma printf_check(cprintf)
 
@@ -4130,8 +4130,7 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 10 "kernel/memory.h"
-extern byte _heap[1024];
-
+extern byte _heap[700];
 
 void* malloc( size_t size );
 
@@ -4141,7 +4140,7 @@ typedef struct block_s block_t;
 
 # 18 "kernel/dispatcher.h"
 typedef struct dispatcher_s {
-task_t tasks[4];
+task_t tasks[3];
 uint8_t size;
 task_t* running;
 scheduler_function_ptr_t callback;
@@ -4155,11 +4154,27 @@ task_t* dispatcher_add_task();
 
 void dispatcher_change_context_isr();
 
+void dispatcher_change_context( task_state_t task_state );
+
 extern dispatcher_t dispatcher;
 
 extern task_t idle;
 
-# 18 "kernel/scheduler.c"
+# 5 "kernel/scheduler.c"
+task_t* scheduler_priority() {
+
+task_t* highest = &idle;
+
+for( int i = 0; i < dispatcher.size; i++ ) {
+
+if( ( dispatcher.tasks[i].state == task_state_ready ) && ( highest->priority < dispatcher.tasks[i].priority ) ) {
+highest = &(dispatcher.tasks[i]);
+}
+}
+
+return highest;
+}
+
 task_t* scheduler_round_robin() {
 int offset = -1;
 for( int i = 0; i < dispatcher.size; i++ ) {
@@ -4184,4 +4199,3 @@ break;
 
 return next;
 }
-
