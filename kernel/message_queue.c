@@ -9,21 +9,24 @@ int8_t message_queue_init(message_queue_t* descriptor) {
 uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t size) {
     GLOBAL_INTERRUPTS_DISABLE(); 
      
-    if(buff == NULL)
+    if(buff == NULL) {
+        GLOBAL_INTERRUPTS_ENABLE();
         return 0;
+    }
     
     //Instanciando um nó de mensagem
     message_queue_node_t* message_queue_node = (message_queue_node_t*)linked_list_get_first((linked_list_t*)descriptor); 
     
     //Caso o que for ser lido for de tamanho diferente da p?oxima mensagem gravada não lê
-    if(message_queue_node->width != size) 
+    if((message_queue_node == NULL) || (message_queue_node->width != size)) {
+        GLOBAL_INTERRUPTS_ENABLE();
         return 0;
+    }
     
     //Atribuindo o conteudo ao buffer para dar free no dado que estava salvo na lista
     uint8_t i;
-    for(i = 0; i < size; i++) {
+    for(i = 0; i < size; i++)
         ((uint8_t*)buff)[i] = ((uint8_t*)(message_queue_node->data))[i];
-    }
     
     //buffer já está salvo, retirando dado da lista
     linked_list_remove_first((linked_list_t*)descriptor);
@@ -36,10 +39,18 @@ uint8_t message_queue_read(message_queue_t descriptor, pointer_t buff, uint8_t s
 uint8_t message_queue_write(message_queue_t descriptor, pointer_t buff, uint8_t size) {
     GLOBAL_INTERRUPTS_DISABLE();
     
-    //Instanciando um nó de mensagem
+//Instanciando um nó de mensagem
     message_queue_node_t* message_queue_node = (message_queue_node_t*)malloc(sizeof(message_queue_node_t));
+    if(message_queue_node == NULL) {
+        GLOBAL_INTERRUPTS_ENABLE();
+        return 0;
+    }
     message_queue_node->width = size;
     message_queue_node->data = (pointer_t*)malloc(size);
+    if(message_queue_node->data == NULL) {
+        GLOBAL_INTERRUPTS_ENABLE();
+        return 0;
+    }
     
         //Atribuindo o conteudo ao buffer para dar free no dado que estava salvo na lista
     uint8_t i;
@@ -55,4 +66,3 @@ uint8_t message_queue_write(message_queue_t descriptor, pointer_t buff, uint8_t 
     GLOBAL_INTERRUPTS_ENABLE();
     return 0;
 }
-        
