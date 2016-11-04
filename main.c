@@ -9,7 +9,7 @@
 // Config tem que vir antes de NojentOS, pois os defines dele sobrescrevem valores do SO.
 #include "config.h"
 
-
+#include "kernel/message_queue.h"
 #include "kernel/defines.h"
 #include "nojentOS.h"
 
@@ -46,38 +46,63 @@ static void task_3() {
 
 semaphore_t g_sem_1;
 semaphore_t g_sem_2;
+message_queue_t descriptor;
 
 static void task_1_priority() {
-    TRISDbits.RD0 = OUTPUT;
-    PORTDbits.RD0 = LOW;
+    
+    TRISA = 0x00;
+    PORTA = 0x00;
     
     semaphore_init( &g_sem_1, 0 );
     semaphore_init( &g_sem_2, 0 );
-    
+    message_queue_init( &descriptor );
+    uint8_t buff_write = 0;
+    uint8_t buff;
+    message_queue_write(descriptor, &buff_write, 1);
     while(TRUE) {
-        PORTDbits.RD0 = !LATDbits.LATD0;
-        for( uint16_t i = 0; i < 60000; i++ ) { NOP(); }
         semaphore_wait( &g_sem_1 );
+        message_queue_read(descriptor, &buff, 1);
+        PORTA = buff;
+        for( uint16_t i = 0; i < 60000; i++ ) { NOP(); }
+        buff_write++;
+        message_queue_write(descriptor, &buff_write, 1);
     }
 }
 
 static void task_2_priority() {
-    TRISDbits.RD1 = OUTPUT;
-    PORTDbits.RD1 = LOW;
+
+    
+    TRISB = 0x00;
+    PORTB = 0x00;
+    
+    uint8_t buff_write = 1;
+    uint8_t buff;
+    message_queue_write(descriptor, &buff_write, 1);
     while(TRUE) {
-        PORTDbits.RD1 = !LATDbits.LATD1;
-        for( uint16_t i = 0; i < 60000; i++ ) { NOP(); }
         semaphore_wait( &g_sem_2 );
+        message_queue_read(descriptor, &buff, 1);
+        PORTB = buff;
+        for( uint16_t i = 0; i < 60000; i++ ) { NOP(); }
+        buff_write++;
+        message_queue_write(descriptor, &buff_write, 1);        
         semaphore_signal( &g_sem_1 );
     }
 }
 
 static void task_3_priority() {
-    TRISDbits.RD2 = OUTPUT;
-    PORTDbits.RD2 = LOW;
+    
+    TRISC = 0x00;
+    PORTC = 0x00;
+    
+    uint8_t buff_write = 2;
+    uint8_t buff;
+    message_queue_write(descriptor, &buff_write, 1);
     while(TRUE) {
-        PORTDbits.RD2 = !LATDbits.LATD2;
-        for( uint16_t i = 0; i < 60000; i++ ) { NOP(); }        
+        message_queue_read(descriptor, &buff, 1);
+        PORTC = buff;
+        for( uint16_t i = 0; i < 60000; i++ ) { NOP(); }
+        buff_write++;
+        message_queue_write(descriptor, &buff_write, 1);
         semaphore_signal( &g_sem_2 );
     }
 }
