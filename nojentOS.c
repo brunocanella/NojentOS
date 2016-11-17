@@ -17,7 +17,8 @@ void nojo_init() {
     OSCCONbits.IRCF = OSC_INTOSC;
     OSCTUNEbits.PLLEN = OSC_PLLENABLE;
     
-    dispatcher_init();    
+    dispatcher_init();
+    delay_init();
 }
 
 void nojo_start() {

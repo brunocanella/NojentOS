@@ -55,7 +55,12 @@ task_t* dispatcher_add_task() {
  */
 void dispatcher_change_context_isr() {
     // Recupera a tarefa que será a proxima a entrar em execução
-    task_t* next = dispatcher.callback();
+    //task_t* next = dispatcher.callback();
+#if SCHEDULER == SCHEDULER_ROUND_ROBIN
+    task_t* next = scheduler_round_robin();
+#else
+    task_t* next = scheduler_priority();
+#endif    
     // Suspende (passa para ready) a tarefa atual
     task_ready( dispatcher.running );
     // Troca a tarefa que está em execução
@@ -90,8 +95,13 @@ void dispatcher_change_context( task_state_t task_state ) {
     
     // Passa a tarefa atual para o estado informado escolhido.
     dispatcher.running->state = task_state;
-    // Pega a nova tarefa e coloca ela como ativa.
-    dispatcher.running = scheduler_priority(); //dispatcher.callback();
+    // Pega a nova tarefa e coloca ela como ativa.    
+    // dispatcher.running = scheduler_priority(); //dispatcher.callback();
+#if SCHEDULER == SCHEDULER_ROUND_ROBIN
+    dispatcher.running = scheduler_round_robin();
+#else
+    dispatcher.running = scheduler_priority();
+#endif        
     // E atualiza o status dela como rodando.
     task_running( dispatcher.running );
     // Finalmente, carrega a pilha desta tarefa

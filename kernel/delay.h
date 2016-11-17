@@ -8,7 +8,13 @@
 #ifndef DELAY_H
 #define	DELAY_H
 
+#include "types.h"
+
 void delay_init();
+
+uint8_t timer1_isr();
+
+void delay_cs( uint16_t a_time );
 
 #endif	/* DELAY_H */
 
