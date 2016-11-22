@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/defines.h</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/sa.c</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/sa_baixo.c</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/sa.h</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/memoria_EEPROM.c</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/nojentOS.c</file>
             <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/main.c</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/memoria_EEPROM.h</file>
+            <file>file:/home/bruno/Documents/UFSC/2016.2/ARA7562%20-%20Sistemas%20Operacionais%20Embarcados/Workspace/NojentOS.X/kernel/sa_baixo.h</file>
         </group>
     </open-files>
 </project-private>

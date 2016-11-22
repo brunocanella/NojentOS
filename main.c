@@ -5,7 +5,8 @@
  */
 #include <xc.h>
 #include <pic18f4520.h>
-
+#include <time.h>
+#include <string.h>
 // Config tem que vir antes de NojentOS, pois os defines dele sobrescrevem valores do SO.
 #include "config.h"
 
@@ -13,6 +14,7 @@
 #include "kernel/defines.h"
 #include "nojentOS.h"
 #include "kernel/delay.h"
+#include "kernel/rs232.h"
 
 #if SCHEDULER == SCHEDULER_ROUND_ROBIN
 
@@ -112,7 +114,14 @@ static void task_3_priority() {
 
 #endif
 
-void main(void) {    
+typedef struct
+{
+	uint8_t valor_8bits;
+	uint16_t valor_16bits;
+	char nome[15];
+}teste_t;
+
+int main(void) {    
     nojo_init();
 #if SCHEDULER == SCHEDULER_ROUND_ROBIN
     asm("GLOBAL _task_1, _task_2, _task_3, _task_idle_callback");
@@ -125,10 +134,49 @@ void main(void) {
     task_create( 2, 100, task_2_priority );
     task_create( 3,  50, task_3_priority );
 #endif
+
+	//printf("Iniciando\n");
+	MEU_format();
+	//printf("Finalizado\n\n");
+	MEU_FILE *A;
+	teste_t teste_write[2], teste_read[2];
+
+    A = MEU_fopen("UFSC0","w");
+
+
+	if (A == NULL)
+    {
+        //printf("Nao consegue criar arquivo novo\n");
+        return(1);
+    }
+    else
+    {
+    	//printf("ok\n\n");
+    }  
+
+    //Arquivo A
+    //printf("Arquivo A\n");
+	teste_write[0].valor_8bits = 100;
+	teste_write[0].valor_16bits = 3578;
+	strcpy(teste_write[0].nome, "Novo Nome");
+
+	teste_write[1].valor_8bits = 246;
+	teste_write[1].valor_16bits = 4578;
+	strcpy(teste_write[1].nome, "Vou Textar Aqui");
+
+    int a = MEU_fwrite(teste_write, sizeof(teste_t), 2, A);
+    MEU_fseek(A, 0, SEEK_SET);
+    MEU_fread(teste_read, sizeof(teste_t), 5, A);   	
+	
+
+	MEU_fclose(A);
+
     
     nojo_start();
     
     while(1) {
         asm("nop");
     }
+    
+    return 0;
 }

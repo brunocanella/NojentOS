@@ -14,6 +14,8 @@
 #include "kernel/dispatcher.h"
 #include "kernel/semaphore.h"
 
+#include "kernel/sa.h"
+
 void nojo_init();
 
 void nojo_start();

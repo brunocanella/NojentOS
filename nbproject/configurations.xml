@@ -18,6 +18,10 @@
       <itemPath>kernel/linked_list.h</itemPath>
       <itemPath>kernel/semaphore.h</itemPath>
       <itemPath>kernel/delay.h</itemPath>
+      <itemPath>kernel/sa.h</itemPath>
+      <itemPath>kernel/sa_baixo.h</itemPath>
+      <itemPath>kernel/rs232.h</itemPath>
+      <itemPath>kernel/memoria_EEPROM.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -37,6 +41,10 @@
       <itemPath>kernel/semaphore.c</itemPath>
       <itemPath>kernel/message_queue.c</itemPath>
       <itemPath>kernel/delay.c</itemPath>
+      <itemPath>kernel/sa_baixo.c</itemPath>
+      <itemPath>kernel/sa.c</itemPath>
+      <itemPath>kernel/rs232.c</itemPath>
+      <itemPath>kernel/memoria_EEPROM.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
